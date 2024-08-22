@@ -1,5 +1,5 @@
 # SoftwareEng_Fall2024
 Team Repository for the CSCI 450 fall 2024 semester project
 
-**Team Members\n**
+**Team Members**  <br/> 
 Dorian Bell II
