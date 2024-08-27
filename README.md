@@ -6,7 +6,7 @@ _The Semester Project Repository for Group I_
 
 John Leidy  
 Dorian Bell II  
-Jorge Puga Hernandez
+Jorge Puga Hernandez  
 Ben Kanter  
 
 <br/>
