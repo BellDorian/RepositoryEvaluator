@@ -8,7 +8,6 @@ Dorian Bell II
 Jorge Puga Hernandez
 Ben Kanter
 
-
 <br/>
 
 ### About Branches  <br/>
