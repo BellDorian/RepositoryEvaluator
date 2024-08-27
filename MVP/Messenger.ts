@@ -4,7 +4,7 @@ interface Message
 	lines: Array<string>; 
 	isEmpty: boolean; 
 	count: number;
-	GetContents(): void;
+	GetContents(): Array<string>;
 	CountLines(): number;
 }
 
