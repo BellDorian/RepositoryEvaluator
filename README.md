@@ -8,7 +8,8 @@ John Leidy
 Dorian Bell II  
 Jorge Puga Hernandez  
 Ben Kanter  
-Tim Carpenter  
+Tim Carpenter 
+Anthony Bates
 
 <br/>
 
