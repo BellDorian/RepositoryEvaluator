@@ -13,12 +13,16 @@
  "scripts": {
   "build": "npx tsc",
   "dev": "nodemon src/index.ts",
-  "test": "echo \"Error: no test specified\" && exit 1"
+  "test": "jest"
  },
  "devDependencies": {
+  "@babel/preset-env": "^7.25.4",
+  "@babel/preset-typescript": "^7.24.7",
+  "@jest/globals": "^29.7.0",
   "@types/node": "^22.5.0",
   "john-leidy-prettier-config": "^1.0.1",
   "nodemon": "^3.1.4",
+  "ts-jest": "^29.2.5",
   "ts-node": "^10.9.2",
   "typescript": "^5.5.4"
  },
