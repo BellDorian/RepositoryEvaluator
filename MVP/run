@@ -18,6 +18,9 @@ case "$1" in
       exit 1
     fi
 
+    echo "Creating coverage folder if it doesn't exist..."
+    mkdir -p coverage
+    
     echo "Running test suite..."
     npm run test
     if [ $? -ne 0 ]; then
