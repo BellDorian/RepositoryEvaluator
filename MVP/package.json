@@ -28,6 +28,7 @@
  },
  "dependencies": {
   "chalk": "^4.1.2",
+  "dotenv": "^16.4.5",
   "yargs": "^17.7.2"
  }
 }
