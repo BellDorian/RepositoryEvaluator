@@ -1,0 +1,51 @@
+#!/bin/bash
+
+case "$1" in
+  install)
+    echo "Installing dependencies..."
+    npm install
+    exit $?
+    ;;
+  
+  test)
+    echo "Installing dependencies..."
+    npm install
+    
+    echo "Running test suite..."
+    npx jest
+    exit $?
+    ;;
+
+  start)
+    echo "Starting TypeScript project..."
+    npm install
+    if [ $? -ne 0 ]; then
+      echo "Dependency installation failed."
+      exit 1
+    fi
+    npm run build
+    if [ $? -ne 0 ]; then
+      echo "Build failed."
+      exit 1
+    fi
+    node dist/index.js
+    exit $?
+    ;;
+  
+  *)
+    echo "Running TypeScript project with arguments..."
+    npm install
+    if [ $? -ne 0 ]; then
+      echo "Dependency installation failed."
+      exit 1
+    fi
+    npm run build
+    if [ $? -ne 0 ]; then
+      echo "Build failed."
+      exit 1
+    fi
+    # Pass all arguments to the node command
+    node dist/index.js "$@"
+    exit $?
+    ;;
+esac
