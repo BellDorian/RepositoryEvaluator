@@ -13,7 +13,8 @@
  "scripts": {
   "build": "npx tsc",
   "dev": "nodemon src/index.ts",
-  "test": "jest"
+  "test": "jest --no-color 2>coverage/output.txt",
+  "posttest": "node dist/postTest.js"
  },
  "devDependencies": {
   "@babel/preset-env": "^7.25.4",
