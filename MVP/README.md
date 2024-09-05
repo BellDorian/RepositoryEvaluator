@@ -48,3 +48,5 @@ console.log('some text');
 If using VSCode install the extension prettier. I have already added my config as a dev dependency. After enabling formatting on save your files will be auto-formatted according to that standard. I don't see this as required it just makes diffs on git much easier to read if we work within the same file and helps keep code readable.
 
 If anyone needs any help, has any questions, etc don't hesitate to reach out!
+
+put output.txt back for run file before submission
