@@ -13,7 +13,7 @@
  "scripts": {
   "build": "npx tsc",
   "dev": "nodemon src/index.ts",
-  "test": "jest --no-color 2>coverage/output.txt",
+  "test": "jest",
   "posttest": "node dist/postTest.js"
  },
  "devDependencies": {
