@@ -2,7 +2,7 @@
 // Date.now() is used to time the latency of the metric calculation. It is converted to seconds
 // and rounded to the nearest millisecond.
 
-import { Repository, NDJSONRow } from './Types/DataTypes'
+import { Repository, NDJSONRow } from '../Types/DataTypes'
 //import { rampupFunction, correctnessFunction, busFactorFunction, responsiveFunction, licenseFunction } from './wherever they are'
 
 export function scoreRepository<T>(repo: Repository<T>): Repository<T> {
