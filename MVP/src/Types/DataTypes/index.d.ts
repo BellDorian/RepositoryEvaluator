@@ -1,5 +1,3 @@
-import { GraphQLResponse } from '../ResponseTypes';
-
 export type NDJSONRow = Partial<{
     URL: string;
     NetScore: number;
