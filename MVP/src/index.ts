@@ -1,10 +1,9 @@
 import chalk from 'chalk';
-import { catchArgs } from './Processors/argProcessor';
 console.log(`🌟 Everything appears to be ${chalk.greenBright('Operational')}! 🌟`);
-catchArgs();
 
-import { main } from './Input/test';
-import { lstat } from 'fs';
+import { ReadUrlFile } from './Input/Input';
 
-
-const x = main();
+// temporary filepath
+const exampleFilepath = './src/Input/example_inFile.txt';
+const contents = ReadUrlFile(exampleFilepath);
+console.log(contents);
