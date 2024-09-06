@@ -1,7 +1,8 @@
-import { describe, it } from '@jest/globals';
-import { NDJSONRow } from '../Types/DataTypes';
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import { NDJSONRow, Repository } from '../Types/DataTypes';
+import { writeNDJSONToCLI } from './CLI';
 
-const NDJSONRow: NDJSONRow = {
+const NDJSONRowMock: NDJSONRow = {
     URL: 'https://someurl.com/',
     NetScore: 0,
     NetScore_Latency: 0,
@@ -17,8 +18,36 @@ const NDJSONRow: NDJSONRow = {
     License_Latency: 0,
 };
 
-const NDJSONRows = [NDJSONRow, NDJSONRow, NDJSONRow];
+const RepositoryMock: Repository<any> = {
+    owner: 'john',
+    repoName: 'johnsrepo',
+    description: 'a description',
+    repoUrl: 'a url',
+    fileUrl: 'a file url',
+    queryResult: null,
+    NDJSONRow: NDJSONRowMock,
+};
+
+const Repositories = [RepositoryMock, RepositoryMock, RepositoryMock, RepositoryMock, RepositoryMock];
 
 describe('CLI Output', () => {
-    it('Should delimit output with newlines', () => {});
+    it('Console log should be called with string versions of NDJSONRows', () => {
+        //mock the console log call
+        const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+        writeNDJSONToCLI(Repositories);
+
+        //expect that the only thing console log is called with is our row mock
+        expect(logSpy).toBeCalledWith(JSON.stringify(NDJSONRowMock));
+        logSpy.mockRestore();
+    });
+    it('Output to console should be newline delimited (individual calls to console log should be made)', () => {
+        const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+        writeNDJSONToCLI(Repositories);
+        expect(logSpy).toHaveBeenCalledTimes(Repositories.length);
+        //index+1 because calls to log spy are 1 indexed..
+        Repositories.forEach((repo, index) => {
+            expect(logSpy).toHaveBeenNthCalledWith(index + 1, JSON.stringify(repo.NDJSONRow));
+        });
+        logSpy.mockRestore();
+    });
 });
