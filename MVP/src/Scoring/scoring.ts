@@ -3,20 +3,23 @@
 // and rounded to the nearest millisecond.
 
 import { Repository, NDJSONRow } from '../Types/DataTypes'
+import { scoreRampupTime } from './scoreRampupTime'
+import { scoreBusFactor } from './scoreBusFactor'
+import { scoreCorrectness } from './scoreCorrectness'
 //import { rampupFunction, correctnessFunction, busFactorFunction, responsiveFunction, licenseFunction } from './wherever they are'
 
 export function scoreRepository<T>(repo: Repository<T>): Repository<T> {
 
   const rampUpStart = Date.now()
-  const rampup = 1 // rampupFunction(repo) goes here.
+  const rampup = scoreRampupTime(repo); // Ben's Responsibility (Discord @Mariocraft95)
   const rampupLatency = Math.round((Date.now() - rampUpStart)/1000 * 1000) / 1000
 
   const correctnessStart = Date.now()
-  const correctness = 2 //correctnessFunction(repo) goes here.
+  const correctness = scoreCorrectness(repo); // Ben's Responsibility (Discord @Mariocraft95)
   const correctnessLatency = Math.round((Date.now() - correctnessStart)/1000 * 1000) / 1000
 
   const busFactorStart = Date.now()
-  const busFactor = 3 //busFactorFunction(repo) goes here.
+  const busFactor = scoreBusFactor(repo); // Ben's Responsibility (Discord @Mariocraft95)
   const busFactorLatency = Math.round((Date.now() - busFactorStart)/1000 * 1000) / 1000
 
   const responsiveStart = Date.now()
