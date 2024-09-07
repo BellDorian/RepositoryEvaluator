@@ -6,8 +6,9 @@
 import { readFileSync } from 'fs';
 
 /**
+ * @author Dorian Bell II
  * Reads the file at the given filepath. Retrieves its contents line-by-line
- *
+ * 
  *
  * @remarks
  * The function expects each line to be a different module link.
@@ -25,3 +26,6 @@ export function ReadUrlFile(filepath: string): string[] {
     let size = urls.length;
     return urls;
 }
+
+
+
