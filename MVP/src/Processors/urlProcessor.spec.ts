@@ -4,6 +4,10 @@ import { NPMRegistryResponse } from '../Types/ResponseTypes';
 import { fetchPackageInfo } from '../Requests/Npm/registry';
 import { mockUrls } from '../TestUtils/constants';
 
+/**
+ * John Leidy
+ * a mock for fetchPackageInfo
+ */
 jest.mock<{ fetchPackageInfo: (packageName: string) => Promise<NPMRegistryResponse> }>(
     '../Requests/Npm/registry',
     () => ({
@@ -15,6 +19,10 @@ jest.mock<{ fetchPackageInfo: (packageName: string) => Promise<NPMRegistryRespon
     })
 );
 
+/**
+ * John Leidy
+ * this block tests the urlProcessor. The it statements will explain what this does.
+ */
 describe('urlProcessor', () => {
     beforeEach(() => {
         jest.clearAllMocks();

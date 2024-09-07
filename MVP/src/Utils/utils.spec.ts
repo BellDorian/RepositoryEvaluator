@@ -1,10 +1,14 @@
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect, it } from '@jest/globals';
 import { pluralizeText } from './utils';
 
 interface TestData<T> {
     [key: string]: { arr: T[]; text: string; expected: string };
 }
 
+/**
+ * John Leidy
+ * test data for utils tests
+ */
 const testData: TestData<number> = {
     'plural text when array has multiple items': {
         arr: [1, 2, 3],
@@ -23,9 +27,13 @@ const testData: TestData<number> = {
     },
 };
 
+/**
+ * John Leidy
+ * This block tests the utils file. The it statement will explain what the test does.
+ */
 describe('Utils', () => {
     Object.entries(testData).map(([key, value]) => {
-        test(`Pluralize text should create ${key}`, () => {
+        it(`Pluralize text should create ${key}`, () => {
             expect(pluralizeText(value.arr, value.text)).toBe(value.expected);
         });
     });

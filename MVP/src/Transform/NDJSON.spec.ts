@@ -2,6 +2,10 @@ import { describe, expect, it } from '@jest/globals';
 import { mockUrls } from '../TestUtils/constants';
 import { transformToNDJSONRow, transformToNDJSONRows } from './NDJSON';
 
+/**
+ * John Leidy
+ * this block tests the NDJSON Transformer. The it statements will explain what each test does.
+ */
 describe('NDJSON Transformer', () => {
     mockUrls.forEach((url) => {
         it(`should build a row with the url ${url}`, () => {
