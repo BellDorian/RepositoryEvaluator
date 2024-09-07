@@ -25,7 +25,6 @@ export function scoreBusFactor<T>(repo: Repository<T>): number {
     git.clone({
         fileSystem, http, singleBranch: true, dir: `./${repoDirectory}`, url: repo.fileUrl
     }); // Clones repo
-    removeRepo(repoDirectory); // Cleans up 
     
     const gitLog = git.log({
         fileSystem,
@@ -49,5 +48,7 @@ export function scoreBusFactor<T>(repo: Repository<T>): number {
             uniqueContributors.push({name: contributor, commits: 1});
         }
     })
+
+    removeRepo(repoDirectory); // Removes Repo
     return 0;
 }
