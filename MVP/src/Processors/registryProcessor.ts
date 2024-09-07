@@ -7,9 +7,9 @@ import { getOwnerNameFromGithubUrl } from './githubProcessor';
  * John Leidy
  * takes in an npmjs.org url, returns a package if it can be found in the url
  * @param url npmjs.org url
- * @returns returns a package if the url is valid
+ * @returns string returns a package if the url is valid
  */
-const extractPackageNameFromUrl = (url: string) => {
+const extractPackageNameFromUrl = (url: string): string => {
     const packageNameMatch = url.match(/\/package\/(.+)/);
     if (!packageNameMatch || packageNameMatch.length < 2) {
         throw new Error('Invalid npm package URL');
@@ -17,6 +17,12 @@ const extractPackageNameFromUrl = (url: string) => {
     return encodeURIComponent(packageNameMatch[1]);
 };
 
+/**
+ * John Leidy
+ * takes in an npm url and returns a github repository url if one was found in the registry for npm
+ * @param npmUrl npmjs.org url
+ * @returns a github repository url found from the registry
+ */
 const getRepoUrl = async (npmUrl: string): Promise<string | undefined> => {
     const packageName = extractPackageNameFromUrl(npmUrl);
     const packageInfo = await fetchPackageInfo(packageName);
@@ -25,7 +31,12 @@ const getRepoUrl = async (npmUrl: string): Promise<string | undefined> => {
     }
     return undefined;
 };
-
+/**
+ * John Leidy
+ * takes in an npm url, gets the repo from the registry, creates params, returns them if there was a repo url found, else undefined
+ * @param npmUrl npmjs.org url
+ * @returns Promise<QueryParams>|undefined
+ */
 const getOwnerRepoNameFromNPMUrl = async (npmUrl: string): Promise<QueryParams | undefined> => {
     const repoUrl = await getRepoUrl(npmUrl);
     if (repoUrl) {
@@ -39,6 +50,12 @@ const getOwnerRepoNameFromNPMUrl = async (npmUrl: string): Promise<QueryParams |
     }
 };
 
+/**
+ * John Leidy
+ * takes in an npm url gets the query params (owner and name) builds a repo if retrieval of params was successful
+ * @param npmUrl npmjs.org url
+ * @returns Promise<Repository<T>> | undefined
+ */
 export const processNpmUrl = async <T>(npmUrl: string): Promise<Repository<T> | undefined> => {
     const params = await getOwnerRepoNameFromNPMUrl(npmUrl);
     if (params) {
