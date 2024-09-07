@@ -3,6 +3,12 @@ import { transformToNDJSONRow } from '../Transform/NDJSON';
 import { QueryParams, Repository } from '../Types/DataTypes';
 import { getOwnerNameFromGithubUrl } from './githubProcessor';
 
+/**
+ * John Leidy
+ * takes in an npmjs.org url, returns a package if it can be found in the url
+ * @param url npmjs.org url
+ * @returns returns a package if the url is valid
+ */
 const extractPackageNameFromUrl = (url: string) => {
     const packageNameMatch = url.match(/\/package\/(.+)/);
     if (!packageNameMatch || packageNameMatch.length < 2) {

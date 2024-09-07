@@ -2,6 +2,12 @@ import chalk from 'chalk';
 import { transformToNDJSONRow } from '../Transform/NDJSON';
 import { QueryParams, Repository } from '../Types/DataTypes';
 
+/**
+ * John Leidy
+ * takes in github url, returns QueryParams if the owner and name can be extracted using match
+ * @param url any github url, including those that come back from registry with and without ssh
+ * @returns QueryParams | undefined
+ */
 export const getOwnerNameFromGithubUrl = (url: string): QueryParams | undefined => {
     //regex to pull the owner and repo name.
     //complex because npm urls can be ssh or http urls
