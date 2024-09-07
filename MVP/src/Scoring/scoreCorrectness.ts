@@ -12,12 +12,12 @@ export function scoreCorrectness<T>(repo: Repository<T>): number {
     const query = `
     {
         repository(owner: "${repo.owner}", name: "${repo.repoName}") {
-        openIssues: issues(states: OPEN) {
-            totalCount
-        }
-        closedIssues: issues(states: CLOSED) {
-            totalCount
-        }
+            openIssues: issues(states: OPEN) {
+                totalCount
+            }
+            closedIssues: issues(states: CLOSED) {
+                totalCount
+            }
         }
     }
     `;
