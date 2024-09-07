@@ -5,7 +5,7 @@ import { Repository, NDJSONRow } from '../Types/DataTypes';
  * Jorge Puga Hernandez
  *
  * Scores a repository by calling the metric functions created by various team members.
- * The time taken to calculate each metric is recorded and converted into seconds.
+ * The time taken to calculate each metric is recorded in milliseconds and converted into seconds.
  *
  * @template T - The type of the data stored in the repository (generic).
  * @param {Repository<T>} repo - The repository that must be scored.
