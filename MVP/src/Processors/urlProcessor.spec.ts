@@ -1,7 +1,7 @@
-import { describe, expect, it, jest } from '@jest/globals';
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { buildReposFromUrls } from './urlProcessor';
-import { fetchPackageInfo } from '../Requests/Npm/registry';
 import { NPMRegistryResponse } from '../Types/ResponseTypes';
+import { fetchPackageInfo } from '../Requests/Npm/registry';
 
 const urls = [
     'https://github.com/Cinnamon/kotaemon',
@@ -146,7 +146,6 @@ const expectedRepos = [
     },
 ];
 
-// Mock the entire module
 jest.mock<{ fetchPackageInfo: (packageName: string) => Promise<NPMRegistryResponse> }>(
     '../Requests/Npm/registry',
     () => ({
@@ -159,10 +158,20 @@ jest.mock<{ fetchPackageInfo: (packageName: string) => Promise<NPMRegistryRespon
 );
 
 describe('urlProcessor', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+        jest.spyOn(console, 'log').mockImplementation(() => {});
+    });
+
     it('Should build an array of repositories from urls', async () => {
         const repos = await buildReposFromUrls(urls);
         repos.forEach((repo) => {
             expect(urls.includes(repo.fileUrl)).toBe(true);
         });
+    });
+
+    it('should reach out to the registry if a url includes npmjs or package', async () => {
+        const repos = await buildReposFromUrls(urls);
+        expect(fetchPackageInfo).toHaveBeenCalledTimes(5);
     });
 });
