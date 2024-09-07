@@ -1,5 +1,10 @@
 import { NPMRegistryResponse } from '../../Types/ResponseTypes';
 
+/**
+ * takes in a package name, reaches out to the registry, returns the response if it was valid
+ * @param packageName npmjs.org package name extracted from url
+ * @returns Promise<NPMRegistryResponse>
+ */
 export const fetchPackageInfo = async (packageName: string): Promise<NPMRegistryResponse> => {
     const registryUrl = `https://registry.npmjs.org/${packageName}`;
 
