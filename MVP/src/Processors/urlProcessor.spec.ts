@@ -63,4 +63,11 @@ describe('urlProcessor', () => {
             expect(err).toBeInstanceOf(Error);
         }
     });
+
+    it('should be okay processing invalid urls', async () => {
+        const repos = await buildReposFromUrls(['d', 'github.qgdef/fff']);
+        repos.forEach((repo) => {
+            expect(mockUrls.includes(repo.fileUrl)).toBe(true);
+        });
+    });
 });
