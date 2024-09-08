@@ -3,6 +3,11 @@ import { repoQueryBuilder } from './repos';
 import { mockRepos } from '../../TestUtils/constants';
 import { defaultFields } from './constants';
 
+/**
+ * John Leidy
+ * This block is responsible for testing the query string builder.
+ * See the it statements for information on what each test does.
+ */
 describe('Repo Query Builder', () => {
     it('Should return an empty query if Repo arr length is 0', () => {
         const query = repoQueryBuilder([]);
