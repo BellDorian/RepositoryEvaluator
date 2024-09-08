@@ -3,6 +3,10 @@ import { buildReposFromUrls } from './urlProcessor';
 import { fetchPackageInfo } from '../Requests/Npm/registry';
 import { mockUrls } from '../TestUtils/constants';
 
+/**
+ * John Leidy
+ * A global fetch mock for use in the calls when building repos from urls
+ */
 jest.spyOn(global, 'fetch').mockImplementation(
     async (input: string | URL | Request, init?: RequestInit | undefined) => {
         const bodyObj = {
