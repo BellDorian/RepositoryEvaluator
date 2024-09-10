@@ -20,7 +20,7 @@ import { readFileSync } from 'fs';
  */
 export function ReadUrlFile(filepath: string): string[] {
     var fileContents = readFileSync(filepath, 'utf8');
-    const urls = fileContents.split('\n');
+    const urls = fileContents.split(/\r?\n/).filter((line) => line.trim() !== '');
 
     let size = urls.length;
     return urls;

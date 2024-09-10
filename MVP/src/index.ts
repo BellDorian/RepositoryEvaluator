@@ -1,5 +1,4 @@
 import chalk from 'chalk';
-import { catchArgs } from './Processors/argProcessor';
 import { ReadUrlFile } from './Input/Input';
 import { buildReposFromUrls } from './Processors/urlProcessor';
 import { mockUrls } from './TestUtils/constants';
@@ -9,6 +8,7 @@ import { requestFromGQL } from './Requests/GitHub/gql';
 import * as dotenv from 'dotenv';
 import { mapGQLResultToRepos } from './Processors/gqlProcessor';
 import { writeNDJSONToCLI } from './Output/CLI';
+import { processArguments } from './Processors/argProcessor';
 
 /**
  * Things to change... our names for variables in the .env. There is a specification in the doc
@@ -22,12 +22,10 @@ const exampleFilepath = './src/Input/example_inFile.txt';
 const contents = ReadUrlFile(exampleFilepath);
 // console.log(contents);
 // console.log(`🌟 Everything appears to be ${chalk.greenBright('Operational')}! 🌟`);
-catchArgs();
 dotenv.config();
 
 const runner = async () => {
-    const filePath = await catchArgs();
-    const urls = ReadUrlFile(filePath ? filePath : './src/Input/example_inFile.txt');
+    const urls = await processArguments();
     console.log(urls);
     const repos = await buildReposFromUrls<BaseRepoQueryResponse>(urls); //using mock urls for now
     const query = repoQueryBuilder(repos); //add an array of fields here... see Request/QueryBuilders/fields.ts for examples
