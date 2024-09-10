@@ -8,7 +8,7 @@ export const catchArgs = async () => {
         // console.log('Arguments caught..');
         // console.log(`Arguments: ${argv._.map((arg) => arg)}`);
         const args = argv._;
-        console.log(argv);
+        //console.log(argv);
     }
     // console.log('argv obj: ', argv);
 };
