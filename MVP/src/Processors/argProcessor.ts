@@ -47,6 +47,7 @@ export const checkArgsForFile = (args: (string | number)[]): string | undefined 
 
 export const processArguments = async (): Promise<string[]> => {
     const args = await grabArgs();
+    console.error(args);
     const filePath = await checkArgsForFile(args);
     if (!filePath) {
         console.log(chalk.red('file not found, defaulting to local file'));
