@@ -3,6 +3,7 @@ import { hideBin } from 'yargs/helpers';
 
 export const catchArgs = async () => {
     const argv = await yargs(hideBin(process.argv)).argv;
+    console.log(argv);
     //should check to be safe
     if (argv._) {
         // console.log('Arguments caught..');
