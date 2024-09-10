@@ -28,6 +28,7 @@ dotenv.config();
 const runner = async () => {
     const filePath = await catchArgs();
     const urls = ReadUrlFile(filePath ? filePath : './src/Input/example_inFile.txt');
+    console.log(urls);
     const repos = await buildReposFromUrls<BaseRepoQueryResponse>(urls); //using mock urls for now
     const query = repoQueryBuilder(repos); //add an array of fields here... see Request/QueryBuilders/fields.ts for examples
     const result = await requestFromGQL<ReposFromQuery<BaseRepoQueryResponse>>(query); //result is the raw gql response... .data has your data, .errors has the errors
