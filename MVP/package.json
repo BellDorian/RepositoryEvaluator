@@ -12,7 +12,7 @@
  "prettier": "john-leidy-prettier-config",
  "scripts": {
   "build": "npx tsc",
-  "dev": "nodemon src/index.ts",
+  "dev": "nodemon",
   "test": "jest --no-color 2>coverage/output.txt",
   "posttest": "node dist/TestUtils/posttest.js"
  },
