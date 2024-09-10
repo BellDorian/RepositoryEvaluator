@@ -9,4 +9,5 @@ export const writeNDJSONToCLI = <T>(repos: Repository<T>[]) => {
     repos.forEach((repo) => {
         strBuilder += convertNDJSONObjToStr(repo.NDJSONRow);
     });
+    console.log(strBuilder);
 };

@@ -5,9 +5,9 @@ export const catchArgs = async () => {
     const argv = await yargs(hideBin(process.argv)).argv;
     //should check to be safe
     if (argv._) {
-        console.log('Arguments caught..');
-        console.log(`Arguments: ${argv._.map((arg) => arg)}`);
+        // console.log('Arguments caught..');
+        // console.log(`Arguments: ${argv._.map((arg) => arg)}`);
         const args = argv._;
     }
-    console.log('argv obj: ', argv);
+    // console.log('argv obj: ', argv);
 };

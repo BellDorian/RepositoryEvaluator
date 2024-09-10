@@ -21,8 +21,8 @@ export const getOwnerNameFromGithubUrl = (url: string): QueryParams | undefined 
 
         return { owner: owner, repoName: repoName };
     } else {
-        console.log(chalk.red('Invalid GitHub URL'));
-        console.log(url);
+        // console.log(chalk.red('Invalid GitHub URL'));
+        // console.log(url);
         return undefined;
     }
 };

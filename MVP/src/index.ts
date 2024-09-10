@@ -20,8 +20,8 @@ import { writeNDJSONToCLI } from './Output/CLI';
 // temporary filepath
 const exampleFilepath = './src/Input/example_inFile.txt';
 const contents = ReadUrlFile(exampleFilepath);
-console.log(contents);
-console.log(`🌟 Everything appears to be ${chalk.greenBright('Operational')}! 🌟`);
+// console.log(contents);
+// console.log(`🌟 Everything appears to be ${chalk.greenBright('Operational')}! 🌟`);
 catchArgs();
 dotenv.config();
 
@@ -33,7 +33,7 @@ const runner = async () => {
     const cleanedRepos = mapGQLResultToRepos(result, repos); //mapper to clean the array of repos and add in their query results.
 
     writeNDJSONToCLI(cleanedRepos);
-    //process.exit(0);
+    process.exit(0);
 };
 
 runner();
