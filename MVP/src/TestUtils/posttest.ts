@@ -1,3 +1,3 @@
-//import { showTestMetrics } from './Processors/testProcessor';
+import { showTestMetrics } from '../Processors/testProcessor';
 
-//showTestMetrics();
+showTestMetrics();

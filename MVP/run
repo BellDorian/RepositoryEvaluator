@@ -20,6 +20,9 @@ case "$1" in
 
     echo "Creating coverage folder if it doesn't exist..."
     mkdir -p coverage
+
+    echo "Creating output.txt if it does not exist..."
+    touch coverage/output.txt
     
     echo "Running test suite..."
     npm run test
