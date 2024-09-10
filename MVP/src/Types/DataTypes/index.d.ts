@@ -33,6 +33,9 @@ export type Repository<T> = {
               name: string;
               url: string;
               description: string;
+              licenseInfo?: ({
+                name: string
+              });
           } & T)
         | null;
     NDJSONRow: NDJSONRow;

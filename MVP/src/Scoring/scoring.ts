@@ -1,4 +1,6 @@
+import { sleep } from 'openai/core';
 import { Repository, NDJSONRow } from '../Types/DataTypes';
+import { licenseFunction } from './licenseFunction';
 //import { rampupFunction, correctnessFunction, busFactorFunction, responsiveFunction, licenseFunction } from './wherever they are'
 
 /**
@@ -30,7 +32,7 @@ export function scoreRepository<T>(repo: Repository<T>): Repository<T> {
     const responsiveLatency = Math.round(((Date.now() - responsiveStart) / 1000) * 1000) / 1000;
 
     const licenseStart = Date.now();
-    const license = 5; //licenseFunction(repo) goes here.
+    const license = licenseFunction(repo); //licenseFunction(repo) goes here.
     const licenseLatency = Math.round(((Date.now() - licenseStart) / 1000) * 1000) / 1000;
 
     const netScoreStart = Date.now();
