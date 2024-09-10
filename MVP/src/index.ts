@@ -25,6 +25,7 @@ const contents = ReadUrlFile(exampleFilepath);
 dotenv.config();
 
 const runner = async () => {
+    console.log('stuff');
     const urls = await processArguments();
     console.log(urls);
     const repos = await buildReposFromUrls<BaseRepoQueryResponse>(urls); //using mock urls for now
