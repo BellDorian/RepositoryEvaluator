@@ -1,13 +1,12 @@
 import { NDJSONRow, Repository } from '../Types/DataTypes';
 
 const convertNDJSONObjToStr = (NDJSONObj: NDJSONRow) => {
-    return `${JSON.stringify(NDJSONObj)}\n`;
+    return `${JSON.stringify(NDJSONObj)}`;
 };
 
 export const writeNDJSONToCLI = <T>(repos: Repository<T>[]) => {
     let strBuilder = '';
     repos.forEach((repo) => {
-        strBuilder += convertNDJSONObjToStr(repo.NDJSONRow);
+        console.log(convertNDJSONObjToStr(repo.NDJSONRow));
     });
-    console.log(strBuilder);
 };
