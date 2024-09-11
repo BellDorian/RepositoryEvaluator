@@ -14,36 +14,47 @@ import { resolve } from "path";
  *
  */
 export function licenseFunction<T>(repo: Repository<T>): number {
-  const openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY, // Make sure to set API key in environment variables
-  });
-  var result: number;
-  var answer = 'placeholder';
+  const licenseName = repo.queryResult?.licenseInfo?.name;
+  
+  if(licenseName == 'MIT License' || licenseName == 'GNU Affero General Public License v3.0' 
+    || licenseName == 'Mozilla Public License 2.0' || licenseName == 'Artistic License 2.0'){
+    return 1;
+  }
+  else if(licenseName == 'Apache License 2.0'){
+    return 0;
+  }
+  else if(licenseName == 'Other'){
+    return 0.5;
+  }
+  else{
+    const openai = new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY, // Make sure to set API key in environment variables
+    });
+    var result: number;
+    var answer;
 
-  try {
-    openai.chat.completions.create({
-      model: "gpt-4",
-      messages: [{ role: "user", content: `Is LGPL v2.1 compatible with ${repo.queryResult?.licenseInfo?.name}? Answer using yes or no` }],
-    })
-    .then(response => {
-      const answer = response.choices[0]?.message?.content;
-      //console.log(`"${answer}"`)
+    try {
+      openai.chat.completions.create({
+        model: "gpt-4",
+        messages: [{ role: "user", content: `Is LGPL v2.1 compatible with ${licenseName}? Answer using yes or no` }],
+      })
+      .then(response => {
+        answer = response.choices[0]?.message?.content;
+
+        if(answer == 'Yes' || answer == 'Yes.'){
+          return 0;
+        }
+        else if(answer == 'No' || answer == 'No.'){
+          return 0;
+        }
+        else{
+          return 0.5; // If no concrete answer can be found
+        }
     })
 
-    if(answer == 'Yes' || answer == 'Yes.'){
-      console.log('1');
-      return 0;
+    } catch (error) {
+      console.error("Error using API:", error);
     }
-    else if(answer == 'No' || answer == 'No.'){
-      console.log('0');
-      return 0;
-    }
-    else{
-      console.log('License may or may not be compatible');
-      return 0;
-    }
-  } catch (error) {
-    console.error("Error using API:", error);
   }
 
   return 0;
