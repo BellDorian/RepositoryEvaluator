@@ -158,6 +158,37 @@ export function SanitizeUrlSet(rawUrls: string[]): CleanURLSet {
 
 /**
  * @author Dorian Bell II
+ * Returns an object containing clean and distinctly separated url tokens pertinent
+ * to the queries that will be made to the npm registry and GQL
+ *
+ * @param raw - A single raw url to be processed {@type string}
+ * @returns All the data that might be needed for process of querying GQL {@type RepoURL | undefined}
+ *
+ */
+export function SanitizeURL_GitHub(raw: string): RepoURL | undefined {
+    try {
+        let protocolAddressPair, protocol, webAddress, addressTokens;
+        if (raw.length < 11) {
+            return undefined;
+        }
+
+        // Splitting web protocol from web address
+        protocolAddressPair = raw.split('//');
+        protocol = protocolAddressPair[0];
+        webAddress = protocolAddressPair[1];
+        addressTokens = webAddress.split('/');
+
+        if (addressTokens[0] == 'github.com') {
+            return BuildCleanURL_github(raw, protocol, addressTokens);
+        }
+        return undefined;
+    } catch {
+        return undefined;
+    }
+}
+
+/**
+ * @author Dorian Bell II
  * Processes a url from the npmjs.com web domain by verifying its domain and format,
  * and then couples the url tokens within an object
  *
@@ -174,11 +205,13 @@ export function SanitizeUrlSet(rawUrls: string[]): CleanURLSet {
 function BuildCleanURL_npm(rawURL: string, webProtocol: string, addressTokens: string[]): PackageURL {
     try {
         // npm url format: [web protocol]\\[npmjs.com]\package\[package name]
+        const title = addressTokens[2].charAt(0) == '@' ? addressTokens[3] : addressTokens[2];
+
         const packageUrl: PackageURL = {
             raw: rawURL,
             tokens: addressTokens,
             protocol: webProtocol,
-            packageName: addressTokens[2],
+            packageName: title,
         };
         return packageUrl;
     } catch {
