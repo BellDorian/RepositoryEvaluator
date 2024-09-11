@@ -178,7 +178,7 @@ function BuildCleanURL_npm(rawURL: string, webProtocol: string, addressTokens: s
             raw: rawURL,
             tokens: addressTokens,
             protocol: webProtocol,
-            packageName: addressTokens[1],
+            packageName: addressTokens[2],
         };
         return packageUrl;
     } catch {
