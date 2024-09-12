@@ -10,7 +10,6 @@ import { resolve } from 'path';
  * @template T - The type of the data stored in the repository (generic)
  * @param {Repository<T>} repo - The repository to be evaluated
  * @returns 0 - License is incompatible
- * @returns 0.5 - Could not determine compatibility
  * @returns 1 - License is compatible
  *
  */
@@ -34,12 +33,11 @@ export function licenseFunction<T>(repo: Repository<T>): number {
     } else if (
         // Known incompatible licenses
         licenseName == 'Apache License 2.0' ||
-        licenseName == 'CDDL-1.0 license'
+        licenseName == 'CDDL-1.0 license' ||
+        // If license not found/specified
+        licenseName == 'Other'
     ) {
         return 0;
-    } else if (licenseName == 'Other') {
-        // If license is not found/specified
-        return 0.5;
     } else {
         var answer;
         const openai = new OpenAI({
@@ -62,10 +60,8 @@ export function licenseFunction<T>(repo: Repository<T>): number {
 
                     if (answer == 'Yes' || answer == 'Yes.') {
                         return 1;
-                    } else if (answer == 'No' || answer == 'No.') {
-                        return 0;
                     } else {
-                        return 0.5; // If no concrete answer can be found
+                        return 0;
                     }
                 });
         } catch (error) {
