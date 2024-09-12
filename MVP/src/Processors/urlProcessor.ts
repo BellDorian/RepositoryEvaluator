@@ -1,6 +1,6 @@
 import { CleanURLSet, PackageURL, RepoURL } from '../Input/Input';
 import { Repository } from '../Types/DataTypes';
-import { processGitHubUrl } from './githubProcessor';
+import { processGitHubUrl, processGitHubUrlN } from './githubProcessor';
 import { processNpmUrl, processNpmUrlN } from './registryProcessor';
 
 /**
@@ -41,6 +41,10 @@ export const buildReposFromUrlsN = async <T>(
     }
 
     for (const gitUrlDataElement of githubUrlData) {
+        const repo = await processGitHubUrlN<T>(gitUrlDataElement);
+        if (repo) {
+            repositories.push(repo);
+        }
     }
 
     return repositories;

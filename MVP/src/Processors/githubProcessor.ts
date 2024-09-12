@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import { transformToNDJSONRow } from '../Transform/NDJSON';
 import { QueryParams, Repository } from '../Types/DataTypes';
+import { RepoURL } from '../Input/Input';
 
 /**
  * John Leidy
@@ -42,6 +43,26 @@ export const processGitHubUrl = <T>(url: string): Repository<T> | undefined => {
             fileUrl: url,
             queryResult: null,
             NDJSONRow: transformToNDJSONRow(url),
+        };
+    } else {
+        return undefined;
+    }
+};
+
+/**
+ * John Leidy
+ * takes in a github url, attempts to get the owner and repo name from that url, returns a created repository if owner and repo name could be obtained.
+ * @param url takes in a github.com url
+ * @returns a repository with proper fielsd initialized
+ */
+export const processGitHubUrlN = <T>(githubUrlData: RepoURL): Repository<T> | undefined => {
+    if (githubUrlData) {
+        return {
+            owner: githubUrlData.repoOwner,
+            repoName: githubUrlData.repoName,
+            fileUrl: githubUrlData.raw,
+            queryResult: null,
+            NDJSONRow: transformToNDJSONRow(githubUrlData.raw),
         };
     } else {
         return undefined;
