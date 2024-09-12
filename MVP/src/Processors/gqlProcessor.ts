@@ -15,7 +15,7 @@ export const mapGQLResultToRepos = <T>(
     GraphQLResult: GraphQLResponse<ReposFromQuery<T>> | undefined,
     repos: Repository<T>[]
 ): Repository<T>[] => {
-    if (GraphQLResult) {
+    if (GraphQLResult && GraphQLResult.data) {
         Object.entries(GraphQLResult.data).forEach(([key, value]) => {
             //if its not null we are going to set it to the repo in our repo arr
             if (value) {

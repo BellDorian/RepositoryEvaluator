@@ -21,7 +21,7 @@ catchArgs();
 dotenv.config();
 
 const runner = async () => {
-    const exampleFilepath = './src/Input/example_inFile.txt';
+    const exampleFilepath = './src/TestUtils/invalidUrls.txt';
     const cleanUrls = ProvideURLsForQuerying(exampleFilepath);
     const repos = await buildReposFromUrls<BaseRepoQueryResponse>(cleanUrls); //using mock urls for now
     const query = repoQueryBuilder(repos); //add an array of fields here... see Request/QueryBuilders/fields.ts for examples
