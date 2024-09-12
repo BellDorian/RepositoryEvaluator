@@ -16,17 +16,13 @@ import { ProvideURLsForQuerying } from './Input/Input';
  * GITHUB_API_URL=https://api.github.com/graphql
  */
 
-// temporary filepath
-const exampleFilepath = './src/Input/example_inFile.txt';
-let cleanUrls = ProvideURLsForQuerying(exampleFilepath);
-console.log(cleanUrls.github_URLs);
-console.log(cleanUrls.npm_URLs);
-
 console.log(`🌟 Everything appears to be ${chalk.greenBright('Operational')}! 🌟`);
 catchArgs();
 dotenv.config();
 
 const runner = async () => {
+    const exampleFilepath = './src/Input/example_inFile.txt';
+    const cleanUrls = ProvideURLsForQuerying(exampleFilepath);
     const repos = await buildReposFromUrls<BaseRepoQueryResponse>(cleanUrls); //using mock urls for now
     const query = repoQueryBuilder(repos); //add an array of fields here... see Request/QueryBuilders/fields.ts for examples
     const result = await requestFromGQL<ReposFromQuery<BaseRepoQueryResponse>>(query); //result is the raw gql response... .data has your data, .errors has the errors
