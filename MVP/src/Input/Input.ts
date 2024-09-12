@@ -92,7 +92,7 @@ export class CleanURLSet {
  */
 export function ReadUrlFile(filepath: string): string[] {
     var fileContents = readFileSync(filepath, 'utf8');
-    //John Leidy, also removing \r as requested in the PR
+    //John Leidy, also removing \r  CAN CHANGE AFTER MERGE AND PUT YOUR NAME ON IT, TEMP
     const urls = fileContents.split(/\r?\n/).filter((line) => line.trim() !== '');
     return urls;
 }
@@ -136,7 +136,7 @@ export function SanitizeUrlSet(rawUrls: string[]): CleanURLSet {
     for (var i = 0; i < size; i++) {
         try {
             let url = rawUrls[i];
-            //John Leidy removed max url length
+            //John Leidy removed max url length, not sure why we had a max url, if its meaningful and a metric you know just put it back sorry
             // Splitting web protocol from web address
             protocolAddressPair = url.split('//');
             protocol = protocolAddressPair[0];
@@ -206,7 +206,7 @@ function BuildCleanURL_npm(rawURL: string, webProtocol: string, addressTokens: s
             raw: rawURL,
             tokens: addressTokens,
             protocol: webProtocol,
-            //John Leidy, fixed package name to include all tokens and join them with '/', still concerned about the brittleness here
+            //John Leidy, fixed package name to include all tokens and join them with '/', still concerned about the brittleness here TEMP, CAN CHANGE IF IT WORKS
             packageName: `${
                 addressTokens[2].charAt(0) === '@' ? addressTokens.slice(2).join('/') : addressTokens[2]
             }`,
