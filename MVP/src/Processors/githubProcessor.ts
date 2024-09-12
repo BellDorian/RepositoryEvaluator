@@ -4,7 +4,7 @@ import { QueryParams, Repository } from '../Types/DataTypes';
 import { RepoURL } from '../Input/Input';
 
 /**
- * John Leidy
+ * @author John Leidy
  * takes in github url, returns QueryParams if the owner and name can be extracted using match
  * this is still necessary because there is not a universally exported function in cleanurls to handle this
  * we do not have the repo owner and repo name until we make a request to the registry to get the github url stored there
@@ -32,7 +32,7 @@ export const getOwnerNameFromGithubUrl = (url: string): QueryParams | undefined 
 };
 
 /**
- * John Leidy
+ * @author John Leidy
  * This function receives a RepoUrl obj and creates a repo using it
  * @param githubUrlData - The repo url data type from clean urls {@type RepoUrl}
  * @returns a repository with proper fielsd initialized
