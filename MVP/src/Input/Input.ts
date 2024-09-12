@@ -206,7 +206,7 @@ function BuildCleanURL_npm(rawURL: string, webProtocol: string, addressTokens: s
             raw: rawURL,
             tokens: addressTokens,
             protocol: webProtocol,
-            //John Leidy, fixed package name to include all tokens and join them with '/'
+            //John Leidy, fixed package name to include all tokens and join them with '/', still concerned about the brittleness here
             packageName: `${
                 addressTokens[2].charAt(0) === '@' ? addressTokens.slice(2).join('/') : addressTokens[2]
             }`,
