@@ -1,30 +1,16 @@
+import { PackageURL } from '../Input/Input';
 import { fetchPackageInfo } from '../Requests/Npm/registry';
 import { transformToNDJSONRow } from '../Transform/NDJSON';
 import { QueryParams, Repository } from '../Types/DataTypes';
 import { getOwnerNameFromGithubUrl } from './githubProcessor';
 
 /**
- * John Leidy
- * takes in an npmjs.org url, returns a package if it can be found in the url
- * @param url npmjs.org url
- * @returns string returns a package if the url is valid
- */
-const extractPackageNameFromUrl = (url: string): string => {
-    const packageNameMatch = url.match(/\/package\/(.+)/);
-    if (!packageNameMatch || packageNameMatch.length < 2) {
-        throw new Error('Invalid npm package URL');
-    }
-    return encodeURIComponent(packageNameMatch[1]);
-};
-
-/**
- * John Leidy
+ * @author John Leidy
  * takes in an npm url and returns a github repository url if one was found in the registry for npm
- * @param npmUrl npmjs.org url
+ * @param packageName - This is the package name for an npm url {@type string}
  * @returns a github repository url found from the registry
  */
-const getRepoUrl = async (npmUrl: string): Promise<string | undefined> => {
-    const packageName = extractPackageNameFromUrl(npmUrl);
+const getRepoUrl = async (packageName: string): Promise<string | undefined> => {
     const packageInfo = await fetchPackageInfo(packageName);
     if (packageInfo.repository.url) {
         return packageInfo.repository.url;
@@ -33,13 +19,13 @@ const getRepoUrl = async (npmUrl: string): Promise<string | undefined> => {
 };
 
 /**
- * John Leidy
+ * @author John Leidy
  * takes in an npm url, gets the repo from the registry, creates params, returns them if there was a repo url found, else undefined
- * @param npmUrl npmjs.org url
- * @returns Promise<QueryParams>|undefined
+ * @param packageName - as the name suggests this is the package name for an npm url {@type string}
+ * @returns params | undefined {@type Promise<QueryParams>|undefined}
  */
-const getOwnerRepoNameFromNPMUrl = async (npmUrl: string): Promise<QueryParams | undefined> => {
-    const repoUrl = await getRepoUrl(npmUrl);
+const getOwnerRepoNameFromNPMUrl = async (packageName: string): Promise<QueryParams | undefined> => {
+    const repoUrl = await getRepoUrl(packageName);
     if (repoUrl) {
         //get the owner and name
         const params = getOwnerNameFromGithubUrl(repoUrl);
@@ -52,22 +38,29 @@ const getOwnerRepoNameFromNPMUrl = async (npmUrl: string): Promise<QueryParams |
 };
 
 /**
- * John Leidy
- * takes in an npm url gets the query params (owner and name) builds a repo if retrieval of params was successful
- * @param npmUrl npmjs.org url
- * @returns Promise<Repository<T>> | undefined
+ * @author John Leidy
+ * This function processes an npm url. Specifically it uses the data provided from clean urls to reach out to the npm registry. Get a repo url that is stored there
+ * Then use that information along with information from the data from cleanurls to build a repository
+ * if anything fails it returns undefined, which means it won't be pushed into the repo builder arr in the function that calls this function
+ * @param npmUrlDataElement - as the name suggests it is an element of data that contains information from an npm url {@type PackageUrl}
+ * @returns a repository or undefined {@type Repository<T>|undefined}
  */
-export const processNpmUrl = async <T>(npmUrl: string): Promise<Repository<T> | undefined> => {
-    const params = await getOwnerRepoNameFromNPMUrl(npmUrl);
-    if (params) {
-        return {
-            owner: params.owner,
-            repoName: params.repoName,
-            fileUrl: npmUrl,
-            queryResult: null,
-            NDJSONRow: transformToNDJSONRow(npmUrl),
-        };
-    } else {
-        return undefined;
+export const processNpmUrl = async <T>(npmUrlDataElement: PackageURL): Promise<Repository<T> | undefined> => {
+    if (npmUrlDataElement) {
+        if (npmUrlDataElement.packageName) {
+            const params = await getOwnerRepoNameFromNPMUrl(npmUrlDataElement.packageName);
+            if (params) {
+                return {
+                    owner: params.owner,
+                    repoName: params.repoName,
+                    fileUrl: npmUrlDataElement.raw,
+                    queryResult: null,
+                    NDJSONRow: transformToNDJSONRow(npmUrlDataElement.raw),
+                };
+            } else {
+                return undefined;
+            }
+        }
     }
+    return undefined;
 };
