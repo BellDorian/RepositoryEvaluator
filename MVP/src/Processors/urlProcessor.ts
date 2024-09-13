@@ -1,4 +1,4 @@
-import { CleanURLSet, PackageURL, RepoURL } from '../Input/Input';
+import { CleanURLSet } from '../Input/Sanitize';
 import { Repository } from '../Types/DataTypes';
 import { processGitHubUrl } from './githubProcessor';
 import { processNpmUrl } from './registryProcessor';

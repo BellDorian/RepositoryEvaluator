@@ -7,7 +7,6 @@ import { BaseRepoQueryResponse, ReposFromQuery } from './Types/ResponseTypes';
 import { requestFromGQL } from './Requests/GitHub/gql';
 import * as dotenv from 'dotenv';
 import { mapGQLResultToRepos } from './Processors/gqlProcessor';
-import { ProvideURLsForQuerying } from './Input/Input';
 
 import { DEFAULT_URLFILEPATH } from './Input/Input';
 import * as Sanitizer from './Input/Sanitize';
@@ -28,8 +27,7 @@ catchArgs();
 dotenv.config();
 
 const runner = async () => {
-    const exampleFilepath = './src/TestUtils/invalidUrls.txt';
-    const cleanUrls = ProvideURLsForQuerying(exampleFilepath);
+    const cleanUrls = Sanitizer.ProvideURLsForQuerying(DEFAULT_URLFILEPATH, true);
     const repos = await buildReposFromUrls<BaseRepoQueryResponse>(cleanUrls); //using mock urls for now
     const query = repoQueryBuilder(repos); //add an array of fields here... see Request/QueryBuilders/fields.ts for examples
     const result = await requestFromGQL<ReposFromQuery<BaseRepoQueryResponse>>(query); //result is the raw gql response... .data has your data, .errors has the errors
