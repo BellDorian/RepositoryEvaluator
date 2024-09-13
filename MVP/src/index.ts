@@ -34,6 +34,7 @@ const runner = async () => {
     const cleanedRepos = mapGQLResultToRepos(result, repos); //mapper to clean the array of repos and add in their query results.
 
     console.log(cleanedRepos);
+    //did it work
 };
 
 runner();
