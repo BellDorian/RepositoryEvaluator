@@ -1,11 +1,10 @@
 import { OpenAI } from 'openai';
 import { Repository } from '../Types/DataTypes';
-import { resolve } from 'path';
 
 /**
  * Tim Carpenter
  *
- * Evaluates the license compatibility score of a repository using the OpenAI API
+ * Evaluates the license compatibility score of a repository
  *
  * @template T - The type of the data stored in the repository (generic)
  * @param {Repository<T>} repo - The repository to be evaluated

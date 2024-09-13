@@ -33,9 +33,15 @@ export type Repository<T> = {
               name: string;
               url: string;
               description: string;
-              licenseInfo?: ({
-                name: string
-              });
+              licenseInfo?: {
+                  name: string;
+              };
+              openIssues?: {
+                  totalCount: number;
+              };
+              closedIssues?: {
+                  totalCount: number;
+              };
           } & T)
         | null;
     NDJSONRow: NDJSONRow;
