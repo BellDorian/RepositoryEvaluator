@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { NDJSONRow, Repository } from '../Types/DataTypes';
 import { writeNDJSONToCLI } from './CLI';
 
+//Individual mocking here to ensure output is as we expect in the console
 const NDJSONRowMock: NDJSONRow = {
     URL: 'https://someurl.com/',
     NetScore: 0,
@@ -17,7 +18,7 @@ const NDJSONRowMock: NDJSONRow = {
     License: 0,
     License_Latency: 0,
 };
-
+//Mock repo to create an array of repos
 const RepositoryMock: Repository<any> = {
     owner: 'john',
     repoName: 'johnsrepo',
@@ -27,9 +28,15 @@ const RepositoryMock: Repository<any> = {
     queryResult: null,
     NDJSONRow: NDJSONRowMock,
 };
+//Our mocked repos array to use for CLI output testing
+const Repositories = Array.from({ length: 20 }, () => RepositoryMock);
 
-const Repositories = [RepositoryMock, RepositoryMock, RepositoryMock, RepositoryMock, RepositoryMock];
-
+/**
+ * John Leidy
+ * CLI Output tests
+ * Here we test the output of NDJSONRows to the console.
+ * Please read the it statements for information on what each test does.
+ */
 describe('CLI Output', () => {
     it('Console log should be called with string versions of NDJSONRows', () => {
         //mock the console log call

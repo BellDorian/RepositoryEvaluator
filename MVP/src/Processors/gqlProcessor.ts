@@ -5,11 +5,17 @@ import { GraphQLResponse, ReposFromQuery } from '../Types/ResponseTypes';
 //if they have some information we add it to the cooresponding repository
 //if they don't we remove the repository from the array
 
+/**
+ * @author John Leidy
+ * @param GraphQLResult - The result from our graphql query from Github {@type GraphQLResponse<ReposFromQuery<T>>}
+ * @param repos - The repos we built from cleanurls {@type Repository<T>[]}
+ * @returns repos - with the query result added to their information {@type Repository<T>[]}
+ */
 export const mapGQLResultToRepos = <T>(
     GraphQLResult: GraphQLResponse<ReposFromQuery<T>> | undefined,
     repos: Repository<T>[]
-) => {
-    if (GraphQLResult) {
+): Repository<T>[] => {
+    if (GraphQLResult && GraphQLResult.data) {
         Object.entries(GraphQLResult.data).forEach(([key, value]) => {
             //if its not null we are going to set it to the repo in our repo arr
             if (value) {
