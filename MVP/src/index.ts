@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import { catchArgs } from './Processors/argProcessor';
-import * as InputHandling from './Input/Input';
+import * as Input from './Input/Input';
 import { buildReposFromUrls } from './Processors/urlProcessor';
 import { mockUrls } from './TestUtils/constants';
 import { repoQueryBuilder } from './Requests/QueryBuilders/repos';
@@ -9,6 +9,9 @@ import { requestFromGQL } from './Requests/GitHub/gql';
 import * as dotenv from 'dotenv';
 import { mapGQLResultToRepos } from './Processors/gqlProcessor';
 
+import { DEFAULT_URLFILEPATH } from './Input/Input';
+import * as Sanitizer from './Input/Sanitize';
+
 /**
  * Things to change... our names for variables in the .env. There is a specification in the doc
  * For now..
@@ -16,9 +19,7 @@ import { mapGQLResultToRepos } from './Processors/gqlProcessor';
  * GITHUB_API_URL=https://api.github.com/graphql
  */
 
-// temporary filepath
-const exampleFilepath = './src/Input/example_inFile.txt';
-let cleanUrls = InputHandling.ProvideURLsForQuerying(exampleFilepath);
+const cleanUrls = Sanitizer.ProvideURLsForQuerying(DEFAULT_URLFILEPATH, true);
 console.log(cleanUrls.github_URLs);
 console.log(cleanUrls.npm_URLs);
 

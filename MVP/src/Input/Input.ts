@@ -1,84 +1,19 @@
-//     Project :    Module Evaluation Tool
-//   Component :    Input Processing
-//       Owner :    Dorian Bell II
-// Last update :    06 September 2024 -- EST 12:50
+export const DEFAULT_URLFILEPATH = './src/Input/example.txt';
 
 import { boolean } from 'yargs';
 import { readFileSync } from 'fs';
 
-export interface TokenizedURL {
-    raw: string;
-    tokens: string[];
-    protocol: string | undefined;
-}
-
-export interface Repo_TokenizedURL extends TokenizedURL {
-    repoOwner: string;
-    repoName: string;
-}
-
-export interface Package_TokenizedURL extends TokenizedURL {
-    packageName: string;
-}
-
-export type RepoURL = Repo_TokenizedURL | undefined;
-export type PackageURL = Package_TokenizedURL | undefined;
-
-export class CleanURLSet {
-    repoCapacity: number = 5;
-    packageCapacity: number = 5;
-    github_URLs: RepoURL[] = [];
-    npm_URLs: PackageURL[] = [];
-    gitCount: number = 0;
-    npmCount: number = 0;
-
-    Copy(rhs: CleanURLSet) {
-        this.repoCapacity = rhs.repoCapacity;
-        this.packageCapacity = rhs.packageCapacity;
-        this.github_URLs = rhs.github_URLs;
-        this.npm_URLs = rhs.npm_URLs;
-        this.gitCount = rhs.gitCount;
-        this.npmCount = rhs.npmCount;
-    }
-
-    constructor(maxRepoCount: number, maxPackageCount: number) {
-        this.repoCapacity = maxRepoCount;
-        this.packageCapacity = maxPackageCount;
-        this.github_URLs;
-    }
-
-    AddRepoURL(github_URL: RepoURL): boolean {
-        try {
-            this.github_URLs[this.gitCount] = github_URL;
-            this.gitCount++;
-            return true;
-        } catch {
-            return false;
-        }
-    }
-
-    AddPackageURL(npm: PackageURL): boolean {
-        try {
-            this.npm_URLs[this.npmCount] = npm;
-            this.npmCount++;
-            return true;
-        } catch {
-            return false;
-        }
-    }
-
-    AddRepoURL_NullFiltered(github_URL: Repo_TokenizedURL): boolean {
-        return github_URL ? this.AddRepoURL(github_URL) : false;
-    }
-
-    AddPackageURL_NullFiltered(npm_URL: Package_TokenizedURL): boolean {
-        return npm_URL ? this.AddPackageURL(npm_URL) : false;
-    }
-}
-
 /**
- * @author Dorian Bell II
+ * @author Dorian Bell II ; John Leidy
+ * @description
  * Reads the file at the given filepath. Retrieves its contents line-by-line
+ *
+ *
+ * @param filepath - The path to the file containing the urls
+ * @returns An array of urls {@type string[] | undefined}
+ *
+ * @throws
+ * This function throws an error if the filepath is invalid
  *
  *
  * @remarks
@@ -86,163 +21,73 @@ export class CleanURLSet {
  * Each link must be to a GitHub repo or an npm listing that has a
  * corresponding GitHub repo.
  *
+ */
+export function TryReadUrlFile(filepath: string): string[] | undefined {
+    try {
+        // Immediately throw if there's no filepath provided
+        if (!filepath) {
+            throw new Error('Invalid filepath provided.');
+        }
+
+        var fileContents = readFileSync(filepath, 'utf8');
+        const urls = fileContents.split(/\r?\n/).filter((line) => line.trim() !== '');
+        return urls;
+    } catch (e) {
+        throw e;
+    }
+}
+
+/**
+ * @author Dorian Bell II
+ *
+ * @description
+ * Reads the file at the given filepath and returns a string array containing its lines.
+ *
+ *
  * @param filepath - The path to the file containing the urls
- * @returns An array of {@type string} urls
- *
- */
-export function ReadUrlFile(filepath: string): string[] {
-    var fileContents = readFileSync(filepath, 'utf8');
-    const urls = fileContents.split('\n');
-    return urls;
-}
-
-/**
- * @author Dorian Bell II
- * Procures a set of sanitized urls to make queries from, using a given filepath
- * as the url source.
+ * @param useDefault - y/n try the default filepath if the specified on fails
+ * @returns An array of urls {@type string[]}
  *
  *
  * @remarks
- * This function calls ReadURLFile and then SanitizeUrlSet.
- *
- * @param filepath - The path to the file containing the urls to be sanitized
- * @returns An object containing tokens from sanitized urls {@type CleanURLSet}
- *
+ * The function never returns undefined, and it never escalates an error.
+ * If a failure occurs, a 1x1 array of empty string will be returned
  */
-export function ProvideURLsForQuerying(filepath: string): CleanURLSet {
-    const urls = ReadUrlFile(filepath);
-    return SanitizeUrlSet(urls);
-}
-
-/**
- * @author Dorian Bell II
- * Returns an object containing clean and distinctly separated url tokens pertinent
- * to the queries that will be made to the npm registry and GQL
- *
- *
- * @param rawURls - The set of urls that shall be sanitized {@type string}
- * @returns All the data that might be needed for process of querying GQL {@type CleanURLSet}
- *
- */
-export function SanitizeUrlSet(rawUrls: string[]): CleanURLSet {
-    let size = rawUrls.length;
-    const cleanURLs = new CleanURLSet(size, size);
-    let url, protocolAddressPair, protocol, webAddress, addressTokens;
-
-    // HERE FOR UNIT TESTING
-    console.log(rawUrls);
-
-    for (var i = 0; i < size; i++) {
-        try {
-            let url = rawUrls[i];
-            if (url.length < 11) {
-                continue;
-            }
-
-            // Splitting web protocol from web address
-            protocolAddressPair = url.split('//');
-            protocol = protocolAddressPair[0];
-            webAddress = protocolAddressPair[1];
-            addressTokens = webAddress.split('/');
-
-            if (addressTokens[0] == 'github.com') {
-                cleanURLs.AddRepoURL(BuildCleanURL_github(url, protocol, addressTokens));
-            } else if (addressTokens[0] == 'www.npmjs.com') {
-                cleanURLs.AddPackageURL(BuildCleanURL_npm(url, protocol, addressTokens));
-            } else {
-            }
-        } catch {}
-    }
-    return cleanURLs;
-}
-
-/**
- * @author Dorian Bell II
- * Returns an object containing clean and distinctly separated url tokens pertinent
- * to the queries that will be made to the npm registry and GQL
- *
- * @param raw - A single raw url to be processed {@type string}
- * @returns All the data that might be needed for process of querying GQL {@type RepoURL | undefined}
- *
- */
-export function SanitizeURL_GitHub(raw: string): RepoURL | undefined {
+export function ReadURLFile(filepath: string, useDefault: boolean = false): string[] {
     try {
-        let protocolAddressPair, protocol, webAddress, addressTokens;
-        if (raw.length < 11) {
-            return undefined;
+        const urls = TryReadUrlFile(filepath);
+        console.log('x');
+        if (urls) {
+            return urls;
         }
+        return useDefault ? ReadDefaultFile() : [''];
+    } catch (e) {
+        return useDefault ? ReadDefaultFile() : [''];
+    }
+}
 
-        // Splitting web protocol from web address
-        protocolAddressPair = raw.split('//');
-        protocol = protocolAddressPair[0];
-        webAddress = protocolAddressPair[1];
-        addressTokens = webAddress.split('/');
-
-        if (addressTokens[0] == 'github.com') {
-            return BuildCleanURL_github(raw, protocol, addressTokens);
+/**
+ * @author Dorian Bell II
+ *
+ * @description
+ * Reads the file at the defeault filepath, DEFAULT_URLFILEPATH.
+ *
+ *
+ * @returns An array of urls {@type string[]}
+ *
+ *
+ * @remarks
+ * The function never returns undefined, and it never escalates an error.
+ * If a failure occurs, a 1x1 array of empty string will be returned
+ */
+function ReadDefaultFile(): string[] {
+    try {
+        const urls = TryReadUrlFile(DEFAULT_URLFILEPATH);
+        if (urls) {
+            return urls;
         }
-        return undefined;
-    } catch {
-        return undefined;
+        return [''];
+    } catch (e) {
+        return [''];
     }
-}
-
-/**
- * @author Dorian Bell II
- * Processes a url from the npmjs.com web domain by verifying its domain and format,
- * and then couples the url tokens within an object
- *
- * @remarks
- * The only thing that should vary between valid npm urls is the package name part.
- * This is stored in index 2 of a given set of address tokens
- *
- * @param rawURl - The url that shall be sanitized {@type string}
- * @param webProtocol - String representing the web protocol fron the url {@type string}
- * @param addressTokens - Tokens taken from the web address, using '\' delimiter {@type string[]}
- * @returns Tokenized url data, which can be used to Query the npm registry {@type PackageURL}
- *
- */
-function BuildCleanURL_npm(rawURL: string, webProtocol: string, addressTokens: string[]): PackageURL {
-    try {
-        // npm url format: [web protocol]\\[npmjs.com]\package\[package name]
-        const title = addressTokens[2].charAt(0) == '@' ? addressTokens[3] : addressTokens[2];
-
-        const packageUrl: PackageURL = {
-            raw: rawURL,
-            tokens: addressTokens,
-            protocol: webProtocol,
-            packageName: title,
-        };
-        return packageUrl;
-    } catch {
-        return undefined;
-    }
-}
-
-/**
- * @author Dorian Bell II
- * Processes a url from the github.com web domain by verifying its domain and format,
- * and then couples the url tokens within an object
- *
- * @remarks
- * The only thing that should vary between valid npm urls is the package name part.
- * This is stored in index 2 of a given set of address tokens
- *
- * @param rawURl - The url that shall be sanitized {@type string}
- * @param webProtocol - String representing the web protocol fron the url {@type string}
- * @param addressTokens - Tokens taken from the web address, using '\' delimiter {@type string[]}
- * @returns Tokenized url data needed for the process of querying GQL {@type RepoURL}
- *
- */
-function BuildCleanURL_github(rawURL: string, webProtocol: string, addressTokens: string[]): RepoURL {
-    try {
-        const repoUrl: RepoURL = {
-            raw: rawURL,
-            tokens: addressTokens,
-            protocol: webProtocol,
-            repoOwner: addressTokens[1],
-            repoName: addressTokens[2],
-        };
-        return repoUrl;
-    } catch {}
 }
