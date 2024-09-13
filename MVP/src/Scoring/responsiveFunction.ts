@@ -11,10 +11,17 @@ import { Repository } from '../Types/DataTypes';
  *
  */
 export function responsiveFunction<T>(repo: Repository<T>): number {
-    const open = repo.queryResult?.openIssues?.totalCount!;
-    const closed = repo.queryResult?.closedIssues?.totalCount!;
+    var score = 0;
 
-    var score = 1 - open / closed;
+    try {
+        const open = repo.queryResult?.openIssues?.totalCount!;
+        const closed = repo.queryResult?.closedIssues?.totalCount!;
+
+        score = 1 - open / closed;
+    } catch (error) {
+        console.error('Error finding issues on repository');
+        return score;
+    }
 
     return score;
 }
