@@ -11,16 +11,14 @@ import { Repository } from '../Types/DataTypes';
  *
  */
 export function responsiveFunction<T>(repo: Repository<T>): number {
-    var score = 0;
+    const open = repo.queryResult?.openIssues?.totalCount!;
+    const closed = repo.queryResult?.closedIssues?.totalCount!;
 
-    try {
-        const open = repo.queryResult?.openIssues?.totalCount!;
-        const closed = repo.queryResult?.closedIssues?.totalCount!;
+    var score = 1 - open / closed;
 
-        score = 1 - open / closed;
-    } catch (error) {
-        console.error('Error finding issues on repository');
-        return score;
+    // If issues can't be found, score is NaN, must be set to 0
+    if (Number.isNaN(score)) {
+        score = 0;
     }
 
     return score;
