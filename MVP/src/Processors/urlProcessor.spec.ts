@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { buildReposFromUrls } from './urlProcessor';
 import { fetchPackageInfo } from '../Requests/Npm/registry';
 import { mockUrls } from '../TestUtils/constants';
-import { ProvideURLsForQuerying } from '../Input/Input';
+import { ProvideURLsForQuerying } from '../Input/Sanitize';
 
 /**
  * John Leidy

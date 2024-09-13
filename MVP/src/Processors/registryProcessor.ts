@@ -1,4 +1,4 @@
-import { PackageURL } from '../Input/Input';
+import { PackageURL } from '../Input/Sanitize';
 import { fetchPackageInfo } from '../Requests/Npm/registry';
 import { transformToNDJSONRow } from '../Transform/NDJSON';
 import { QueryParams, Repository } from '../Types/DataTypes';

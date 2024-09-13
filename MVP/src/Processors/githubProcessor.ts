@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import { transformToNDJSONRow } from '../Transform/NDJSON';
 import { QueryParams, Repository } from '../Types/DataTypes';
-import { RepoURL } from '../Input/Input';
+import { RepoURL } from '../Input/Sanitize';
 
 /**
  * @author John Leidy
