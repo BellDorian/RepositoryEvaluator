@@ -47,7 +47,7 @@ describe('urlProcessor', () => {
     });
 
     it('should reach out to the registry if a url includes npmjs or package', async () => {
-        const exampleFilepath = './src/Input/example_inFile.txt';
+        const exampleFilepath = './src/Input/example.txt';
         const cleanUrls = ProvideURLsForQuerying(exampleFilepath);
         const repos = await buildReposFromUrls(cleanUrls);
         expect(fetch).toHaveBeenCalledTimes(5);
