@@ -1,3 +1,12 @@
+/**
+ * @author Ben Kanter
+ * Accepts a repository
+ * Pull number of open and closed issues to obtain score
+ * 
+ * @param repo - Repository to be scored
+ * @returns Score calculated by 1 - (open issues / total issues)
+ */
+
 import { Repository, NDJSONRow } from '../Types/DataTypes'
 /*
 General algorithm: 

@@ -1,3 +1,14 @@
+/**
+ * @author Ben Kanter
+ * Accepts a repository
+ * Clones the repo using isometric git
+ * Finds unique contributors 
+ * Measures the amount of contributions each contributor has
+ * Returns score based on that. 
+ * 
+ * @param repo - Repository to be scored
+ */
+
 import { Repository, NDJSONRow } from '../Types/DataTypes'
 /*
 General algorithm: 
@@ -10,6 +21,7 @@ const git = require('isomorphic-git');
 const fileSystem = require('fs');
 const http = require('isomorphic-git/http/node');
 
+
 function removeRepo(directory: string) {
     if (fileSystem.existsSync(directory)) {
       // Recursively remove all files and subdirectories
@@ -18,7 +30,7 @@ function removeRepo(directory: string) {
     } else {
       console.log(`Directory ${directory} does not exist.`);
     }
-  }
+}
 export function scoreBusFactor<T>(repo: Repository<T>): number {
     
     const repoDirectory = `./${repo.repoName}`
