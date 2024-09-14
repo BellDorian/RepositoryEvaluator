@@ -30,6 +30,6 @@ const runner = async () => {
     LogMessage('Successfully cleaned and scored repos');
     console.log(cleanedRepos);
 };
-
+//commit
 ErrorWrapperForAsync(runner, 'Error occured during runner exec');
 runner();
