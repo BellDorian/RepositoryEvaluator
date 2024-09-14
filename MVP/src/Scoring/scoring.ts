@@ -4,14 +4,13 @@ import { responsiveFunction } from './responsiveFunction';
 //import { rampupFunction, correctnessFunction, busFactorFunction, responsiveFunction, licenseFunction } from './wherever they are'
 
 /**
- * Jorge Puga Hernandez
- *
- * Scores a repository by calling the metric functions created by various team members.
+ * @author Jorge Puga Hernandez
+ * @description - Scores a repository by calling the metric functions created by various team members.
  * The time taken to calculate each metric is recorded in milliseconds and converted into seconds.
  *
  * @template T - The type of the data stored in the repository (generic).
- * @param {Repository<T>} repo - The repository that must be scored.
- * @returns {Repository<T>} - An updated repository with the calculated metrics and their respective latencies.
+ * @param repo - The repository that must be scored.
+ * @returns An updated repository with the calculated metrics and their respective latencies. {@type Repository<T>}
  *
  */
 export function scoreRepository<T>(repo: Repository<T>): Repository<T> {
@@ -62,14 +61,14 @@ export function scoreRepository<T>(repo: Repository<T>): Repository<T> {
 }
 
 /**
- * Jorge Puga Hernandez
+ * @author Jorge Puga Hernandez
  *
- * Scores an array of repositories by using the map function to
+ * @description - Scores an array of repositories by using the map function to
  * apply the 'scorerRepository' function to each repository in the array.
  *
  * @template T - The type of the data stored in each repository.
- * @param {Repository<T>[]} repoArr - Array of repositories to score.
- * @returns {Repository<T>[]} - An updated repository with the calculated metrics and their respective latencies.
+ * @param repoArr - Array of repositories to score. {@type Repository<T>[]}
+ * @returns An updated repository with the calculated metrics and their respective latencies. {@type Repository<T>[]}
  *
  */
 export function scoreRepositoriesArray<T>(repoArr: Repository<T>[]): Repository<T>[] {

@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { buildReposFromUrls } from './urlProcessor';
 import { fetchPackageInfo } from '../Requests/Npm/registry';
 import { mockUrls } from '../TestUtils/constants';
+import { ProvideURLsForQuerying } from '../Input/Sanitize';
 
 /**
  * John Leidy
@@ -34,14 +35,21 @@ describe('urlProcessor', () => {
     });
 
     it('Should build an array of repositories from urls', async () => {
-        const repos = await buildReposFromUrls(mockUrls);
+        const exampleFilepath = './src/Input/example_inFile.txt';
+        const cleanUrls = ProvideURLsForQuerying(exampleFilepath);
+        const repos = await buildReposFromUrls(cleanUrls);
         repos.forEach((repo) => {
-            expect(mockUrls.includes(repo.fileUrl)).toBe(true);
+            expect(
+                cleanUrls.github_URLs.some((url) => url?.raw === repo.fileUrl) ||
+                    cleanUrls.npm_URLs.some((url) => url?.raw === repo.fileUrl)
+            ).toBe(true);
         });
     });
 
     it('should reach out to the registry if a url includes npmjs or package', async () => {
-        const repos = await buildReposFromUrls(mockUrls);
+        const exampleFilepath = './src/Input/example.txt';
+        const cleanUrls = ProvideURLsForQuerying(exampleFilepath);
+        const repos = await buildReposFromUrls(cleanUrls);
         expect(fetch).toHaveBeenCalledTimes(5);
     });
 
@@ -62,14 +70,17 @@ describe('urlProcessor', () => {
             }
         );
         try {
-            const repos = await buildReposFromUrls(mockUrls);
+            const exampleFilepath = './src/Input/example_inFile.txt';
+            const cleanUrls = ProvideURLsForQuerying(exampleFilepath);
+            const repos = await buildReposFromUrls(cleanUrls);
         } catch (err) {
             expect(err).toBeInstanceOf(Error);
         }
     });
 
     it('should be okay processing invalid urls', async () => {
-        const repos = await buildReposFromUrls(['d', 'github.qgdef/fff']);
+        const cleanUrls = ProvideURLsForQuerying('./src/TestUtils/invalidUrls.txt');
+        const repos = await buildReposFromUrls(cleanUrls);
         repos.forEach((repo) => {
             expect(mockUrls.includes(repo.fileUrl)).toBe(true);
         });

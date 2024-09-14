@@ -1,10 +1,14 @@
 import chalk from 'chalk';
 import { transformToNDJSONRow } from '../Transform/NDJSON';
 import { QueryParams, Repository } from '../Types/DataTypes';
+import { RepoURL } from '../Input/Sanitize';
 
 /**
- * John Leidy
+ * @author John Leidy
  * takes in github url, returns QueryParams if the owner and name can be extracted using match
+ * this is still necessary because there is not a universally exported function in cleanurls to handle this
+ * we do not have the repo owner and repo name until we make a request to the registry to get the github url stored there
+ * then we can reparse the url and extract those items
  * @param url any github url, including those that come back from registry with and without ssh
  * @returns QueryParams | undefined
  */
@@ -28,20 +32,19 @@ export const getOwnerNameFromGithubUrl = (url: string): QueryParams | undefined 
 };
 
 /**
- * John Leidy
- * takes in a github url, attempts to get the owner and repo name from that url, returns a created repository if owner and repo name could be obtained.
- * @param url takes in a github.com url
+ * @author John Leidy
+ * This function receives a RepoUrl obj and creates a repo using it
+ * @param githubUrlData - The repo url data type from clean urls {@type RepoUrl}
  * @returns a repository with proper fielsd initialized
  */
-export const processGitHubUrl = <T>(url: string): Repository<T> | undefined => {
-    const params = getOwnerNameFromGithubUrl(url);
-    if (params) {
+export const processGitHubUrl = <T>(githubUrlData: RepoURL): Repository<T> | undefined => {
+    if (githubUrlData) {
         return {
-            owner: params.owner,
-            repoName: params.repoName,
-            fileUrl: url,
+            owner: githubUrlData.repoOwner,
+            repoName: githubUrlData.repoName,
+            fileUrl: githubUrlData.raw,
             queryResult: null,
-            NDJSONRow: transformToNDJSONRow(url),
+            NDJSONRow: transformToNDJSONRow(githubUrlData.raw),
         };
     } else {
         return undefined;
