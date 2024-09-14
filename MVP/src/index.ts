@@ -24,10 +24,17 @@ console.log(cleanUrls.npm_URLs);
 
 console.log(`🌟 Everything appears to be ${chalk.greenBright('Operational')}! 🌟`);
 catchArgs();
+dotenv.config();
 
-import { ReadUrlFile } from './Input/Input';
+const runner = async () => {
+    const cleanUrls = Sanitizer.ProvideURLsForQuerying(DEFAULT_URLFILEPATH, true);
+    const repos = await buildReposFromUrls<BaseRepoQueryResponse>(cleanUrls); //using mock urls for now
+    const query = repoQueryBuilder(repos); //add an array of fields here... see Request/QueryBuilders/fields.ts for examples
+    const result = await requestFromGQL<ReposFromQuery<BaseRepoQueryResponse>>(query); //result is the raw gql response... .data has your data, .errors has the errors
+    const cleanedRepos = mapGQLResultToRepos(result, repos); //mapper to clean the array of repos and add in their query results.
 
-// temporary filepath
-const exampleFilepath = './src/Input/example_inFile.txt';
-const contents = ReadUrlFile(exampleFilepath);
-console.log(contents);
+    console.log(cleanedRepos);
+    //did it work
+};
+
+runner();

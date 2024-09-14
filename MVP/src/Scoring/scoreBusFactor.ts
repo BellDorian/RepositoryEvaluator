@@ -31,7 +31,7 @@ function removeRepo(directory: string) {
       console.log(`Directory ${directory} does not exist.`);
     }
 }
-export function scoreBusFactor<T>(repo: Repository<T>): number {
+export function scoreBusFactor<T>(repo: Repository<T>, ): number {
     
     const repoDirectory = `./${repo.repoName}`
     git.clone({
