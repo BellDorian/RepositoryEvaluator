@@ -13,7 +13,7 @@
  "scripts": {
   "build": "npx tsc",
   "dev": "nodemon src/index.ts",
-  "test": "jest"
+  "test": "jest --verbose"
  },
  "devDependencies": {
   "@babel/preset-env": "^7.25.4",
