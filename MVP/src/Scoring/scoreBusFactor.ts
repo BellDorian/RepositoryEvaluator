@@ -32,7 +32,7 @@ function removeRepo(directory: string) {
     }
 }
 export function scoreBusFactor<T>(repo: Repository<T>, ): number {
-    
+    return 0; // Temp for merge
     const repoDirectory = `./${repo.repoName}`
     git.clone({
         fileSystem, http, singleBranch: true, dir: `./${repoDirectory}`, url: repo.fileUrl
@@ -52,6 +52,7 @@ export function scoreBusFactor<T>(repo: Repository<T>, ): number {
         name: string;
         commits: number;
     }
+    /*
     let uniqueContributors: Contributor[] = [];
     contributors.forEach((contributor: string) => {
         let currentIndex = uniqueContributors.findIndex(contributor) // Need to finish this
@@ -62,5 +63,5 @@ export function scoreBusFactor<T>(repo: Repository<T>, ): number {
     })
 
     removeRepo(repoDirectory); // Removes Repo
-    return 0;
+    return 0; */
 }
