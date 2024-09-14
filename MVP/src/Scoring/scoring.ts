@@ -1,3 +1,6 @@
+import { Repository, NDJSONRow } from '../Types/DataTypes';
+import { licenseFunction } from './licenseFunction';
+import { responsiveFunction } from './responsiveFunction';
 // Scoring file that will contain individual metric calculation functions written by the team.
 // Date.now() is used to time the latency of the metric calculation. It is converted to seconds
 // and rounded to the nearest millisecond.
@@ -8,6 +11,16 @@ import { scoreBusFactor } from './scoreBusFactor'
 import { scoreCorrectness } from './scoreCorrectness'
 //import { rampupFunction, correctnessFunction, busFactorFunction, responsiveFunction, licenseFunction } from './wherever they are'
 
+/**
+ * @author Jorge Puga Hernandez
+ * @description - Scores a repository by calling the metric functions created by various team members.
+ * The time taken to calculate each metric is recorded in milliseconds and converted into seconds.
+ *
+ * @template T - The type of the data stored in the repository (generic).
+ * @param repo - The repository that must be scored.
+ * @returns An updated repository with the calculated metrics and their respective latencies. {@type Repository<T>}
+ *
+ */
 export function scoreRepository<T>(repo: Repository<T>): Repository<T> {
 
   const rampUpStart = Date.now()
@@ -34,32 +47,39 @@ export function scoreRepository<T>(repo: Repository<T>): Repository<T> {
   const netScore = 1 // must arrive at a conclusion for calculating this. Which metrics are more meaningful? Could weigh based on importance.
   const netScoreLatency = Math.round((Date.now() - netScoreStart)/1000 * 1000) / 1000
 
-  const updatedNDJSONRow: NDJSONRow = {
-    ...repo.NDJSONRow,
-    NetScore: netScore,
-    NetScore_Latency: netScoreLatency,
-    RampUp: rampup,
-    RampUp_Latency: rampupLatency,
-    Correctness: correctness,
-    Correctness_Latency: correctnessLatency,
-    BusFactor: busFactor,
-    BusFactor_Latency: busFactorLatency,
-    ResponsiveMaintainer: responsive,
-    ResponsiveMaintainer_Latency: responsiveLatency,
-    License: license,
-    License_Latency: licenseLatency
-  }
+    const updatedNDJSONRow: NDJSONRow = {
+        ...repo.NDJSONRow,
+        NetScore: netScore,
+        NetScore_Latency: netScoreLatency,
+        RampUp: rampup,
+        RampUp_Latency: rampupLatency,
+        Correctness: correctness,
+        Correctness_Latency: correctnessLatency,
+        BusFactor: busFactor,
+        BusFactor_Latency: busFactorLatency,
+        ResponsiveMaintainer: responsive,
+        ResponsiveMaintainer_Latency: responsiveLatency,
+        License: license,
+        License_Latency: licenseLatency,
+    };
 
-  return{
-    ...repo,
-    NDJSONRow: updatedNDJSONRow
-  }
-
+    return {
+        ...repo,
+        NDJSONRow: updatedNDJSONRow,
+    };
 }
 
-// Scores the repo array.
-// Using the map function to apply calculations to each repo in the array.
-// Will return an updated array after applying the teams metric functions.
-export function scoreRepositoriesArray<T>(repoArr: Repository<T>[]): Repository<T>[]{
-  return repoArr.map(scoreRepository)
+/**
+ * @author Jorge Puga Hernandez
+ *
+ * @description - Scores an array of repositories by using the map function to
+ * apply the 'scorerRepository' function to each repository in the array.
+ *
+ * @template T - The type of the data stored in each repository.
+ * @param repoArr - Array of repositories to score. {@type Repository<T>[]}
+ * @returns An updated repository with the calculated metrics and their respective latencies. {@type Repository<T>[]}
+ *
+ */
+export function scoreRepositoriesArray<T>(repoArr: Repository<T>[]): Repository<T>[] {
+    return repoArr.map(scoreRepository);
 }
