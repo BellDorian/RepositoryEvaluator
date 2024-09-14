@@ -1,6 +1,6 @@
 import { NDJSONRow, Repository } from '../Types/DataTypes';
 
-const convertNDJSONObjToStr = (NDJSONObj: NDJSONRow) => {
+export const convertNDJSONObjToStr = (NDJSONObj: NDJSONRow) => {
     return JSON.stringify(NDJSONObj);
 };
 

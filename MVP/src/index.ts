@@ -10,6 +10,7 @@ import { mapGQLResultToRepos } from './Processors/gqlProcessor';
 
 import { DEFAULT_URLFILEPATH } from './Input/Input';
 import * as Sanitizer from './Input/Sanitize';
+import { writeNDJSONToFile } from './Output/File';
 
 /**
  * Things to change... our names for variables in the .env. There is a specification in the doc
@@ -28,13 +29,18 @@ dotenv.config();
 
 const runner = async () => {
     const cleanUrls = Sanitizer.ProvideURLsForQuerying(DEFAULT_URLFILEPATH, true);
+    console.log(cleanUrls);
+    console.log(cleanUrls.github_URLs.map((g) => g?.tokens));
+    console.log(cleanUrls.npm_URLs.map((g) => g?.tokens));
     const repos = await buildReposFromUrls<BaseRepoQueryResponse>(cleanUrls); //using mock urls for now
-    const query = repoQueryBuilder(repos); //add an array of fields here... see Request/QueryBuilders/fields.ts for examples
-    const result = await requestFromGQL<ReposFromQuery<BaseRepoQueryResponse>>(query); //result is the raw gql response... .data has your data, .errors has the errors
-    const cleanedRepos = mapGQLResultToRepos(result, repos); //mapper to clean the array of repos and add in their query results.
 
+    const query = repoQueryBuilder(repos, ['stargazerCount']); //add an array of fields here... see Request/QueryBuilders/fields.ts for examples
+    console.log(query);
+    const result = await requestFromGQL<ReposFromQuery<BaseRepoQueryResponse>>(query);
+    console.log(result); //result is the raw gql response... .data has your data, .errors has the errors
+    const cleanedRepos = mapGQLResultToRepos(result, repos); //mapper to clean the array of repos and add in their query results.
     console.log(cleanedRepos);
-    //did it work
+    writeNDJSONToFile(cleanedRepos);
 };
 
 runner();

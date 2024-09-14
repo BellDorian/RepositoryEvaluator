@@ -1,5 +1,5 @@
-import { NDJSONRows, Repository } from '../Types/DataTypes';
-import { BaseRepoQueryResponse, GraphQLResponse } from '../Types/ResponseTypes';
+import { Repository } from '../Types/DataTypes';
+import { GraphQLResponse } from '../Types/ResponseTypes';
 
 export const mockUrls = [
     'https://github.com/Cinnamon/kotaemon',

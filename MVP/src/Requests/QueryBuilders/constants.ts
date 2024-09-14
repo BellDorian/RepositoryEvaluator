@@ -12,6 +12,12 @@ export const defaultFields = [
     `owner {
         login
     }`,
+    `openIssues: issues(states: OPEN) {
+        totalCount
+    }`,
+    `closedIssues: issues(states: CLOSED) {
+        totalCount
+    }`,
 ];
 
 export const extraFields = [

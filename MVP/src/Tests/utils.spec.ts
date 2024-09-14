@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals';
-import { pluralizeText } from './utils';
+import { pluralizeText } from '../Utils/utils';
 
 interface TestData<T> {
     [key: string]: { arr: T[]; text: string; expected: string };

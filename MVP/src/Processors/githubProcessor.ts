@@ -5,12 +5,12 @@ import { RepoURL } from '../Input/Sanitize';
 
 /**
  * @author John Leidy
- * takes in github url, returns QueryParams if the owner and name can be extracted using match
- * this is still necessary because there is not a universally exported function in cleanurls to handle this
+ * @description takes in github url, returns QueryParams if the owner and name can be extracted using match
+ * @remarks this is still necessary because there is not a universally exported function in cleanurls to handle this
  * we do not have the repo owner and repo name until we make a request to the registry to get the github url stored there
  * then we can reparse the url and extract those items
  * @param url any github url, including those that come back from registry with and without ssh
- * @returns QueryParams | undefined
+ * @returns a repo name and it's owner {@type QueryParams | undefined}
  */
 export const getOwnerNameFromGithubUrl = (url: string): QueryParams | undefined => {
     //regex to pull the owner and repo name.
@@ -33,7 +33,7 @@ export const getOwnerNameFromGithubUrl = (url: string): QueryParams | undefined 
 
 /**
  * @author John Leidy
- * This function receives a RepoUrl obj and creates a repo using it
+ * @description This function receives a RepoUrl obj and creates a repo using it
  * @param githubUrlData - The repo url data type from clean urls {@type RepoUrl}
  * @returns a repository with proper fielsd initialized
  */
