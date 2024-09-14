@@ -1,65 +1,71 @@
 #!/bin/bash
 
+# Function to convert Windows path to Unix path
+convert_path() {
+  echo "$1" | sed 's/\\/\//g'
+}
+
 case "$1" in
-  install)
-    echo "Installing dependencies..."
-    npm install
-    exit $?
-    ;;
-  
-  test)
-    echo "Installing dependencies..."
-    npm install
-    
-    echo "Building the project..."
-    npm run build
-    if [ $? -ne 0 ]; then
-      echo "Build failed."
-      exit 1
-    fi
+install)
+  npm install >/dev/null 2>&1
+  npm run build >/dev/null 2>&1 # suppressing output
+  node -e "require('./dist/Output/CLI').printDependencyCount()"
+  exit $?
+  ;;
 
-    echo "Creating coverage folder if it doesn't exist..."
-    mkdir -p coverage
-    
-    echo "Running test suite..."
-    npm run test
-    if [ $? -ne 0 ]; then
-      echo "Tests failed."
-      exit 1
-    fi
-    exit $?
-    ;;
+test)
+  npm install >/dev/null 2>&1
 
-  start)
-    echo "Starting TypeScript project..."
-    npm install
-    if [ $? -ne 0 ]; then
-      echo "Dependency installation failed."
-      exit 1
-    fi
-    npm run build
-    if [ $? -ne 0 ]; then
-      echo "Build failed."
-      exit 1
-    fi
-    node dist/index.js
-    exit $?
-    ;;
-  
-  *)
-    echo "Running TypeScript project with arguments..."
-    npm install
-    if [ $? -ne 0 ]; then
-      echo "Dependency installation failed."
-      exit 1
-    fi
-    npm run build
-    if [ $? -ne 0 ]; then
-      echo "Build failed."
-      exit 1
-    fi
-    # Pass all arguments to the node command
-    node dist/index.js "$@"
-    exit $?
-    ;;
+  npm run build >/dev/null 2>&1
+  if [ $? -ne 0 ]; then
+    echo "Build failed."
+    exit 1
+  fi
+
+  mkdir -p coverage
+
+  touch coverage/output.txt
+
+  npm run test >/dev/null 2>&1
+  if [ $? -ne 0 ]; then
+    node -e "require('./dist/Output/CLI').printTestResults()"
+    exit 1
+  fi
+
+  exit $?
+  ;;
+
+start)
+  npm install >/dev/null 2>&1
+  if [ $? -ne 0 ]; then
+    echo "Dependency installation failed."
+    exit 1
+  fi
+  npm run build #>/dev/null 2>&1
+  if [ $? -ne 0 ]; then
+    echo "Build failed."
+    exit 1
+  fi
+  node dist/index.js
+  exit $?
+  ;;
+
+*)
+  npm install >/dev/null 2>&1
+  if [ $? -ne 0 ]; then
+    echo "Dependency installation failed."
+    exit 1
+  fi
+  npm run build >/dev/null 2>&1
+  if [ $? -ne 0 ]; then
+    echo "Build failed."
+    exit 1
+  fi
+  # Convert Windows path to Unix path
+  filePath=$(convert_path "$1")
+  # Comment out or remove the echo statement
+  # echo "Windows path \"$1\" converted to Unix path \"$filePath\""
+  node -e "require('./dist/Output/CLI').processInputFile(\"$filePath\")"
+  exit $?
+  ;;
 esac
