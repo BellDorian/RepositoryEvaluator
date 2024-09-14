@@ -1,7 +1,13 @@
 import { Repository, NDJSONRow } from '../Types/DataTypes';
 import { licenseFunction } from './licenseFunction';
 import { responsiveFunction } from './responsiveFunction';
-//import { rampupFunction, correctnessFunction, busFactorFunction, responsiveFunction, licenseFunction } from './wherever they are'
+import { scoreRampupTime } from './scoreRampupTime'
+import { scoreBusFactor } from './scoreBusFactor'
+import { scoreCorrectness } from './scoreCorrectness'
+import { finalScore } from './finalScore';
+// Scoring file that will contain individual metric calculation functions written by the team.
+// Date.now() is used to time the latency of the metric calculation. It is converted to seconds
+// and rounded to the nearest millisecond.
 
 /**
  * @author Jorge Puga Hernandez
@@ -13,30 +19,33 @@ import { responsiveFunction } from './responsiveFunction';
  * @returns An updated repository with the calculated metrics and their respective latencies. {@type Repository<T>}
  *
  */
-export function scoreRepository<T>(repo: Repository<T>): Repository<T> {
-    const rampUpStart = Date.now();
-    const rampup = 1; // rampupFunction(repo) goes here.
-    const rampupLatency = Math.round(((Date.now() - rampUpStart) / 1000) * 1000) / 1000;
+export function scoreRepository<T>(repo: Repository<T>
+    
+): Repository<T> {
 
-    const correctnessStart = Date.now();
-    const correctness = 2; //correctnessFunction(repo) goes here.
-    const correctnessLatency = Math.round(((Date.now() - correctnessStart) / 1000) * 1000) / 1000;
+  const rampUpStart = Date.now()
+  const rampup = scoreRampupTime(repo); // Ben's Responsibility (Discord @Mariocraft95)
+  const rampupLatency = Math.round((Date.now() - rampUpStart)/1000 * 1000) / 1000
 
-    const busFactorStart = Date.now();
-    const busFactor = 3; //busFactorFunction(repo) goes here.
-    const busFactorLatency = Math.round(((Date.now() - busFactorStart) / 1000) * 1000) / 1000;
+  const correctnessStart = Date.now()
+  const correctness = scoreCorrectness(repo); // Ben's Responsibility (Discord @Mariocraft95)
+  const correctnessLatency = Math.round((Date.now() - correctnessStart)/1000 * 1000) / 1000
 
-    const responsiveStart = Date.now();
-    const responsive = responsiveFunction(repo); //responsiveFunction(repo) goes here.
-    const responsiveLatency = Math.round(((Date.now() - responsiveStart) / 1000) * 1000) / 1000;
+  const busFactorStart = Date.now()
+  const busFactor = scoreBusFactor(repo); // Ben's Responsibility (Discord @Mariocraft95)
+  const busFactorLatency = Math.round((Date.now() - busFactorStart)/1000 * 1000) / 1000
 
-    const licenseStart = Date.now();
-    const license = licenseFunction(repo); //licenseFunction(repo) goes here.
-    const licenseLatency = Math.round(((Date.now() - licenseStart) / 1000) * 1000) / 1000;
+  const responsiveStart = Date.now()
+  const responsive = responsiveFunction(repo); // Tim's Responsibility (Discord @TimboCarp)
+  const responsiveLatency = Math.round((Date.now() - responsiveStart)/1000 * 1000) / 1000
 
-    const netScoreStart = Date.now();
-    const netScore = 1; // must arrive at a conclusion for calculating this. Which metrics are more meaningful? Could weigh based on importance.
-    const netScoreLatency = Math.round(((Date.now() - netScoreStart) / 1000) * 1000) / 1000;
+  const licenseStart = Date.now()
+  const license = licenseFunction(repo); // Tim's Responsibility (Discord @TimboCarp)
+  const licenseLatency = Math.round((Date.now() - licenseStart)/1000 * 1000) / 1000
+
+  const netScoreStart = Date.now()
+  const netScore = finalScore(repo, rampup, correctness, busFactor, responsive, license) // Ben's Responsibility (Discord @Mariocraft95)
+  const netScoreLatency = Math.round((Date.now() - netScoreStart)/1000 * 1000) / 1000
 
     const updatedNDJSONRow: NDJSONRow = {
         ...repo.NDJSONRow,

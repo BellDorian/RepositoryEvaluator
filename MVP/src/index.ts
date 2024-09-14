@@ -32,3 +32,4 @@ const runner = async () => {
 };
 
 ErrorWrapperForAsync(runner, 'Error occured during runner exec');
+runner();
