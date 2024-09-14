@@ -30,3 +30,12 @@ export const createReactionsField = (first: number) => `
         }
     }
 `;
+
+export const createIssuesField = (first: number) => `
+    openIssues: issues(states:OPEN) {
+        totalCount
+    }
+    closedIssues: issues(states:CLOSED) {
+        totalCount
+    }
+`;

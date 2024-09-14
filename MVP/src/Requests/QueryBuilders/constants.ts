@@ -1,4 +1,9 @@
-import { createLanguagesField, createReactionsField, createVulnerabilityAlertsField } from './fields';
+import {
+    createLanguagesField,
+    createReactionsField,
+    createVulnerabilityAlertsField,
+    createIssuesField,
+} from './fields';
 
 export const defaultFields = [
     'description',
@@ -34,4 +39,5 @@ export const extraFields = [
     createLanguagesField(10),
     createVulnerabilityAlertsField(10),
     createReactionsField(10),
+    createIssuesField(0),
 ];
