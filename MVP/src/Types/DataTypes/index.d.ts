@@ -42,6 +42,7 @@ export type Repository<T> = {
               closedIssues?: {
                   totalCount: number;
               };
+              stargazerCount?: number;
           } & T)
         | null;
     NDJSONRow: NDJSONRow;
