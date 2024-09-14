@@ -1,5 +1,6 @@
+import { PackageURL } from '../Input/Sanitize';
 import { Repository } from '../Types/DataTypes';
-import { GraphQLResponse } from '../Types/ResponseTypes';
+import { GraphQLResponse, NPMRegistryResponse } from '../Types/ResponseTypes';
 
 export const mockUrls = [
     'https://github.com/Cinnamon/kotaemon',
@@ -343,4 +344,29 @@ export const mockGQLResult: GraphQLResponse<any> = {
             message: "Could not resolve to a Repository with the name 'x/someunkonwrepo'.",
         },
     ],
+};
+
+export const registryMocking: {
+    validPackageUrl: PackageURL;
+    validPackageNpmResponse: NPMRegistryResponse;
+    invalidPackageUrl: PackageURL;
+} = {
+    validPackageUrl: {
+        raw: 'https://www.npmjs.com/package/queue-lit',
+        tokens: ['www.npmjs.com', 'package', 'queue-lit'],
+        protocol: 'https:',
+        packageName: 'queue-lit',
+    },
+    validPackageNpmResponse: {
+        repository: {
+            type: '',
+            url: 'https://github.com/joelvoss/queue-lit',
+        },
+    },
+    invalidPackageUrl: {
+        packageName: 'O_o',
+        raw: ':O',
+        tokens: [],
+        protocol: '',
+    },
 };

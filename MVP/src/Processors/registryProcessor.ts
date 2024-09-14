@@ -12,7 +12,7 @@ import { getOwnerNameFromGithubUrl } from './githubProcessor';
  */
 const getRepoUrl = async (packageName: string): Promise<string | undefined> => {
     const packageInfo = await fetchPackageInfo(packageName);
-    if (packageInfo.repository.url) {
+    if (packageInfo?.repository?.url) {
         return packageInfo.repository.url;
     }
     return undefined;
