@@ -10,6 +10,8 @@ import { mapGQLResultToRepos } from './Processors/gqlProcessor';
 
 import { DEFAULT_URLFILEPATH } from './Input/Input';
 import * as Sanitizer from './Input/Sanitize';
+import { scoreRepositoriesArray } from './Scoring/scoring';
+import { createIssuesField } from './Requests/QueryBuilders/fields';
 
 /**
  * Things to change... our names for variables in the .env. There is a specification in the doc
@@ -29,11 +31,18 @@ dotenv.config();
 const runner = async () => {
     const cleanUrls = Sanitizer.ProvideURLsForQuerying(DEFAULT_URLFILEPATH, true);
     const repos = await buildReposFromUrls<BaseRepoQueryResponse>(cleanUrls); //using mock urls for now
-    const query = repoQueryBuilder(repos); //add an array of fields here... see Request/QueryBuilders/fields.ts for examples
+    const query = repoQueryBuilder(repos, [
+        `licenseInfo {
+        name
+        spdxId
+        url
+    }`,
+        createIssuesField(10),
+    ]); //add an array of fields here... see Request/QueryBuilders/fields.ts for examples
     const result = await requestFromGQL<ReposFromQuery<BaseRepoQueryResponse>>(query); //result is the raw gql response... .data has your data, .errors has the errors
     const cleanedRepos = mapGQLResultToRepos(result, repos); //mapper to clean the array of repos and add in their query results.
-
-    console.log(cleanedRepos);
+    const scored = scoreRepositoriesArray(cleanedRepos);
+    console.log(scored);
     //did it work
 };
 
