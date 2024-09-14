@@ -22,8 +22,8 @@ function CreateLogFile() {
 /**
  * @author Jorge Puga Hernandez
  * @description
- * - This function will log messages to the log file with the ISO time
- * stamp format. If the log file does not exist, then it will be created
+ * - This function will log messages to the log file with the locale time
+ * format. If the log file does not exist, then it will be created
  * by calling the CreateLogFile function.
  * - If the level is 0, then nothing will be logged.
  * - If the level is 1, then the informational message will be logged.
