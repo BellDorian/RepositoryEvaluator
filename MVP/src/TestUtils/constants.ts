@@ -3,7 +3,7 @@ import { BaseRepoQueryResponse, GraphQLResponse, NPMRegistryResponse } from '../
 import { PackageURL } from '../Types/URLTypes';
 
 export const validFilePath =
-    'C:\\Users\\ps5re\\Documents\\PurdueIndyFinalSemester\\SWE\\SWE_actual_repo\\SoftwareEng_Fall2024\\MVP\\src\\TestUtils\\validUrls.txt';
+    'C:/Users/ps5re/Documents/PurdueIndyFinalSemester/SWE/SWE_actual_repo/SoftwareEng_Fall2024/MVP/src/TestUtils/validUrls.txt';
 
 export const mockUrls = [
     'https://github.com/Cinnamon/kotaemon',
