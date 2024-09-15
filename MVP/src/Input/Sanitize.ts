@@ -1,3 +1,4 @@
+import { Package_TokenizedURL, PackageURL, Repo_TokenizedURL, RepoURL } from '../Types/URLTypes';
 import { ReadURLFile } from './Input';
 
 export class CleanURLSet {
@@ -51,24 +52,6 @@ export class CleanURLSet {
         return npm_URL ? this.AddPackageURL(npm_URL) : false;
     }
 }
-
-export interface TokenizedURL {
-    raw: string;
-    tokens: string[];
-    protocol: string | undefined;
-}
-
-export interface Repo_TokenizedURL extends TokenizedURL {
-    repoOwner: string;
-    repoName: string;
-}
-
-export interface Package_TokenizedURL extends TokenizedURL {
-    packageName: string;
-}
-
-export type RepoURL = Repo_TokenizedURL | undefined;
-export type PackageURL = Package_TokenizedURL | undefined;
 
 /**
  * @author Dorian Bell II
