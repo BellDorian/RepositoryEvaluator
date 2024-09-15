@@ -4,7 +4,8 @@
  * Clones the repo using isometric git
  * Finds unique contributors 
  * Measures the amount of contributions each contributor has
- * Returns score based on that. 
+ * Decides which contributors should be part of the bus factor score
+ * Utilizes a sigmoid function where the variable is bus factor contributors
  * 
  * @param repo - Repository to be scored
  * 
