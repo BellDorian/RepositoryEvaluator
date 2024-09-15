@@ -28,10 +28,9 @@ test)
 
   npm run test >/dev/null 2>&1
   if [ $? -ne 0 ]; then
-    node -e "require('./dist/Output/CLI').printTestResults()"
     exit 1
   fi
-
+  node -e "require('./dist/Output/CLI').printTestResults()"
   exit $?
   ;;
 
