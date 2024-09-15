@@ -7,6 +7,7 @@ import { licenseFunction } from '../Scoring/licenseFunction';
 import { responsiveFunction } from '../Scoring/responsiveFunction';
 import * as LICENSESCORING from '../Scoring/licenseFunction';
 import * as RESPONSIVESCORING from '../Scoring/responsiveFunction';
+import * as BUSFACTORSCORING from '../Scoring/scoreBusFactor';
 
 /**
  * John Leidy
@@ -32,6 +33,9 @@ export const getLicenseFuncSpy = (returnValue: number) =>
 
 export const getResponsiveFuncSpy = (returnValue: number) =>
     jest.spyOn(RESPONSIVESCORING, 'responsiveFunction').mockImplementation((repo) => returnValue);
+
+export const getBusFactorFuncSpy = (returnValue: number) =>
+    jest.spyOn(BUSFACTORSCORING, 'scoreBusFactor').mockImplementation((repo) => returnValue);
 
 export const getMockedCleanUrls = (filepath?: string) => {
     const cleanUrls = ProvideURLsForQuerying(filepath ? filepath : './src/TestUtils/example.txt', true);
