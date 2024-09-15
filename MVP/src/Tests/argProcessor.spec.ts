@@ -13,6 +13,7 @@ describe('Arg Processor', () => {
     });
     it('Should return a valid filepath if it exists in args', async () => {
         process.argv = [...originalArgv, validFilePath];
+        console.error(process.argv);
         const filePath = await processArguments();
         expect(filePath).toBeTruthy();
     });
