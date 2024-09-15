@@ -1,5 +1,57 @@
+import { Package_TokenizedURL, PackageURL, Repo_TokenizedURL, RepoURL } from '../Types/URLTypes';
 import { ReadURLFile } from './Input';
-import * as URL from '../Types/URLTypes';
+
+export class CleanURLSet {
+    repoCapacity: number = 5;
+    packageCapacity: number = 5;
+    github_URLs: RepoURL[] = [];
+    npm_URLs: PackageURL[] = [];
+    gitCount: number = 0;
+    npmCount: number = 0;
+
+    Copy(rhs: CleanURLSet) {
+        this.repoCapacity = rhs.repoCapacity;
+        this.packageCapacity = rhs.packageCapacity;
+        this.github_URLs = rhs.github_URLs;
+        this.npm_URLs = rhs.npm_URLs;
+        this.gitCount = rhs.gitCount;
+        this.npmCount = rhs.npmCount;
+    }
+
+    constructor(maxRepoCount: number, maxPackageCount: number) {
+        this.repoCapacity = maxRepoCount;
+        this.packageCapacity = maxPackageCount;
+        this.github_URLs;
+    }
+
+    AddRepoURL(github_URL: RepoURL): boolean {
+        try {
+            this.github_URLs[this.gitCount] = github_URL;
+            this.gitCount++;
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    AddPackageURL(npm: PackageURL): boolean {
+        try {
+            this.npm_URLs[this.npmCount] = npm;
+            this.npmCount++;
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    AddRepoURL_NullFiltered(github_URL: Repo_TokenizedURL): boolean {
+        return github_URL ? this.AddRepoURL(github_URL) : false;
+    }
+
+    AddPackageURL_NullFiltered(npm_URL: Package_TokenizedURL): boolean {
+        return npm_URL ? this.AddPackageURL(npm_URL) : false;
+    }
+}
 
 /**
  * @author Dorian Bell II
@@ -18,7 +70,7 @@ import * as URL from '../Types/URLTypes';
 export function ProvideURLsForQuerying(
     filepath: string,
     fallbackToDefaultPath: boolean = false
-): URL.CleanURLSet {
+): CleanURLSet {
     const urls = ReadURLFile(filepath, fallbackToDefaultPath);
     console.log(urls);
     return SanitizeUrlSet(urls);
@@ -37,16 +89,16 @@ export function ProvideURLsForQuerying(
  * @remarks
  * The function returns an empty CleanURLSet if an undefined string array is provided
  */
-export function SanitizeUrlSet(rawUrls: string[] | undefined): URL.CleanURLSet {
+export function SanitizeUrlSet(rawUrls: string[] | undefined): CleanURLSet {
     // Immediately quite this process with an empty CleanURLSet if an invalid URL set was provided
     if (!rawUrls) {
-        return new URL.CleanURLSet(0, 0);
+        return new CleanURLSet(0, 0);
     }
 
     // Now that that's out of the way, we can sanitize each string
     let url, protocolAddressPair, protocol, webAddress, addressTokens;
     let size = rawUrls.length;
-    const cleanURLs = new URL.CleanURLSet(size, size);
+    const cleanURLs = new CleanURLSet(size, size);
 
     // HERE FOR UNIT TESTING
     console.log(rawUrls);
@@ -91,7 +143,7 @@ export function SanitizeUrlSet(rawUrls: string[] | undefined): URL.CleanURLSet {
  * @throws
  * An error gets thrown if anything goes wrong in the process of building the URLobj
  */
-export function TryBuildRepoURL(raw: string): URL.RepoURL | undefined {
+export function TryBuildRepoURL(raw: string): RepoURL | undefined {
     try {
         let protocolAddressPair, protocol, webAddress, addressTokens;
         if (raw.length < 11) {
@@ -126,7 +178,7 @@ export function TryBuildRepoURL(raw: string): URL.RepoURL | undefined {
  * @throws
  * An error gets thrown if anything goes wrong in the process of building the URLobj
  */
-export function TryBuildPackageURL(raw: string): URL.PackageURL | undefined {
+export function TryBuildPackageURL(raw: string): PackageURL | undefined {
     try {
         let protocolAddressPair, protocol, webAddress, addressTokens;
         if (raw.length < 11) {
@@ -164,13 +216,13 @@ export function TryBuildPackageURL(raw: string): URL.PackageURL | undefined {
  * The only thing that should vary between valid npm urls is the package name part.
  * This is stored in index 2 of a given set of address tokens
  */
-function BuildCleanURL_npm(rawURL: string, webProtocol: string, addressTokens: string[]): URL.PackageURL {
+function BuildCleanURL_npm(rawURL: string, webProtocol: string, addressTokens: string[]): PackageURL {
     try {
         // npm url format: [web protocol]\\[npmjs.com]\package\[package name]
         const packageInfo = rawURL.match(/\/package\/(.+)/);
         const title = packageInfo ? packageInfo[1] : ' ';
 
-        const packageUrl: URL.PackageURL = {
+        const packageUrl: PackageURL = {
             raw: rawURL,
             tokens: addressTokens,
             protocol: webProtocol,
@@ -198,9 +250,9 @@ function BuildCleanURL_npm(rawURL: string, webProtocol: string, addressTokens: s
  * The only thing that should vary between valid npm urls is the package name part.
  * This is stored in index 2 of a given set of address tokens
  */
-function BuildCleanURL_github(rawURL: string, webProtocol: string, addressTokens: string[]): URL.RepoURL {
+function BuildCleanURL_github(rawURL: string, webProtocol: string, addressTokens: string[]): RepoURL {
     try {
-        const repoUrl: URL.RepoURL = {
+        const repoUrl: RepoURL = {
             raw: rawURL,
             tokens: addressTokens,
             protocol: webProtocol,
