@@ -1,6 +1,6 @@
-import { PackageURL } from '../Input/Sanitize';
 import { Repository } from '../Types/DataTypes';
 import { BaseRepoQueryResponse, GraphQLResponse, NPMRegistryResponse } from '../Types/ResponseTypes';
+import { PackageURL } from '../Types/URLTypes';
 
 export const mockUrls = [
     'https://github.com/Cinnamon/kotaemon',

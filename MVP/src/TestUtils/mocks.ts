@@ -8,6 +8,8 @@ import { responsiveFunction } from '../Scoring/responsiveFunction';
 import * as LICENSESCORING from '../Scoring/licenseFunction';
 import * as RESPONSIVESCORING from '../Scoring/responsiveFunction';
 import * as BUSFACTORSCORING from '../Scoring/scoreBusFactor';
+import * as RAMPUPSCORING from '../Scoring/scoreRampupTime';
+import * as CORRECTNESSSCORING from '../Scoring/scoreCorrectness';
 
 /**
  * John Leidy
@@ -36,6 +38,12 @@ export const getResponsiveFuncSpy = (returnValue: number) =>
 
 export const getBusFactorFuncSpy = (returnValue: number) =>
     jest.spyOn(BUSFACTORSCORING, 'scoreBusFactor').mockImplementation((repo) => returnValue);
+
+export const getRampUpFuncSpy = (returnValue: number) =>
+    jest.spyOn(RAMPUPSCORING, 'scoreRampupTime').mockImplementation((repo) => returnValue);
+
+export const getCorrectnessSpy = (returnValue: number) =>
+    jest.spyOn(CORRECTNESSSCORING, 'scoreCorrectness').mockImplementation((repo) => returnValue);
 
 export const getMockedCleanUrls = (filepath?: string) => {
     const cleanUrls = ProvideURLsForQuerying(filepath ? filepath : './src/TestUtils/example.txt', true);

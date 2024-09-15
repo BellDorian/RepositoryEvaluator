@@ -8,8 +8,11 @@ import { convertNDJSONObjToStr } from './CLI';
  * @param repos Repositories array of cleaned repositories {@type Repository<T>[]}
  * @returns a promise {@type Promise<void>}
  */
-const writeToTXT = async <T>(repos: Repository<T>[]) =>
-    writeFile('./results/RESULTS.txt', repos.map((repo) => convertNDJSONObjToStr(repo.NDJSONRow)).join('\n'));
+export const writeToTXT = async <T>(repos: Repository<T>[], filePath?: string) =>
+    writeFile(
+        filePath ? `${filePath}RESULTS.txt` : './results/RESULTS.txt',
+        repos.map((repo) => convertNDJSONObjToStr(repo.NDJSONRow)).join('\n')
+    );
 
 /**
  * @autor John Leidy
@@ -18,9 +21,9 @@ const writeToTXT = async <T>(repos: Repository<T>[]) =>
  * @param repos Repositories array of cleaned repositories {@type Repository<T>[]}
  * @returns a promise {@type Promise<void>}
  */
-const writeToJSONArr = async <T>(repos: Repository<T>[]) =>
+export const writeToJSONArr = async <T>(repos: Repository<T>[], filePath?: string) =>
     writeFile(
-        './results/RESULTSarr.json',
+        filePath ? `${filePath}RESULTSarr.json` : './results/RESULTSarr.json',
         `[\n   ${repos.map((repo) => convertNDJSONObjToStr(repo.NDJSONRow)).join(',\n   ')}\n]`
     );
 
@@ -32,9 +35,9 @@ const writeToJSONArr = async <T>(repos: Repository<T>[]) =>
  * @param repos An array of cleaned repositories {@type Repository<T>[]}
  * @returns a promise {@type Promise<void>}
  */
-const writeToJSONObjs = async <T>(repos: Repository<T>[]) =>
+export const writeToJSONObjs = async <T>(repos: Repository<T>[], filePath?: string) =>
     writeFile(
-        './results/RESULTSobjs.json',
+        filePath ? `${filePath}RESULTSobjs.json` : './results/RESULTSobjs.json',
         `${JSON.stringify(
             repos.reduce(
                 (acc, repo) => ({ ...acc, [repo.repoName]: { NDJSONRow: repo.NDJSONRow } }),
@@ -45,8 +48,8 @@ const writeToJSONObjs = async <T>(repos: Repository<T>[]) =>
         )}`
     );
 
-export const writeNDJSONToFile = async <T>(repos: Repository<T>[]) => {
-    await writeToTXT(repos);
-    await writeToJSONArr(repos);
-    await writeToJSONObjs(repos);
+export const writeNDJSONToFile = async <T>(repos: Repository<T>[], filePath?: string) => {
+    await writeToTXT(repos, filePath);
+    await writeToJSONArr(repos, filePath);
+    await writeToJSONObjs(repos, filePath);
 };
