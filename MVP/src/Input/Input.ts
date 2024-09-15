@@ -15,7 +15,6 @@ import { readFileSync } from 'fs';
  * @throws
  * This function throws an error if the filepath is invalid
  *
- *
  * @remarks
  * The function expects each line to be a different module link.
  * Each link must be to a GitHub repo or an npm listing that has a
@@ -39,7 +38,6 @@ export function TryReadUrlFile(filepath: string): string[] | undefined {
 
 /**
  * @author Dorian Bell II
- *
  * @description
  * Reads the file at the given filepath and returns a string array containing its lines.
  *
@@ -47,7 +45,6 @@ export function TryReadUrlFile(filepath: string): string[] | undefined {
  * @param filepath - The path to the file containing the urls
  * @param useDefault - y/n try the default filepath if the specified on fails
  * @returns An array of urls {@type string[]}
- *
  *
  * @remarks
  * The function never returns undefined, and it never escalates an error.
@@ -68,13 +65,11 @@ export function ReadURLFile(filepath: string, useDefault: boolean = false): stri
 
 /**
  * @author Dorian Bell II
- *
  * @description
  * Reads the file at the defeault filepath, DEFAULT_URLFILEPATH.
  *
  *
  * @returns An array of urls {@type string[]}
- *
  *
  * @remarks
  * The function never returns undefined, and it never escalates an error.

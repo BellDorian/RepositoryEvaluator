@@ -73,14 +73,13 @@ export type PackageURL = Package_TokenizedURL | undefined;
 /**
  * @author Dorian Bell II
  * @description
- * Procures a set of sanitized urls to make queries from, using a given filepath
- * as the url source.
+ * - Procures a set of sanitized urls to make queries from, using a given filepath
+ *   as the url source.
  *
  *
  * @param filepath - The path to the file containing the urls to be sanitized
  * @param fallbackToDefaultPath - y/n try to use the default filepath if the given path fails
  * @returns An object containing tokens from sanitized urls {@type CleanURLSet}
- *
  *
  * @remarks
  * This function calls ReadURLFile and then SanitizeUrlSet.
@@ -97,13 +96,12 @@ export function ProvideURLsForQuerying(
 /**
  * @author Dorian Bell II
  * @description
- * Returns an object containing clean and distinctly separated url tokens pertinent
- * to the queries that will be made to the npm registry and GQL
+ * - Returns an object containing clean and distinctly separated url tokens pertinent
+ *   to the queries that will be made to the npm registry and GQL
  *
  *
  * @param rawURls - The set of urls that shall be sanitized {@type string | undefined}
  * @returns All the data that might be needed for process of querying GQL {@type CleanURLSet}
- *
  *
  * @remarks
  * The function returns an empty CleanURLSet if an undefined string array is provided
@@ -152,8 +150,8 @@ export function SanitizeUrlSet(rawUrls: string[] | undefined): CleanURLSet {
 /**
  * @author Dorian Bell II
  * @description
- * Returns an object containing clean and distinctly separated url tokens pertinent
- * to the queries that will be made to the npm registry and GQL
+ * - Returns an object containing clean and distinctly separated url tokens pertinent
+ *   to the queries that will be made to the npm registry and GQL
  *
  *
  * @param raw - A single raw url to be processed {@type string}
@@ -187,8 +185,8 @@ export function TryBuildRepoURL(raw: string): RepoURL | undefined {
 /**
  * @author Dorian Bell II
  * @description
- * Returns an object containing clean and distinctly separated url tokens pertinent
- * to the queries that will be made to the npm registry and GQL
+ * - Returns an object containing clean and distinctly separated url tokens pertinent
+ *   to the queries that will be made to the npm registry and GQL
  *
  *
  * @param raw - A single raw url to be processed {@type string}
@@ -222,15 +220,14 @@ export function TryBuildPackageURL(raw: string): PackageURL | undefined {
 /**
  * @author Dorian Bell II ; John Leidy
  * @description
- * Processes a url from the npmjs.com web domain by verifying its domain and format,
- * and then couples the url tokens within an object
+ * - Processes a url from the npmjs.com web domain by verifying its domain and format,
+ *  and then couples the url tokens within an object
  *
  *
  * @param rawURl - The url that shall be sanitized {@type string}
  * @param webProtocol - String representing the web protocol fron the url {@type string}
  * @param addressTokens - Tokens taken from the web address, using '\' delimiter {@type string[]}
  * @returns Tokenized url data, which can be used to Query the npm registry {@type PackageURL}
- *
  *
  * @remarks
  * The only thing that should vary between valid npm urls is the package name part.
@@ -257,15 +254,14 @@ function BuildCleanURL_npm(rawURL: string, webProtocol: string, addressTokens: s
 /**
  * @author Dorian Bell II
  * @description
- * Processes a url from the github.com web domain by verifying its domain and format,
- * and then couples the url tokens within an object
+ * - Processes a url from the github.com web domain by verifying its domain and format,
+ *  and then couples the url tokens within an object
  *
  *
  * @param rawURl - The url that shall be sanitized {@type string}
  * @param webProtocol - String representing the web protocol fron the url {@type string}
  * @param addressTokens - Tokens taken from the web address, using '\' delimiter {@type string[]}
  * @returns Tokenized url data needed for the process of querying GQL {@type RepoURL}
- *
  *
  * @remarks
  * The only thing that should vary between valid npm urls is the package name part.
