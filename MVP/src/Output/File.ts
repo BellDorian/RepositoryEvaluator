@@ -3,7 +3,8 @@ import { NDJSONRow, Repository } from '../Types/DataTypes';
 import { convertNDJSONObjToStr } from './CLI';
 
 /**
- *
+ *@author John Leidy
+ * @description This writes our NDJSONRows to a txt file
  * @param repos Repositories array of cleaned repositories {@type Repository<T>[]}
  * @returns a promise {@type Promise<void>}
  */
