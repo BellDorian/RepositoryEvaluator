@@ -49,9 +49,7 @@ const runner = async () => {
         console.log(repo.fileUrl);
         console.log(repo.queryResult?.licenseInfo);
     });
-    writeNDJSONToFile(cleanedRepos);
-    const query = repoQueryBuilder(repos); //add an array of fields here... see Request/QueryBuilders/fields.ts for examples
-    const result = await requestFromGQL<ReposFromQuery<BaseRepoQueryResponse>>(query); //result is the raw gql response... .data has your data, .errors has the errors
+    writeNDJSONToFile(cleanedRepos); //result is the raw gql response... .data has your data, .errors has the errors
     LogMessage('Successfully cleaned and scored repos');
     console.log(cleanedRepos);
 };
