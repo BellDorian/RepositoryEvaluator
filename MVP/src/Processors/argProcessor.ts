@@ -25,7 +25,7 @@ export const checkArgsForFile = (args: (string | number)[]): string | undefined 
         if (typeof argument === 'string') {
             if (existsSync(argument)) {
                 if (argument.includes('txt')) {
-                    validPaths.push(argument);
+                    validPaths.push(argument.normalize());
                 }
             }
         }
