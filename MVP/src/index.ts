@@ -29,17 +29,25 @@ dotenv.config();
 
 const runner = async () => {
     const cleanUrls = Sanitizer.ProvideURLsForQuerying(DEFAULT_URLFILEPATH, true);
-    console.log(cleanUrls);
-    console.log(cleanUrls.github_URLs.map((g) => g?.tokens));
-    console.log(cleanUrls.npm_URLs.map((g) => g?.tokens));
     const repos = await buildReposFromUrls<BaseRepoQueryResponse>(cleanUrls); //using mock urls for now
 
-    const query = repoQueryBuilder(repos, ['stargazerCount']); //add an array of fields here... see Request/QueryBuilders/fields.ts for examples
-    console.log(query);
+    const query = repoQueryBuilder(repos, [
+        'stargazerCount',
+        `licenseInfo {
+        name
+        spdxId
+        url
+    }`,
+    ]); //add an array of fields here... see Request/QueryBuilders/fields.ts for examples
+
     const result = await requestFromGQL<ReposFromQuery<BaseRepoQueryResponse>>(query);
-    console.log(result); //result is the raw gql response... .data has your data, .errors has the errors
+    //result is the raw gql response... .data has your data, .errors has the errors
     const cleanedRepos = mapGQLResultToRepos(result, repos); //mapper to clean the array of repos and add in their query results.
     console.log(cleanedRepos);
+    cleanedRepos.forEach((repo) => {
+        console.log(repo.fileUrl);
+        console.log(repo.queryResult?.licenseInfo);
+    });
     writeNDJSONToFile(cleanedRepos);
 };
 

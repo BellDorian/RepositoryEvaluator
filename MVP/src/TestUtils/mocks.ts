@@ -2,6 +2,11 @@ import { jest } from '@jest/globals';
 import { ProvideURLsForQuerying } from '../Input/Sanitize';
 import { readFileSync } from 'fs';
 import { TryReadUrlFile } from '../Input/Input';
+import OpenAI from 'openai';
+import { licenseFunction } from '../Scoring/licenseFunction';
+import { responsiveFunction } from '../Scoring/responsiveFunction';
+import * as LICENSESCORING from '../Scoring/licenseFunction';
+import * as RESPONSIVESCORING from '../Scoring/responsiveFunction';
 
 /**
  * John Leidy
@@ -21,6 +26,12 @@ export const getFetchSpy = <T>(returnBody: T, statusCode: number, throwAnError?:
             //the mock response object fetch will return when called
             return new Response(blob, { status: statusCode });
         });
+
+export const getLicenseFuncSpy = (returnValue: number) =>
+    jest.spyOn(LICENSESCORING, 'licenseFunction').mockImplementation((repo) => returnValue);
+
+export const getResponsiveFuncSpy = (returnValue: number) =>
+    jest.spyOn(RESPONSIVESCORING, 'responsiveFunction').mockImplementation((repo) => returnValue);
 
 export const getMockedCleanUrls = (filepath?: string) => {
     const cleanUrls = ProvideURLsForQuerying(filepath ? filepath : './src/TestUtils/example.txt', true);

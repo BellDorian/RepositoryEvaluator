@@ -19,7 +19,7 @@ describe('Registry Processor', () => {
         expect(repo).toBe(undefined);
     });
     it('Should return a repo if the npm package is valid', async () => {
-        const fetchSpy = getFetchSpy(registryMocking.validPackageNpmResponse, 404, false);
+        const fetchSpy = getFetchSpy(registryMocking.validPackageNpmResponse, 200, false);
         const repo = await processNpmUrl(registryMocking.validPackageUrl);
         expect(fetchSpy).toBeCalledTimes(2);
         expect(repo).toBeTruthy();
