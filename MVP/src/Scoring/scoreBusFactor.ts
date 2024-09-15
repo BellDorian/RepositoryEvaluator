@@ -78,6 +78,7 @@ export function scoreBusFactor<T>(repo: Repository<T>, ): number {
     // Using the number of commits the largest contributor, 
     // sets a benchmark that is used to determine whether or not a contributor can be considered part of the bus factor
     let primaryContributorCommits = uniqueContributors[0].commits;
+    // Currently, percentages have to add up to 1. Perfectly fine to leave it like this though
     const highPercentage = .75; 
     const lowPercentage = .25;
     let highCommitBenchmark = primaryContributorCommits * highPercentage; 
