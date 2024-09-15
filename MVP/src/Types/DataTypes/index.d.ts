@@ -43,6 +43,7 @@ export type Repository<T> = {
                   totalCount: number;
               };
               stargazerCount?: number;
+              licenseInfo?: { name?: string };
           } & T)
         | null;
     NDJSONRow: NDJSONRow;

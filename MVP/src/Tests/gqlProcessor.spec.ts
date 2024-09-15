@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
-import { mapGQLResultToRepos } from './gqlProcessor';
 import { mockGQLResult, mockRepos, mockValidRepos } from '../TestUtils/constants';
+import { mapGQLResultToRepos } from '../Processors/gqlProcessor';
 
 /**
  * John Leidy

@@ -5,9 +5,9 @@ import { processNpmUrl } from './registryProcessor';
 
 /**
  * @author John Leidy
- * Takes in CleanUrlSet, returns generic repositories array
- * @param cleanUrls -  {@type CleanUrlSet} the query params and urls from files.
- * @returns repositories - {@type Repository<T>} where T is the type to extend the base query result with.
+ * @description Takes in CleanUrlSet, returns generic repositories array
+ * @param cleanUrls the query params and urls from files. {@type CleanUrlSet}
+ * @returns repositories  {@type Repository<T>[]}
  */
 export const buildReposFromUrls = async <T>(cleanUrls: CleanURLSet): Promise<Repository<T>[]> => {
     let repositories: Repository<T>[] = [];

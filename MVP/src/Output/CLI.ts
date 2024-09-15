@@ -101,20 +101,4 @@ export const processInputFile = (filePath: string) => {
  * @param NDJSONObj - The NDJSON object to convert.
  * @returns The stringified NDJSON object.
  */
-const convertNDJSONObjToStr = (NDJSONObj: NDJSONRow) => {
-    return JSON.stringify({
-        URL: NDJSONObj.URL,
-        NetScore: NDJSONObj.NetScore,
-        NetScore_Latency: NDJSONObj.NetScore_Latency,
-        RampUp: NDJSONObj.RampUp,
-        RampUp_Latency: NDJSONObj.RampUp_Latency,
-        Correctness: NDJSONObj.Correctness,
-        Correctness_Latency: NDJSONObj.Correctness_Latency,
-        BusFactor: NDJSONObj.BusFactor,
-        BusFactor_Latency: NDJSONObj.BusFactor_Latency,
-        ResponsiveMaintainer: NDJSONObj.ResponsiveMaintainer,
-        ResponsiveMaintainer_Latency: NDJSONObj.ResponsiveMaintainer_Latency,
-        License: NDJSONObj.License,
-        License_Latency: NDJSONObj.License_Latency,
-    });
-};
+export const convertNDJSONObjToStr = (NDJSONObj: NDJSONRow) => JSON.stringify(NDJSONObj);

@@ -1,5 +1,11 @@
 import { NDJSONRow, NDJSONRows } from '../Types/DataTypes';
 
+/**
+ * @author John Leidy
+ * @description Transforms a url into an NDJSONRow obj
+ * @param url a url for a repo {@type string}
+ * @returns an NDJSONRow {@type NDJSONRow}
+ */
 export const transformToNDJSONRow = (url: string): NDJSONRow => ({
     URL: url,
     NetScore: 0,
@@ -16,5 +22,11 @@ export const transformToNDJSONRow = (url: string): NDJSONRow => ({
     License_Latency: 0,
 });
 
+/**
+ * @author John Leidy
+ * @description A function to create NDJSONRows from an arr of urls
+ * @param urls an arr of urls {@type string[]}
+ * @returns an array of NDJSONRows {@type NDJSONRows}
+ */
 export const transformToNDJSONRows = (urls: string[]): NDJSONRows =>
     urls.map((url) => transformToNDJSONRow(url));

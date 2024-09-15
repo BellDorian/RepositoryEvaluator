@@ -1,6 +1,7 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
+//PLEASE REMOVE WHEN CREATING FOR TASK, TEMP TO TEST
 export const catchArgs = async () => {
     const argv = await yargs(hideBin(process.argv)).argv;
     //should check to be safe

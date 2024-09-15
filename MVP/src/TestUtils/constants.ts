@@ -1,5 +1,6 @@
-import { NDJSONRows, Repository } from '../Types/DataTypes';
-import { BaseRepoQueryResponse, GraphQLResponse } from '../Types/ResponseTypes';
+import { Repository } from '../Types/DataTypes';
+import { BaseRepoQueryResponse, GraphQLResponse, NPMRegistryResponse } from '../Types/ResponseTypes';
+import { PackageURL } from '../Types/URLTypes';
 
 export const mockUrls = [
     'https://github.com/Cinnamon/kotaemon',
@@ -343,4 +344,139 @@ export const mockGQLResult: GraphQLResponse<any> = {
             message: "Could not resolve to a Repository with the name 'x/someunkonwrepo'.",
         },
     ],
+};
+
+export const registryMocking: {
+    validPackageUrl: PackageURL;
+    validPackageNpmResponse: NPMRegistryResponse;
+    invalidPackageUrl: PackageURL;
+} = {
+    validPackageUrl: {
+        raw: 'https://www.npmjs.com/package/queue-lit',
+        tokens: ['www.npmjs.com', 'package', 'queue-lit'],
+        protocol: 'https:',
+        packageName: 'queue-lit',
+    },
+    validPackageNpmResponse: {
+        repository: {
+            type: '',
+            url: 'https://github.com/joelvoss/queue-lit',
+        },
+    },
+    invalidPackageUrl: {
+        packageName: 'O_o',
+        raw: ':O',
+        tokens: [],
+        protocol: '',
+    },
+};
+
+export const licenseScoringMocks: {
+    knownCompatibleLicenses: string[];
+    knownIncompatibleLicenses: string[];
+    repoWithValidLicense: Repository<any>;
+    repoWithInvalidLicense: Repository<any>;
+    repoWithUnknownLicense: Repository<any>;
+} = {
+    knownCompatibleLicenses: [
+        'LGPL-2.1 License',
+        'MIT License',
+        'GNU Affero General Public License v3.0',
+        'Mozilla Public License 2.0',
+        'Artistic License 2.0',
+        'BSD-2-Clause license',
+        'BSD-3-Clause license',
+        'GPL-2.0 license',
+        'GPL-3.0 license',
+        'EPL-2.0 license',
+    ],
+    knownIncompatibleLicenses: ['Apache License 2.0', 'CDDL-1.0 license', 'Other'],
+    repoWithValidLicense: {
+        owner: 'Z4nzu',
+        repoName: 'hackingtool',
+        fileUrl: 'https://github.com/Z4nzu/hackingtool',
+        queryResult: {
+            description: '',
+            name: '',
+            url: '',
+            licenseInfo: {
+                name: 'MIT License',
+            },
+        },
+        NDJSONRow: {
+            URL: 'https://github.com/Z4nzu/hackingtool',
+            NetScore: 0,
+            NetScore_Latency: 0,
+            RampUp: 0,
+            RampUp_Latency: 0,
+            Correctness: 0,
+            Correctness_Latency: 0,
+            BusFactor: 0,
+            BusFactor_Latency: 0,
+            ResponsiveMaintainer: 0,
+            ResponsiveMaintainer_Latency: 0,
+            License: 0,
+            License_Latency: 0,
+        },
+    },
+    repoWithInvalidLicense: {
+        owner: 'Cinnamon',
+        repoName: 'kotaemon',
+        fileUrl: 'https://github.com/Cinnamon/kotaemon',
+        queryResult: {
+            description: 'An open-source RAG-based tool for chatting with your documents.',
+            name: 'kotaemon',
+            url: 'https://github.com/Cinnamon/kotaemon',
+            owner: {
+                login: 'Cinnamon',
+            },
+            licenseInfo: {
+                name: 'Apache License 2.0',
+            },
+        },
+        NDJSONRow: {
+            URL: 'https://github.com/Cinnamon/kotaemon',
+            NetScore: 0,
+            NetScore_Latency: 0,
+            RampUp: 0,
+            RampUp_Latency: 0,
+            Correctness: 0,
+            Correctness_Latency: 0,
+            BusFactor: 0,
+            BusFactor_Latency: 0,
+            ResponsiveMaintainer: 0,
+            ResponsiveMaintainer_Latency: 0,
+            License: 0,
+            License_Latency: 0,
+        },
+    },
+    repoWithUnknownLicense: {
+        owner: 'dokku',
+        repoName: 'dokku',
+        fileUrl: 'https://github.com/dokku/dokku',
+        queryResult: {
+            description:
+                'A docker-powered PaaS that helps you build and manage the lifecycle of applications',
+            name: 'dokku',
+            url: 'https://github.com/dokku/dokku',
+            owner: {
+                login: 'dokku',
+            },
+        },
+        NDJSONRow: {
+            URL: 'https://github.com/dokku/dokku',
+            NetScore: 0,
+            NetScore_Latency: 0,
+            RampUp: 0,
+            RampUp_Latency: 0,
+            Correctness: 0,
+            Correctness_Latency: 0,
+            BusFactor: 0,
+            BusFactor_Latency: 0,
+            ResponsiveMaintainer: 0,
+            ResponsiveMaintainer_Latency: 0,
+            License: 0,
+            License_Latency: 0,
+        },
+    },
 };

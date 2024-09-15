@@ -1,7 +1,7 @@
 import { describe, expect, it } from '@jest/globals';
-import { repoQueryBuilder } from './repos';
-import { mockRepos } from '../../TestUtils/constants';
-import { defaultFields } from './constants';
+import { repoQueryBuilder } from '../Requests/QueryBuilders/repos';
+import { mockRepos } from '../TestUtils/constants';
+import { defaultFields } from '../Requests/QueryBuilders/constants';
 
 /**
  * John Leidy

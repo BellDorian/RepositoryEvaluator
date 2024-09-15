@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 import { mockUrls } from '../TestUtils/constants';
-import { transformToNDJSONRow, transformToNDJSONRows } from './NDJSON';
+import { transformToNDJSONRow, transformToNDJSONRows } from '../Transform/NDJSON';
 
 /**
  * John Leidy
