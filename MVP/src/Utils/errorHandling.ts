@@ -1,7 +1,4 @@
-//     Project :    Module Evaluation Tool
-//   Component :    Error Handling Function Component
-//       Owner :    Jorge Puga Hernandez
-// Last update :    07 September 2024 -- EST 03:12
+import { LogMessage } from './log';
 
 /**
  * @author Jorge Puga Hernandez
@@ -20,8 +17,10 @@ export const ErrorWrapper = (func: () => void, message: string) => {
     } catch (err) {
         if (err instanceof Error) {
             console.log(err.message, message);
+            LogMessage(`${message}: ${err.message}`);
         } else {
             console.log(message);
+            LogMessage(message);
         }
         process.exit(1);
     }
@@ -48,8 +47,44 @@ export const ErrorWrapperForReturns = <T>(func: (...args: any[]) => T, message: 
     } catch (err) {
         if (err instanceof Error) {
             console.log(err.message, message);
+            LogMessage(`${message}: ${err.message}`);
         } else {
             console.log(message);
+            LogMessage(message);
+        }
+        process.exit(1);
+    }
+};
+
+/**
+ * @author Jorge Puga Hernandez
+ * @description
+ * - Wraps an async function in a try-catch block,
+ *   handling any errors that occur during its execution. This
+ *   function can accept multiple parameters.
+ * - If an error is caught, it logs the error message and exits with return code 1.
+ *
+ * @template T - The return type of the function being wrapped (generic).
+ * @param func - The async function to execute which returns a promise. {@type (...args: any[]) => Promise<T>}
+ * @param message - The error message to display if an error occurs. {@type string}
+ * @param args - The arguments to pass to the function. {@type ...any[]}
+ * @returns The result of the function if no error occurs (promise). {@type T}
+ *
+ */
+export const ErrorWrapperForAsync = async <T>(
+    func: (...args: any[]) => Promise<T>,
+    message: string,
+    ...args: any[]
+): Promise<T | void> => {
+    try {
+        return await func(...args);
+    } catch (err) {
+        if (err instanceof Error) {
+            console.log(err.message, message);
+            LogMessage(`${message}: ${err.message}`);
+        } else {
+            console.log(message);
+            LogMessage(message);
         }
         process.exit(1);
     }
