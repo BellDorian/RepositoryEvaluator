@@ -49,5 +49,5 @@ export const checkArgsForFile = (args: (string | number)[]): string | undefined 
 export const processArguments = async (): Promise<string | undefined> => {
     const args = await grabArgs();
     const filePath = await checkArgsForFile(args);
-    return filePath?.normalize();
+    return filePath;
 };
