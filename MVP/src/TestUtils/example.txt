@@ -8,5 +8,3 @@ https://www.typescriptlang.org/docs/handbook/functions.html
 https://www.youtube.com/watch?v=dQw4w9WgXcQ
 https://www.npmjs.com/package/query-string
 https://www.npmjs.com/package/@atom-ide-community/atom-package-manager
-https://github.com/Cinnamon/kotaemon
-https://github.com/Z4nzu/hackingtool

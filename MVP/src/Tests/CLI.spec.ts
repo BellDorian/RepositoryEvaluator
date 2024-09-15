@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { NDJSONRow, Repository } from '../Types/DataTypes';
-import { writeNDJSONToCLI } from './CLI';
+import { writeNDJSONToCLI } from '../Output/CLI';
 
 //Individual mocking here to ensure output is as we expect in the console
 const NDJSONRowMock: NDJSONRow = {

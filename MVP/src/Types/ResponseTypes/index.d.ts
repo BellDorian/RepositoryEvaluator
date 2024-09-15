@@ -29,9 +29,9 @@ export interface GraphQLResponse<T> {
 }
 
 export interface NPMRegistryResponse {
-    repository: {
-        type: string;
-        url: string;
+    repository?: {
+        type?: string;
+        url?: string;
     };
 }
 

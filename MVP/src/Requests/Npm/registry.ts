@@ -2,11 +2,11 @@ import { NPMRegistryResponse } from '../../Types/ResponseTypes';
 
 /**
  * @author John Leidy
- * takes in a package name, reaches out to the registry, returns the response if it was valid
+ * @description Takes in a package name, reaches out to the registry, returns the response if it was valid.
  * @param packageName npmjs.org package name extracted from url {@type string}
- * @returns Promise<NPMRegistryResponse>
+ * @returns a promise {@type Promise<NPMRegistryResponse>}
  */
-export const fetchPackageInfo = async (packageName: string): Promise<NPMRegistryResponse> => {
+export const fetchPackageInfo = async (packageName: string): Promise<NPMRegistryResponse | undefined> => {
     const registryUrl = `https://registry.npmjs.org/${packageName}`;
 
     try {
@@ -14,11 +14,11 @@ export const fetchPackageInfo = async (packageName: string): Promise<NPMRegistry
         const rawText = await response.text();
         const jsonResponse = JSON.parse(rawText);
         if (!response.ok) {
-            throw new Error(`Package not found, url: ${packageName}`);
+            return undefined;
         }
         return jsonResponse;
     } catch (error) {
         console.error('Error fetching package info:', error);
-        throw error;
+        return undefined;
     }
 };
