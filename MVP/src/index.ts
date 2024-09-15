@@ -1,6 +1,5 @@
 import './Utils/envConfig';
 import chalk from 'chalk';
-import { catchArgs } from './Processors/argProcessor';
 import { buildReposFromUrls } from './Processors/urlProcessor';
 import { mockUrls } from './TestUtils/constants';
 import { repoQueryBuilder } from './Requests/QueryBuilders/repos';
@@ -12,6 +11,7 @@ import { LogMessage } from './Utils/log';
 import { ErrorWrapper, ErrorWrapperForAsync, ErrorWrapperForReturns } from './Utils/errorHandling';
 import { ProvideURLsForQuerying } from './Input/Sanitize';
 import { writeNDJSONToFile } from './Output/File';
+import { checkArgsForFile, processArguments } from './Processors/argProcessor';
 
 const cleanUrls = ProvideURLsForQuerying(DEFAULT_URLFILEPATH, true);
 console.log(cleanUrls.github_URLs);
@@ -20,10 +20,9 @@ console.log(cleanUrls.npm_URLs);
 LogMessage('Starting...');
 console.log(`🌟 Everything appears to be ${chalk.greenBright('Operational')}! 🌟`);
 
-catchArgs();
-
 const runner = async () => {
-    const cleanUrls = ProvideURLsForQuerying(DEFAULT_URLFILEPATH, true);
+    const filePath = await processArguments();
+    const cleanUrls = ProvideURLsForQuerying(filePath ? filePath : DEFAULT_URLFILEPATH, true);
     const repos = await buildReposFromUrls<BaseRepoQueryResponse>(cleanUrls);
     const query = repoQueryBuilder(repos, [
         `licenseInfo {
