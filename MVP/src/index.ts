@@ -14,12 +14,6 @@ import { writeNDJSONToFile } from './Output/File';
 import { checkArgsForFile, processArguments } from './Processors/argProcessor';
 import { writeNDJSONToCLI } from './Output/CLI';
 
-// const cleanUrls = ProvideURLsForQuerying(DEFAULT_URLFILEPATH, true);
-// console.log(cleanUrls.github_URLs);
-// console.log(cleanUrls.npm_URLs);
-
-// LogMessage('Starting...');
-// console.log(`🌟 Everything appears to be ${chalk.greenBright('Operational')}! 🌟`);
 
 const runner = async () => {
     const filePath = await processArguments();
@@ -39,5 +33,5 @@ const runner = async () => {
     LogMessage('Successfully cleaned and scored repos');
     writeNDJSONToCLI(cleanedRepos);
 };
-//commit
+LogMessage(`🌟 ${chalk.greenBright("Starting...")} 🌟`)
 runner();

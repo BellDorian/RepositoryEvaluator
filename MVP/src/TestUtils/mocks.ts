@@ -46,11 +46,7 @@ export const getRampUpFuncSpy = (returnValue: number) =>
 export const getCorrectnessSpy = (returnValue: number) =>
     jest.spyOn(CORRECTNESSSCORING, 'scoreCorrectness').mockImplementation((repo) => returnValue);
 
-export const parseJestOutputSpy = (testsPassed: number, totalTests: number) =>
-    jest.spyOn(TESTPROCESSOR, 'parseJestOutput').mockImplementation(() => ({ testsPassed, totalTests }));
 
-export const getPercentLinesCoverageSpy = (returnValue: number) =>
-    jest.spyOn(TESTPROCESSOR, 'getLinePercentCoverage').mockImplementation(() => returnValue);
 
 export const getMockedCleanUrls = (filepath?: string) => {
     const cleanUrls = ProvideURLsForQuerying(filepath ? filepath : './src/TestUtils/example.txt', true);

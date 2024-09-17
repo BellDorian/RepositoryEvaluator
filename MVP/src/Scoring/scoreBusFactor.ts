@@ -20,7 +20,7 @@ const http = require('isomorphic-git/http/node');
 
 function removeRepo(directory: string) {
     if (fileSystem.existsSync(directory)) {
-        // Recursively remove all files and subdirectories
+        // Recursively remove all files and subdirectories//
         fileSystem.rmSync(directory, { recursive: true, force: true });
         console.log(`Repository at ${directory} has been removed.`);
     } else {
@@ -97,7 +97,6 @@ export function scoreBusFactor<T>(repo: Repository<T>): number {
         }
     }
     // Using the Sigmoid function to get the desired distribution of the score.
-
     const distrubutionMultiplier = 0.8; // As this value -> 0, it requires more contributors to get close to a 1. Can be edited to produce a different score distribution
     highContributorScore = 1 / (1 + Math.pow(Math.E, distrubutionMultiplier * -highContributorScore - 5));
     lowContributorScore = 1 / (1 + Math.pow(Math.E, distrubutionMultiplier * -highContributorScore - 5));

@@ -1,12 +1,9 @@
-import { afterEach, beforeAll, beforeEach, describe, expect, it, jest } from '@jest/globals';
+import { afterEach, beforeEach, describe, expect, it } from '@jest/globals';
 import { processArguments } from '../Processors/argProcessor';
 import { validFilePath, validSpacePath } from '../TestUtils/constants';
 
 describe('Arg Processor', () => {
     const originalArgv = process.argv;
-    beforeAll(() => {
-        jest.spyOn(console, 'warn').mockImplementation(() => {});
-    });
     beforeEach(() => {
         process.argv = [...originalArgv];
     });
