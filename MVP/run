@@ -20,7 +20,7 @@ case "$1" in
     touch coverage/output.txt
     touch coverage/dump.txt
     
-    npm run test
+    npm run test:jest:mute
     if [ $? -ne 0 ]; then
       echo "Tests failed."
       exit 1

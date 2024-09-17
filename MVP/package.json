@@ -13,10 +13,10 @@
  "scripts": {
   "build": "npx tsc",
   "dev": "nodemon src/index.ts",
-  "test": "npm run build && npm run jest:mute",
+  "test": "npm run build && npm run jest:verbose",
   "posttest": "node dist/TestUtils/posttest.js",
   "jest:verbose": "jest --config jest.config.verbose.js",
-  "jest:mute": "npm run build && jest --silent --config jest.config.minimal.js >coverage/dump.txt"
+  "test:jest:mute": "npm run build && jest --silent --config jest.config.minimal.js >coverage/dump.txt"
  },
  "devDependencies": {
   "@babel/preset-env": "^7.25.4",
