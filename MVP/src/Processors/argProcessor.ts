@@ -13,8 +13,17 @@ export const grabArgs = async (): Promise<(string | number)[]> => {
     return [];
 };
 
+export const checkIfAllArgsAreValidPath = (argArr:(string|number)[]) => {
+    const fullPath = argArr.join(' ');
+    if(existsSync(fullPath) && fullPath.includes('.txt')){
+        return fullPath;
+    }
+    return undefined;
+}
+
 export const checkArgsForFile = (args: (string | number)[]): string | undefined => {
     let validPaths: string[] = [];
+
     args.forEach((argument) => {
         if (typeof argument === 'string') {
             if (existsSync(argument)) {
@@ -34,8 +43,10 @@ export const checkArgsForFile = (args: (string | number)[]): string | undefined 
     } else if (validPaths.length === 1) {
         return validPaths[0];
     } else if (validPaths.length === 0) {
-        console.log(chalk.red('NO FILES WERE FOUND WITH THE GIVEN PATHS'));
-        console.log(args.map((argument) => argument));
+        const fullPath = checkIfAllArgsAreValidPath(args);
+        if(fullPath){
+            return fullPath;
+        }
         return undefined;
     } else {
         console.log(chalk.red('unknown *investigate*'));
