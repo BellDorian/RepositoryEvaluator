@@ -15,6 +15,20 @@ export const grabArgs = async (): Promise<(string | number)[]> => {
 
 /**
  * @author John Leidy
+ * @description This is a rough function that checks if the path had spaces causing the path to be split up when parsed
+ * @param argArr this is argv._ {@type (string|number)[]}
+ * @returns a full path or nothing {@type string|undefined}
+ */
+export const checkIfAllArgsAreValidPath = (argArr: (string | number)[]) => {
+    const fullPath = argArr.join(' ');
+    if (existsSync(fullPath) && fullPath.includes('.txt')) {
+        return fullPath;
+    }
+    return undefined;
+};
+
+/**
+ * @author John Leidy
  * @description A func to check the arr of arguments for a valid txt file with urls
  * @param args the arguments from the process {@type (string|number)[]}
  * @returns a filepath or... nothing O_o  {@type string|undefined}
@@ -33,7 +47,11 @@ export const checkArgsForFile = (args: (string | number)[]): string | undefined 
     if (validPaths.length > 1 || validPaths.length === 1) {
         return validPaths[0];
     } else if (validPaths.length === 0) {
-        LogMessage('No url files found');
+        LogMessage('Checking if all args are a valid path when combined');
+        const fullPath = checkIfAllArgsAreValidPath(args);
+        if (fullPath) {
+            return fullPath;
+        }
         return undefined;
     } else {
         LogMessage('A suprising else was reached O_o');

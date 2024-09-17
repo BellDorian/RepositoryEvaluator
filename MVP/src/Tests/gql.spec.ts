@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import { beforeAll, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { requestFromGQL } from '../Requests/GitHub/gql';
 import { getFetchSpy } from '../TestUtils/mocks';
 
@@ -12,7 +12,6 @@ describe('Gql Request', () => {
         jest.resetAllMocks();
         jest.spyOn(console, 'error').mockImplementation(() => {});
     });
-
     it('should throw an error without a proper .evn alongside proper env variables', async () => {
         //set them to an incorrect value
         process.env.GITHUB_API_URL = undefined;

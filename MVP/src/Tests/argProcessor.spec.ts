@@ -1,10 +1,12 @@
-import { afterEach, beforeEach, describe, expect, it } from '@jest/globals';
+import { afterEach, beforeAll, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { processArguments } from '../Processors/argProcessor';
-import { validFilePath } from '../TestUtils/constants';
+import { validFilePath, validSpacePath } from '../TestUtils/constants';
 
 describe('Arg Processor', () => {
     const originalArgv = process.argv;
-
+    beforeAll(() => {
+        jest.spyOn(console, 'warn').mockImplementation(() => {});
+    });
     beforeEach(() => {
         process.argv = [...originalArgv];
     });
@@ -20,5 +22,10 @@ describe('Arg Processor', () => {
         process.argv = [...originalArgv];
         const filepath = await processArguments();
         expect(filepath).toBeFalsy();
+    });
+    it('Should process paths with spaces', async () => {
+        process.argv = [...originalArgv, validSpacePath()];
+        const filepath = await processArguments();
+        expect(filepath).toBeTruthy();
     });
 });
