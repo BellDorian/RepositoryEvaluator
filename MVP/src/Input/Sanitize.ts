@@ -72,7 +72,8 @@ export function ProvideURLsForQuerying(
     fallbackToDefaultPath: boolean = false
 ): CleanURLSet {
     const urls = ReadURLFile(filepath, fallbackToDefaultPath);
-    console.log(urls);
+    //removed for checker
+    //console.log(urls);
     return SanitizeUrlSet(urls);
 }
 
@@ -100,8 +101,8 @@ export function SanitizeUrlSet(rawUrls: string[] | undefined): CleanURLSet {
     let size = rawUrls.length;
     const cleanURLs = new CleanURLSet(size, size);
 
-    // HERE FOR UNIT TESTING
-    console.log(rawUrls);
+    // HERE FOR UNIT TESTING - Removed for checker
+    //console.log(rawUrls);
 
     for (var i = 0; i < size; i++) {
         try {

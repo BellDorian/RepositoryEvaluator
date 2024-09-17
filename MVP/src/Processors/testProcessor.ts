@@ -37,6 +37,6 @@ export const showTestMetrics = () => {
     const percentLinesTotal = getLinePercentCoverage();
     const testsResults = parseJestOutput();
     console.log(
-        `${testsResults.testsPassed}/${testsResults.totalTests} test cases passed. ${percentLinesTotal}% line coverage achieved.`
+        `${testsResults.testsPassed}/${testsResults.totalTests} test cases passed. ${Math.round(percentLinesTotal)}% line coverage achieved.`
     );
 };
