@@ -1,6 +1,7 @@
 import { writeFile } from 'fs/promises';
 import { NDJSONRow, Repository } from '../Types/DataTypes';
 import { convertNDJSONObjToStr } from './CLI';
+import { existsSync, mkdirSync } from 'fs';
 
 /**
  *@author John Leidy
@@ -48,7 +49,20 @@ export const writeToJSONObjs = async <T>(repos: Repository<T>[], filePath?: stri
         )}`
     );
 
+/**
+ * @author John Leidy
+ * @description 
+ * @param repos 
+ * @param filePath 
+ */
+const ensureDirExists = (filePath?:string) => {
+    if(!existsSync(filePath ? filePath : './results/')){
+        mkdirSync(filePath ? filePath : './results/');
+    }
+}
+
 export const writeNDJSONToFile = async <T>(repos: Repository<T>[], filePath?: string) => {
+    ensureDirExists();
     await writeToTXT(repos, filePath);
     await writeToJSONArr(repos, filePath);
     await writeToJSONObjs(repos, filePath);
