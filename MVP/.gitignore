@@ -3,3 +3,5 @@ dist/
 .env
 coverage/
 Logs/
+results/
+src/TestUtils/OutputDumps

@@ -2,27 +2,9 @@ import path from 'path';
 import { Repository } from '../Types/DataTypes';
 import { GraphQLResponse, NPMRegistryResponse } from '../Types/ResponseTypes';
 import { PackageURL } from '../Types/URLTypes';
-import { _decodeChunks } from 'openai/streaming';
 
 export const validFilePath = () => path.resolve(__dirname, '../TestUtils/validUrls.txt');
 export const validSpacePath = () => path.resolve(__dirname, '../TestUtils/space dir/space file.txt');
-export const validTestRegex = /^\d+\/\d+ test cases passed\. \d+% line coverage achieved\.$/;
-export type TestProcessorValues = {
-    testsPassed: number;
-    totalTests: number;
-    percentTotalLineCoverage: number;
-};
-export const mockAllPass: TestProcessorValues = {
-    testsPassed: 10,
-    totalTests: 10,
-    percentTotalLineCoverage: 80,
-};
-export const mockFail: TestProcessorValues = {
-    testsPassed: 1,
-    totalTests: 10,
-    percentTotalLineCoverage: 5,
-};
-
 export const mockUrls = [
     'https://github.com/Cinnamon/kotaemon',
     'https://github.com/Z4nzu/hackingtool',

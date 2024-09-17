@@ -1,16 +1,10 @@
 import { jest } from '@jest/globals';
 import { ProvideURLsForQuerying } from '../Input/Sanitize';
-import { readFileSync } from 'fs';
-import { TryReadUrlFile } from '../Input/Input';
-import OpenAI from 'openai';
-import { licenseFunction } from '../Scoring/licenseFunction';
-import { responsiveFunction } from '../Scoring/responsiveFunction';
 import * as LICENSESCORING from '../Scoring/licenseFunction';
 import * as RESPONSIVESCORING from '../Scoring/responsiveFunction';
 import * as BUSFACTORSCORING from '../Scoring/scoreBusFactor';
 import * as RAMPUPSCORING from '../Scoring/scoreRampupTime';
 import * as CORRECTNESSSCORING from '../Scoring/scoreCorrectness';
-import * as TESTPROCESSOR from '../Processors/testProcessor';
 
 /**
  * John Leidy
