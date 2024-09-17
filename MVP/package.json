@@ -13,7 +13,7 @@
     "scripts": {
         "build": "npx tsc",
         "dev": "nodemon src/index.ts",
-        "test": "npm run build && npm run test:jest:verbose",
+        "test": "npm run install && npm run build && npm run test:jest:verbose",
         "posttest": "node dist/TestUtils/posttest.js",
         "test:jest:verbose": "jest --config jest.config.verbose.js",
         "test:jest:mute": "jest --config jest.config.minimal.js >coverage/dump.txt"

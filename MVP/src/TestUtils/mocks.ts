@@ -40,8 +40,6 @@ export const getRampUpFuncSpy = (returnValue: number) =>
 export const getCorrectnessSpy = (returnValue: number) =>
     jest.spyOn(CORRECTNESSSCORING, 'scoreCorrectness').mockImplementation((repo) => returnValue);
 
-
-
 export const getMockedCleanUrls = (filepath?: string) => {
     const cleanUrls = ProvideURLsForQuerying(filepath ? filepath : './src/TestUtils/example.txt', true);
     return cleanUrls;
