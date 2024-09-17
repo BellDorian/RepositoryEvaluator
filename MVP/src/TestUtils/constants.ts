@@ -4,7 +4,7 @@ import { GraphQLResponse, NPMRegistryResponse } from '../Types/ResponseTypes';
 import { PackageURL } from '../Types/URLTypes';
 
 export const validFilePath = () => path.resolve(__dirname, '../TestUtils/validUrls.txt');
-
+export const validSpacePath = () => path.resolve(__dirname, '../TestUtils/space dir/space file.txt');
 export const mockUrls = [
     'https://github.com/Cinnamon/kotaemon',
     'https://github.com/Z4nzu/hackingtool',

@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import { Repository } from '../Types/DataTypes';
 import { GraphQLResponse, ReposFromQuery } from '../Types/ResponseTypes';
+import { LogMessage } from '../Utils/log';
 //we get back an obj with repos... they either have information of some type or they dont (null)
 //if they have some information we add it to the cooresponding repository
 //if they don't we remove the repository from the array
@@ -31,9 +32,7 @@ export const mapGQLResultToRepos = <T>(
         //we only want the repos that we got a successful return from
         return repos.filter((repo) => {
             if (repo.queryResult === null) {
-                console.error(
-                    chalk.red(`URL: ${repo.fileUrl} failed to process. GQL returned a null response.`)
-                );
+                LogMessage(`URL: ${chalk.red(repo.fileUrl)} failed to process. GQL returned a ${chalk.red('NULL')} response.`)
             }
             return repo.queryResult !== null;
         });

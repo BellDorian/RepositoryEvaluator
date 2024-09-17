@@ -17,13 +17,13 @@ type ParsedJestOutput = {
     totalTests: number | null;
 };
 
-const getLinePercentCoverage = (): number => {
+export const getLinePercentCoverage = (): number => {
     const rawData = fs.readFileSync('coverage/coverage-summary.json', 'utf8');
     const coverageData: CoverageData = JSON.parse(rawData);
     return coverageData.total.lines.pct;
 };
 
-const parseJestOutput = (): ParsedJestOutput => {
+export const parseJestOutput = (): ParsedJestOutput => {
     const output = fs.readFileSync('coverage/output.txt', 'utf8');
     const testsRegex = /Tests:\s*(\d+)\s*passed,\s*(\d+)\s*total/;
     const testsMatch = output.match(testsRegex);
@@ -37,6 +37,6 @@ export const showTestMetrics = () => {
     const percentLinesTotal = getLinePercentCoverage();
     const testsResults = parseJestOutput();
     console.log(
-        `${testsResults.testsPassed}/${testsResults.totalTests} test cases passed. ${percentLinesTotal}% line coverage achieved.`
+         `${testsResults.testsPassed}/${testsResults.totalTests} test cases passed. ${Math.round(percentLinesTotal)}% line coverage achieved.`
     );
 };

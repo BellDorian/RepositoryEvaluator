@@ -7,14 +7,11 @@ import { GraphQLResponse } from '../../Types/ResponseTypes';
  * @returns a promise {@type Promise<GraphQLResponse<T> | undefined>}
  */
 export const requestFromGQL = async <T>(query: string): Promise<GraphQLResponse<T> | undefined> => {
-    if (!process.env.GITHUB_API_URL || !process.env.GITHUB_PAT) {
-        throw new Error(
-            'env not properly configured, please create a .env file in MVP/ with... GITHUB_PAT (will change) and GITHUB_API_URL'
-        );
+    if(!process.env.GITHUB_TOKEN){
+        throw new Error("TOKEN NOT SET GG")
     }
-
-    const endpoint = process.env.GITHUB_API_URL;
-    const token = process.env.GITHUB_PAT;
+    const endpoint = 'https://api.github.com/graphql';
+    const token = process.env.GITHUB_TOKEN;
 
     try {
         const response = await fetch(endpoint, {

@@ -53,7 +53,6 @@ export function TryReadUrlFile(filepath: string): string[] | undefined {
 export function ReadURLFile(filepath: string, useDefault: boolean = false): string[] {
     try {
         const urls = TryReadUrlFile(filepath);
-        console.log('x');
         if (urls) {
             return urls;
         }

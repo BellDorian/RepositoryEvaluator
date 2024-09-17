@@ -18,8 +18,9 @@ case "$1" in
     mkdir -p coverage
 
     touch coverage/output.txt
+    touch coverage/dump.txt
     
-    npm run test
+    npm run test 
     if [ $? -ne 0 ]; then
       echo "Tests failed."
       exit 1

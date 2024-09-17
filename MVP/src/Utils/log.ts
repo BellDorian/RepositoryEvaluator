@@ -4,7 +4,7 @@ import * as fs from 'fs';
 // Obtain the environment variables. If they are not set, use the default values
 // below. The verbosity level will be 0 by default as per instructions.
 const LOG_LEVEL = process.env.LOG_LEVEL ? parseInt(process.env.LOG_LEVEL, 10) : 0;
-const LOG_FILE = process.env.LOG_FILE || '../Logs/temporary.log';
+const LOG_FILE = process.env.LOG_FILE || './Logs/temporary.log';
 
 /**
  * @author Jorge Puga Hernandez
@@ -15,6 +15,9 @@ const LOG_FILE = process.env.LOG_FILE || '../Logs/temporary.log';
  */
 function CreateLogFile() {
     if (!fs.existsSync(LOG_FILE)) {
+        if(!fs.existsSync("./Logs")){
+            fs.mkdirSync("./Logs");
+        }
         fs.writeFileSync(LOG_FILE, '', { flag: 'w' });
     }
 }

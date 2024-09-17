@@ -12,13 +12,11 @@ import { ErrorWrapper, ErrorWrapperForAsync, ErrorWrapperForReturns } from './Ut
 import { ProvideURLsForQuerying } from './Input/Sanitize';
 import { writeNDJSONToFile } from './Output/File';
 import { checkArgsForFile, processArguments } from './Processors/argProcessor';
+import { writeNDJSONToCLI } from './Output/CLI';
 
-const cleanUrls = ProvideURLsForQuerying(DEFAULT_URLFILEPATH, true);
-console.log(cleanUrls.github_URLs);
-console.log(cleanUrls.npm_URLs);
-
-LogMessage('Starting...');
-console.log(`🌟 Everything appears to be ${chalk.greenBright('Operational')}! 🌟`);
+if (!process.env.LOG_FILE) {
+    process.exit(1);
+}
 
 const runner = async () => {
     const filePath = await processArguments();
@@ -36,7 +34,7 @@ const runner = async () => {
     const cleanedRepos = mapGQLResultToRepos(result, repos); //mapper to clean the array of repos and add in their query results.
     writeNDJSONToFile(cleanedRepos); //result is the raw gql response... .data has your data, .errors has the errors
     LogMessage('Successfully cleaned and scored repos');
-    console.log(cleanedRepos);
+    writeNDJSONToCLI(cleanedRepos);
 };
-//commit
+LogMessage(`🌟 ${chalk.greenBright('Starting...')} 🌟`);
 runner();

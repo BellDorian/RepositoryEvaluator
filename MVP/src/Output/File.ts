@@ -1,6 +1,7 @@
 import { writeFile } from 'fs/promises';
 import { NDJSONRow, Repository } from '../Types/DataTypes';
 import { convertNDJSONObjToStr } from './CLI';
+import { existsSync, mkdirSync } from 'fs';
 
 /**
  *@author John Leidy
@@ -48,7 +49,20 @@ export const writeToJSONObjs = async <T>(repos: Repository<T>[], filePath?: stri
         )}`
     );
 
+/**
+ * @author John Leidy
+ * @description a function to ensure the output directory exists, create if not
+ * @param filePath the path the user wants to create a results file in {@type string|undefined}
+ * @returns nothing {@type void}
+ */
+export const ensureDirExists = (filePath?: string) => {
+    if (!existsSync(filePath ? filePath : './results/')) {
+        mkdirSync(filePath ? filePath : './results/');
+    }
+};
+
 export const writeNDJSONToFile = async <T>(repos: Repository<T>[], filePath?: string) => {
+    ensureDirExists();
     await writeToTXT(repos, filePath);
     await writeToJSONArr(repos, filePath);
     await writeToJSONObjs(repos, filePath);
