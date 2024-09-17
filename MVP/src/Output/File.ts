@@ -51,15 +51,15 @@ export const writeToJSONObjs = async <T>(repos: Repository<T>[], filePath?: stri
 
 /**
  * @author John Leidy
- * @description 
- * @param repos 
- * @param filePath 
+ * @description a function to ensure the output directory exists, create if not
+ * @param filePath the path the user wants to create a results file in {@type string|undefined}
+ * @returns nothing {@type void}
  */
-const ensureDirExists = (filePath?:string) => {
-    if(!existsSync(filePath ? filePath : './results/')){
+export const ensureDirExists = (filePath?: string) => {
+    if (!existsSync(filePath ? filePath : './results/')) {
         mkdirSync(filePath ? filePath : './results/');
     }
-}
+};
 
 export const writeNDJSONToFile = async <T>(repos: Repository<T>[], filePath?: string) => {
     ensureDirExists();

@@ -4,4 +4,4 @@ dist/
 coverage/
 Logs/
 results/
-src/TestUtils/OutputDumps
+src/TestUtils/OutputDumps/

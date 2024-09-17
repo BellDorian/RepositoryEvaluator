@@ -1,5 +1,11 @@
 import { describe, expect, it } from '@jest/globals';
-import { writeNDJSONToFile, writeToJSONArr, writeToJSONObjs, writeToTXT } from '../Output/File';
+import {
+    ensureDirExists,
+    writeNDJSONToFile,
+    writeToJSONArr,
+    writeToJSONObjs,
+    writeToTXT,
+} from '../Output/File';
 import { mockRepos } from '../TestUtils/constants';
 import { TryReadUrlFile } from '../Input/Input';
 import { readFileSync } from 'fs';
@@ -13,6 +19,7 @@ const outputDump = './src/TestUtils/OutputDumps/';
 
 describe('File Output', () => {
     it('Should create txt file with newline delimited NDJSONRows', async () => {
+        ensureDirExists(outputDump);
         await writeToTXT(mockRepos, outputDump);
         const urls = TryReadUrlFile(`${outputDump}RESULTS.txt`);
         expect(urls).toBeTruthy();
@@ -21,6 +28,7 @@ describe('File Output', () => {
         });
     });
     it('Should create a json file with an arr of NDJSONRows', async () => {
+        ensureDirExists(outputDump);
         await writeToJSONArr(mockRepos, outputDump);
         const json: NDJSONRows = JSON.parse(readFileSync(`${outputDump}RESULTSarr.json`, 'utf-8'));
         expect(json).toBeTruthy();
@@ -29,6 +37,7 @@ describe('File Output', () => {
         });
     });
     it('Should create a json file with objs and keys that are the repo name', async () => {
+        ensureDirExists(outputDump);
         await writeToJSONObjs(mockRepos, outputDump);
         const json: JSONObjFile = JSON.parse(readFileSync(`${outputDump}RESULTSobjs.json`, 'utf-8'));
         expect(json).toBeTruthy();
@@ -37,6 +46,7 @@ describe('File Output', () => {
         });
     });
     it('Should create all three files', async () => {
+        ensureDirExists(outputDump);
         await writeNDJSONToFile(mockRepos, outputDump);
         const jsonobjs: JSONObjFile = JSON.parse(readFileSync(`${outputDump}RESULTSobjs.json`, 'utf-8'));
         const jsonarr: NDJSONRows = JSON.parse(readFileSync(`${outputDump}RESULTSarr.json`, 'utf-8'));
