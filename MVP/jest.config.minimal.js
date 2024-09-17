@@ -5,8 +5,7 @@ module.exports = {
     silent: true,
     reporters:[
         './dist/TestUtils/customReporter.js'
-      ],
-      coverageReporters:['json-summary'],
-      setupFilesAfterEnv: ["./jest.setup.js"],
+    ],
+    coverageReporters:['json-summary'],
   };
   
