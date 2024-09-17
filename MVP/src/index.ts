@@ -14,6 +14,9 @@ import { writeNDJSONToFile } from './Output/File';
 import { checkArgsForFile, processArguments } from './Processors/argProcessor';
 import { writeNDJSONToCLI } from './Output/CLI';
 
+if (!process.env.LOG_FILE) {
+    process.exit(1);
+}
 
 const runner = async () => {
     const filePath = await processArguments();
@@ -33,5 +36,5 @@ const runner = async () => {
     LogMessage('Successfully cleaned and scored repos');
     writeNDJSONToCLI(cleanedRepos);
 };
-LogMessage(`🌟 ${chalk.greenBright("Starting...")} 🌟`)
+LogMessage(`🌟 ${chalk.greenBright('Starting...')} 🌟`);
 runner();
