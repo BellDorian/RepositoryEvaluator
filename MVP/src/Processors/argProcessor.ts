@@ -1,7 +1,7 @@
 import { existsSync } from 'fs';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { LogMessage } from '../Utils/log';
+import { LogDebug, LogInfo } from '../Utils/log';
 
 /**
  * @author John Leidy
@@ -47,14 +47,14 @@ export const checkArgsForFile = (args: (string | number)[]): string | undefined 
     if (validPaths.length > 1 || validPaths.length === 1) {
         return validPaths[0];
     } else if (validPaths.length === 0) {
-        LogMessage('Checking if all args are a valid path when combined');
+        LogDebug('Checking if all args are a valid path when combined');
         const fullPath = checkIfAllArgsAreValidPath(args);
         if (fullPath) {
             return fullPath;
         }
         return undefined;
     } else {
-        LogMessage('A suprising else was reached O_o');
+        LogDebug('A suprising else was reached O_o');
         return undefined;
     }
 };
