@@ -1,4 +1,4 @@
-import { LogMessage } from './log';
+import { LogDebug, LogInfo } from './log';
 
 /**
  * @author Jorge Puga Hernandez
@@ -17,10 +17,10 @@ export const ErrorWrapper = (func: () => void, message: string) => {
     } catch (err) {
         if (err instanceof Error) {
             console.log(err.message, message);
-            LogMessage(`${message}: ${err.message}`);
+            LogInfo(`${message}: ${err.message}`);
         } else {
             console.log(message);
-            LogMessage(message);
+            LogInfo(message);
         }
         process.exit(1);
     }
@@ -47,10 +47,10 @@ export const ErrorWrapperForReturns = <T>(func: (...args: any[]) => T, message: 
     } catch (err) {
         if (err instanceof Error) {
             console.log(err.message, message);
-            LogMessage(`${message}: ${err.message}`);
+            LogInfo(`${message}: ${err.message}`);
         } else {
             console.log(message);
-            LogMessage(message);
+            LogInfo(message);
         }
         process.exit(1);
     }
@@ -81,10 +81,10 @@ export const ErrorWrapperForAsync = async <T>(
     } catch (err) {
         if (err instanceof Error) {
             console.log(err.message, message);
-            LogMessage(`${message}: ${err.message}`);
+            LogInfo(`${message}: ${err.message}`);
         } else {
             console.log(message);
-            LogMessage(message);
+            LogInfo(message);
         }
         process.exit(1);
     }

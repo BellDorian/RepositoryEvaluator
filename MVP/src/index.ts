@@ -7,7 +7,7 @@ import { BaseRepoQueryResponse, ReposFromQuery } from './Types/ResponseTypes';
 import { requestFromGQL } from './Requests/GitHub/gql';
 import { mapGQLResultToRepos } from './Processors/gqlProcessor';
 import { DEFAULT_URLFILEPATH } from './Input/Input';
-import { LogMessage } from './Utils/log';
+import { LogDebug, LogInfo } from './Utils/log';
 import { ErrorWrapper, ErrorWrapperForAsync, ErrorWrapperForReturns } from './Utils/errorHandling';
 import { ProvideURLsForQuerying } from './Input/Sanitize';
 import { writeNDJSONToFile } from './Output/File';
@@ -33,8 +33,8 @@ const runner = async () => {
     const result = await requestFromGQL<ReposFromQuery<BaseRepoQueryResponse>>(query); //result is the raw gql response... .data has your data, .errors has the errors
     const cleanedRepos = mapGQLResultToRepos(result, repos); //mapper to clean the array of repos and add in their query results.
     writeNDJSONToFile(cleanedRepos); //result is the raw gql response... .data has your data, .errors has the errors
-    LogMessage('Successfully cleaned and scored repos');
+    LogDebug('Successfully cleaned and scored repos');
     writeNDJSONToCLI(cleanedRepos);
 };
-LogMessage(`🌟 ${chalk.greenBright('Starting...')} 🌟`);
+LogDebug(`🌟 ${chalk.greenBright('Starting...')} 🌟`);
 runner();
