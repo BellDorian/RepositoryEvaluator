@@ -6,6 +6,9 @@ import * as fs from 'fs';
 const LOG_LEVEL = process.env.LOG_LEVEL ? parseInt(process.env.LOG_LEVEL, 10) : 0;
 const LOG_FILE = process.env.LOG_FILE || './Logs/temporary.log';
 
+// Extra level for our own testing purposes.
+const SECRET_LEVEL = process.env.SECRET_LEVEL || undefined;
+
 /**
  * @author Jorge Puga Hernandez
  * @description
@@ -15,8 +18,8 @@ const LOG_FILE = process.env.LOG_FILE || './Logs/temporary.log';
  */
 function CreateLogFile() {
     if (!fs.existsSync(LOG_FILE)) {
-        if(!fs.existsSync("./Logs")){
-            fs.mkdirSync("./Logs");
+        if (!fs.existsSync('./Logs')) {
+            fs.mkdirSync('./Logs');
         }
         fs.writeFileSync(LOG_FILE, '', { flag: 'w' });
     }
@@ -28,19 +31,42 @@ function CreateLogFile() {
  * - This function will log messages to the log file with the locale time
  * format. If the log file does not exist, then it will be created
  * by calling the CreateLogFile function.
- * - If the level is 0, then nothing will be logged.
- * - If the level is 1, then the informational message will be logged.
- * - If the level is 2, then the debug message will be logged.
+ * - If the verbosity level is >=1, then informational messages will be logged
  *
  * @param message - The message to log. {@type string}
  *
  */
-export function LogMessage(message: string) {
-    if (LOG_LEVEL == 0) {
-        return;
-    } else if (LOG_LEVEL == 1 || LOG_LEVEL == 2) {
+export function LogInfo(message: string) {
+    if (LOG_LEVEL >= 1) {
         CreateLogFile();
         const logEntry = `${new Date().toLocaleString()} - ${message}\n`;
         fs.appendFileSync(LOG_FILE, logEntry);
+
+        if (SECRET_LEVEL) {
+            console.log(logEntry);
+        }
+    }
+}
+
+/**
+ * @author Jorge Puga Hernandez
+ * @description
+ * - This function will log messages to the log file with the locale time
+ * format. If the log file does not exist, then it will be created
+ * by calling the CreateLogFile function.
+ * - If the verbosity level is >=2, then debug messages will be logged.
+ *
+ * @param message - The message to log. {@type string}
+ *
+ */
+export function LogDebug(message: string) {
+    if (LOG_LEVEL >= 2) {
+        CreateLogFile();
+        const logEntry = `${new Date().toLocaleString()} - ${message}\n`;
+        fs.appendFileSync(LOG_FILE, logEntry);
+
+        if (SECRET_LEVEL) {
+            console.log(logEntry);
+        }
     }
 }
