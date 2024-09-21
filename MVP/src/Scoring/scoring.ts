@@ -1,13 +1,10 @@
 import { Repository, NDJSONRow } from '../Types/DataTypes';
 import { licenseFunction } from './licenseFunction';
 import { responsiveFunction } from './responsiveFunction';
-import { scoreRampupTime } from './scoreRampupTime'
-import { scoreBusFactor } from './scoreBusFactor'
-import { scoreCorrectness } from './scoreCorrectness'
+import { scoreRampupTime } from './scoreRampupTime';
+import { scoreBusFactor } from './scoreBusFactor';
+import { scoreCorrectness } from './scoreCorrectness';
 import { finalScore } from './finalScore';
-// Scoring file that will contain individual metric calculation functions written by the team.
-// Date.now() is used to time the latency of the metric calculation. It is converted to seconds
-// and rounded to the nearest millisecond.
 
 /**
  * @author Jorge Puga Hernandez
@@ -19,33 +16,30 @@ import { finalScore } from './finalScore';
  * @returns An updated repository with the calculated metrics and their respective latencies. {@type Repository<T>}
  *
  */
-export function scoreRepository<T>(repo: Repository<T>
-    
-): Repository<T> {
+export function scoreRepository<T>(repo: Repository<T>): Repository<T> {
+    const rampUpStart = Date.now();
+    const rampup = scoreRampupTime(repo);
+    const rampupLatency = Math.round(((Date.now() - rampUpStart) / 1000) * 1000) / 1000;
 
-  const rampUpStart = Date.now()
-  const rampup = scoreRampupTime(repo); // Ben's Responsibility (Discord @Mariocraft95)
-  const rampupLatency = Math.round((Date.now() - rampUpStart)/1000 * 1000) / 1000
+    const correctnessStart = Date.now();
+    const correctness = scoreCorrectness(repo);
+    const correctnessLatency = Math.round(((Date.now() - correctnessStart) / 1000) * 1000) / 1000;
 
-  const correctnessStart = Date.now()
-  const correctness = scoreCorrectness(repo); // Ben's Responsibility (Discord @Mariocraft95)
-  const correctnessLatency = Math.round((Date.now() - correctnessStart)/1000 * 1000) / 1000
+    const busFactorStart = Date.now();
+    const busFactor = scoreBusFactor(repo);
+    const busFactorLatency = Math.round(((Date.now() - busFactorStart) / 1000) * 1000) / 1000;
 
-  const busFactorStart = Date.now()
-  const busFactor = scoreBusFactor(repo); // Ben's Responsibility (Discord @Mariocraft95)
-  const busFactorLatency = Math.round((Date.now() - busFactorStart)/1000 * 1000) / 1000
+    const responsiveStart = Date.now();
+    const responsive = responsiveFunction(repo);
+    const responsiveLatency = Math.round(((Date.now() - responsiveStart) / 1000) * 1000) / 1000;
 
-  const responsiveStart = Date.now()
-  const responsive = responsiveFunction(repo); // Tim's Responsibility (Discord @TimboCarp)
-  const responsiveLatency = Math.round((Date.now() - responsiveStart)/1000 * 1000) / 1000
+    const licenseStart = Date.now();
+    const license = licenseFunction(repo);
+    const licenseLatency = Math.round(((Date.now() - licenseStart) / 1000) * 1000) / 1000;
 
-  const licenseStart = Date.now()
-  const license = licenseFunction(repo); // Tim's Responsibility (Discord @TimboCarp)
-  const licenseLatency = Math.round((Date.now() - licenseStart)/1000 * 1000) / 1000
-
-  const netScoreStart = Date.now()
-  const netScore = finalScore(repo, rampup, correctness, busFactor, responsive, license) // Ben's Responsibility (Discord @Mariocraft95)
-  const netScoreLatency = Math.round((Date.now() - netScoreStart)/1000 * 1000) / 1000
+    const netScoreStart = Date.now();
+    const netScore = finalScore(repo, rampup, correctness, busFactor, responsive, license);
+    const netScoreLatency = Math.round(((Date.now() - netScoreStart) / 1000) * 1000) / 1000;
 
     const updatedNDJSONRow: NDJSONRow = {
         ...repo.NDJSONRow,
