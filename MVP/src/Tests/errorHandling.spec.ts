@@ -1,6 +1,7 @@
 import { ErrorWrapper, ErrorWrapperForReturns, ErrorWrapperForAsync } from '../Utils/errorHandling';
 import { jest, describe, it, expect, beforeEach, afterEach } from '@jest/globals';
 
+// Tests for Void Function Error Wrapper
 describe('ErrorWrapper Tests', () => {
     let exitSpy: any;
     beforeEach(() => {
@@ -24,8 +25,20 @@ describe('ErrorWrapper Tests', () => {
 
         expect(exitSpy).toBeCalledWith(1);
     });
+
+    it('We must also test the else clause in the catch block', () => {
+        const mockFunction = jest.fn(() => {
+            throw 'ErrorWrapper: Not Instance of Error';
+        });
+        try {
+            ErrorWrapper(mockFunction, 'Testing ErrorWrapper Else Catch Block');
+        } catch (err) {}
+
+        expect(exitSpy).toBeCalledWith(1);
+    });
 });
 
+// Tests for Error Wrapper with Returns
 describe('ErrorWrapperForReturns Tests', () => {
     let exitSpy: any;
     beforeEach(() => {
@@ -57,8 +70,20 @@ describe('ErrorWrapperForReturns Tests', () => {
         expect(result).toBe(10);
         expect(exitSpy).not.toBeCalled();
     });
+
+    it('We must also test the else clause in the catch block', () => {
+        const mockFunction = jest.fn(() => {
+            throw 'ErrorWrapperForReturns: Not Instance of Error';
+        });
+        try {
+            ErrorWrapperForReturns(mockFunction, 'Testing ErrorWrapperForReturns Else Catch Block');
+        } catch (err) {}
+
+        expect(exitSpy).toBeCalledWith(1);
+    });
 });
 
+// Tests for Async Error Wrapper
 describe('ErrorWrapperForAsync Tests', () => {
     let exitSpy: any;
     beforeEach(() => {
@@ -89,5 +114,16 @@ describe('ErrorWrapperForAsync Tests', () => {
 
         expect(result).toBe(25);
         expect(exitSpy).not.toBeCalled();
+    });
+
+    it('We must also test the else clause in the catch block', async () => {
+        const mockFunction = jest.fn(async () => {
+            throw 'ErrorWrapperForAsync: Not Instance of Error';
+        });
+        try {
+            await ErrorWrapperForAsync(mockFunction, 'Testing ErrorWrapperForAsync Else Catch Block');
+        } catch (err) {}
+
+        expect(exitSpy).toBeCalledWith(1);
     });
 });
