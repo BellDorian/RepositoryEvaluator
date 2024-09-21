@@ -42,10 +42,14 @@ export const CategorizeModules = <T>(repos: Repository<T>[]) => {
  * @param compatibleModules - An array of compatible repos. {@type Repository<T>[]}
  */
 const PrintCompatibleModules = <T>(compatibleModules: Repository<T>[]) => {
-    console.log('\nCompatible modules:');
-    compatibleModules.forEach((repo) => {
-        console.log(JSON.stringify(repo, null, 2));
-    });
+    if (compatibleModules.length === 0) {
+        console.log('\nNo compatible modules found!');
+    } else {
+        console.log('\nCompatible modules:');
+        compatibleModules.forEach((repo) => {
+            console.log(JSON.stringify(repo, null, 2));
+        });
+    }
 };
 
 /**
@@ -57,8 +61,12 @@ const PrintCompatibleModules = <T>(compatibleModules: Repository<T>[]) => {
  * @param compatibleModules - An array of incompatible repos. {@type Repository<T>[]}
  */
 const PrintIncompatibleModules = <T>(incompatibleModules: Repository<T>[]) => {
-    console.log('\nIncompatible modules:');
-    incompatibleModules.forEach((repo) => {
-        console.log(JSON.stringify(repo, null, 2));
-    });
+    if (incompatibleModules.length === 0) {
+        console.log('\nNo incompatible modules found!');
+    } else {
+        console.log('\nIncompatible modules:');
+        incompatibleModules.forEach((repo) => {
+            console.log(JSON.stringify(repo, null, 2));
+        });
+    }
 };
