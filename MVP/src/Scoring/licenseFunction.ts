@@ -1,5 +1,6 @@
 import { OpenAI } from 'openai';
 import { Repository } from '../Types/DataTypes';
+import { LogDebug } from '../Utils/log';
 
 /**
  * Tim Carpenter
@@ -64,7 +65,8 @@ export function licenseFunction<T>(repo: Repository<T>): number {
                     }
                 });
         } catch (error) {
-            console.error('Error using API:', error);
+            LogDebug(error instanceof Error ? error.message : 'some unknown error occured');
+            return 0;
         }
     }
 

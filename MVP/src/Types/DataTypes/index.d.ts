@@ -1,17 +1,17 @@
 export type NDJSONRow = Partial<{
     URL: string;
     NetScore: number;
-    NetScore_Latency: number;
+    NetScore_Latency: string;
     RampUp: number;
-    RampUp_Latency: number;
+    RampUp_Latency: string;
     Correctness: number;
-    Correctness_Latency: number;
+    Correctness_Latency: string;
     BusFactor: number;
-    BusFactor_Latency: number;
+    BusFactor_Latency: string;
     ResponsiveMaintainer: number;
-    ResponsiveMaintainer_Latency: number;
+    ResponsiveMaintainer_Latency: string;
     License: number;
-    License_Latency: number;
+    License_Latency: string;
 }>;
 
 export type NDJSONRows = NDJSONRow[];
