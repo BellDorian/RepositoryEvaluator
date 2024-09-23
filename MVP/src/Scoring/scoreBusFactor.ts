@@ -56,7 +56,6 @@ const filterLow = (contributors: CC | undefined) => {
 
 function removeRepo(directory: string) {
     if (fileSystem.existsSync(directory)) {
-        // Recursively remove all files and subdirectories
         fileSystem.rmSync(directory, { recursive: true, force: true });
         LogDebug(`Repository at ${directory} has been removed.`);
     } else {
