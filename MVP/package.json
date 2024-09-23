@@ -13,7 +13,7 @@
     "scripts": {
         "build": "npx tsc",
         "dev": "nodemon src/index.ts",
-        "test": "npm install && npm run build && npm run test:jest:verbose",
+        "test": "npm install && npm run build && npm run test:jest:mute",
         "posttest": "node dist/TestUtils/posttest.js",
         "test:jest:verbose": "jest --verbose --config jest.config.verbose.js",
         "test:jest:mute": "jest --config jest.config.minimal.js >coverage/dump.txt"
@@ -32,6 +32,7 @@
     "dependencies": {
         "chalk": "^4.1.2",
         "dotenv": "^16.4.5",
+        "isomorphic-git": "^1.27.1",
         "jest": "^29.7.0",
         "openai": "^4.58.2",
         "yargs": "^17.7.2"

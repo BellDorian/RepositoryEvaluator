@@ -6,6 +6,7 @@ module.exports = {
     reporters:[
         './dist/TestUtils/customReporter.js'
     ],
+    coverageProvider: 'v8',
     coverageReporters:['json-summary'],
   };
   

@@ -16,6 +16,14 @@ export const createVulnerabilityAlertsField = (first: number) => `
     }
 `;
 
+export const createLicenseField = () => `
+    licenseInfo {
+        name
+        spdxId
+        url
+    }
+`;
+
 export const createReactionsField = (first: number) => `
     reactions: issues(first: ${first}) {
         nodes {

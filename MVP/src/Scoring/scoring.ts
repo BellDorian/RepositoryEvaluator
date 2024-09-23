@@ -21,7 +21,7 @@ function getLatencyInMs(startTime: [number, number]): number {
  * @returns An updated repository with the calculated metrics and their respective latencies. {@type Repository<T>}
  *
  */
-export function scoreRepository<T>(repo: Repository<T>): Repository<T> {
+export async function scoreRepository<T>(repo: Repository<T>): Promise<Repository<T>> {
     const netScoreStart = process.hrtime();
     const rampUpStart = process.hrtime();
     const rampup = scoreRampupTime(repo);
@@ -32,7 +32,7 @@ export function scoreRepository<T>(repo: Repository<T>): Repository<T> {
     const correctnessLatency = getLatencyInMs(correctnessStart);
 
     const busFactorStart = process.hrtime();
-    const busFactor = scoreBusFactor(repo);
+    const busFactor = await scoreBusFactor(repo);
     const busFactorLatency = getLatencyInMs(busFactorStart);
 
     const responsiveStart = process.hrtime();
@@ -76,6 +76,11 @@ export function scoreRepository<T>(repo: Repository<T>): Repository<T> {
  * @returns An updated repository with the calculated metrics and their respective latencies. {@type Repository<T>[]}
  *
  */
-export function scoreRepositoriesArray<Q>(repoArr: Repository<Q>[]): Repository<Q>[] {
-    return repoArr.map(scoreRepository);
+export async function scoreRepositoriesArray<Q>(repoArr: Repository<Q>[]): Promise<Repository<Q>[]> {
+    let repoBuilder: Repository<Q>[] = [];
+    for (const repo of repoArr) {
+        const scoredRepo = await scoreRepository(repo);
+        repoBuilder.push(scoredRepo);
+    }
+    return repoBuilder;
 }
