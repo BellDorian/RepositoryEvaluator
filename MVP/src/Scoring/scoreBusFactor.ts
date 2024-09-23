@@ -19,6 +19,8 @@ import * as fileSystem from 'fs';
 import { LogDebug } from '../Utils/log';
 const http = require('isomorphic-git/http/node');
 
+const DUMP_DIRECTORY = './REPO_DUMP';
+
 export type Contributor = {
     name: string;
     commitCount: number;
@@ -109,9 +111,15 @@ const calculateScore = (filteredContributors: CC | undefined, maxExpectedContrib
     }
 };
 
+const ensureRepoDumpExists = () => {
+    if (!fileSystem.existsSync(DUMP_DIRECTORY)) {
+        fileSystem.mkdirSync(DUMP_DIRECTORY);
+    }
+};
+
 export async function scoreBusFactor<T>(repo: Repository<T>): Promise<number> {
     let score = 0;
-    const repoDirectory = `./REPO_DUMP/${repo.repoName}`;
+    const repoDirectory = `${DUMP_DIRECTORY}/${repo.repoName}`;
     try {
         await handleRepoClone(repoDirectory, repo);
         const gitLog = await getGitLog(repoDirectory, 100);
