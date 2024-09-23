@@ -1,4 +1,5 @@
 import { GraphQLResponse } from '../../Types/ResponseTypes';
+import { LogDebug } from '../../Utils/log';
 
 /**
  * @author John Leidy
@@ -7,8 +8,8 @@ import { GraphQLResponse } from '../../Types/ResponseTypes';
  * @returns a promise {@type Promise<GraphQLResponse<T> | undefined>}
  */
 export const requestFromGQL = async <T>(query: string): Promise<GraphQLResponse<T> | undefined> => {
-    if(!process.env.GITHUB_TOKEN){
-        throw new Error("TOKEN NOT SET GG")
+    if (!process.env.GITHUB_TOKEN) {
+        throw new Error('TOKEN NOT SET');
     }
     const endpoint = 'https://api.github.com/graphql';
     const token = process.env.GITHUB_TOKEN;
@@ -25,7 +26,7 @@ export const requestFromGQL = async <T>(query: string): Promise<GraphQLResponse<
         const result: GraphQLResponse<T> = await response.json();
         return result;
     } catch (err) {
-        console.error(err);
+        LogDebug(err instanceof Error ? err.message : 'An unknown error occured in requestFromGQL');
         return undefined;
     }
 };

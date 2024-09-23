@@ -1,4 +1,5 @@
 import { NPMRegistryResponse } from '../../Types/ResponseTypes';
+import { LogDebug } from '../../Utils/log';
 
 /**
  * @author John Leidy
@@ -18,7 +19,11 @@ export const fetchPackageInfo = async (packageName: string): Promise<NPMRegistry
         }
         return jsonResponse;
     } catch (error) {
-        console.error('Error fetching package info:', error);
+        LogDebug(
+            error instanceof Error
+                ? `${error.message} when fetching package info for ${packageName}`
+                : `an unknown error occured when hitting registry for ${packageName}`
+        );
         return undefined;
     }
 };

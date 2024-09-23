@@ -2,6 +2,7 @@ import chalk from 'chalk';
 import { transformToNDJSONRow } from '../Transform/NDJSON';
 import { QueryParams, Repository } from '../Types/DataTypes';
 import { RepoURL } from '../Types/URLTypes';
+import { LogDebug } from '../Utils/log';
 
 /**
  * @author John Leidy
@@ -25,8 +26,7 @@ export const getOwnerNameFromGithubUrl = (url: string): QueryParams | undefined 
 
         return { owner: owner, repoName: repoName };
     } else {
-        console.log(chalk.red('Invalid GitHub URL'));
-        console.log(url);
+        LogDebug(`${url} was found to be an invalid github url post processing`);
         return undefined;
     }
 };
