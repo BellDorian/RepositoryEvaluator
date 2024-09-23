@@ -38,7 +38,7 @@ export function licenseFunction<T>(repo: Repository<T>): number {
         licenseName == 'Other'
     ) {
         return 0;
-    } else {
+    } else if (process.env.OPENAI_API_KEY) {
         var answer;
         const openai = new OpenAI({
             apiKey: process.env.OPENAI_API_KEY, // Make sure to set API key in environment variables
@@ -68,6 +68,8 @@ export function licenseFunction<T>(repo: Repository<T>): number {
             LogDebug(error instanceof Error ? error.message : 'some unknown error occured');
             return 0;
         }
+    }else{
+        return 0;
     }
 
     return 0;

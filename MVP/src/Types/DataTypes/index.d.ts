@@ -1,17 +1,17 @@
 export type NDJSONRow = Partial<{
     URL: string;
     NetScore: number;
-    NetScore_Latency: string;
+    NetScore_Latency: number;
     RampUp: number;
-    RampUp_Latency: string;
+    RampUp_Latency: number;
     Correctness: number;
-    Correctness_Latency: string;
+    Correctness_Latency: number;
     BusFactor: number;
-    BusFactor_Latency: string;
+    BusFactor_Latency: number;
     ResponsiveMaintainer: number;
-    ResponsiveMaintainer_Latency: string;
+    ResponsiveMaintainer_Latency: number;
     License: number;
-    License_Latency: string;
+    License_Latency: number;
 }>;
 
 export type NDJSONRows = NDJSONRow[];
@@ -44,6 +44,7 @@ export type Repository<T> = {
               };
               stargazerCount?: number;
               licenseInfo?: { name?: string };
+              ref?: {target?: {history: {edges?: [{node:{}}]}}}
           } & T)
         | null;
     NDJSONRow: NDJSONRow;

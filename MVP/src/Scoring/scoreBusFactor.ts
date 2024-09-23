@@ -14,18 +14,18 @@
 
 import { Repository, NDJSONRow } from '../Types/DataTypes';
 
-import * as fileSystem from 'fs';
-import * as git from 'isomorphic-git';
+// import * as fileSystem from 'fs';
+// import * as git from 'isomorphic-git';
 
-function removeRepo(directory: string) {
-    if (fileSystem.existsSync(directory)) {
-        // Recursively remove all files and subdirectories
-        fileSystem.rmSync(directory, { recursive: true, force: true });
-        console.log(`Repository at ${directory} has been removed.`);
-    } else {
-        console.log(`Directory ${directory} does not exist.`);
-    }
-}
+// function removeRepo(directory: string) {
+//     if (fileSystem.existsSync(directory)) {
+//         // Recursively remove all files and subdirectories
+//         fileSystem.rmSync(directory, { recursive: true, force: true });
+//         console.log(`Repository at ${directory} has been removed.`);
+//     } else {
+//         console.log(`Directory ${directory} does not exist.`);
+//     }
+// }
 export function scoreBusFactor<T>(repo: Repository<T>): number {
     // const repoDirectory = `./${repo.repoName}`;
     // // git.clone({

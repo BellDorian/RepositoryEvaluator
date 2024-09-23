@@ -16,9 +16,9 @@ import { writeNDJSONToCLI } from './Output/CLI';
 import { scoreRepositoriesArray } from './Scoring/scoring';
 import { Repository } from './Types/DataTypes';
 
-// if (!process.env.LOG_FILE) {
-//     process.exit(1);
-// }
+if (!process.env.LOG_FILE) {
+    process.exit(1);
+}
 
 const x = <T>(x: Repository<T>) => {};
 
@@ -36,6 +36,7 @@ const runner = async () => {
     ]); //add an array of fields here... see Request/QueryBuilders/fields.ts for examples
 
     const result = await requestFromGQL<ReposFromQuery<BaseRepoQueryResponse>>(query); //result is the raw gql response... .data has your data, .errors has the errors
+    console.log();
     const cleanedRepos = mapGQLResultToRepos(result, repos);
     const res = scoreRepositoriesArray<BaseRepoQueryResponse>(cleanedRepos); //mapper to clean the array of repos and add in their query results.
     writeNDJSONToFile(res); //result is the raw gql response... .data has your data, .errors has the errors

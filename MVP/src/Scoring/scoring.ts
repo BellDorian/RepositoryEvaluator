@@ -25,26 +25,26 @@ export function scoreRepository<T>(repo: Repository<T>): Repository<T> {
     const netScoreStart = process.hrtime();
     const rampUpStart = process.hrtime();
     const rampup = scoreRampupTime(repo);
-    const rampupLatency = getLatencyInMs(rampUpStart).toFixed(2);
+    const rampupLatency = getLatencyInMs(rampUpStart);
 
     const correctnessStart = process.hrtime();
     const correctness = scoreCorrectness(repo);
-    const correctnessLatency = getLatencyInMs(correctnessStart).toFixed(2);
+    const correctnessLatency = getLatencyInMs(correctnessStart);
 
     const busFactorStart = process.hrtime();
     const busFactor = 0; //scoreBusFactor(repo);
-    const busFactorLatency = getLatencyInMs(busFactorStart).toFixed(2);
+    const busFactorLatency = getLatencyInMs(busFactorStart);
 
     const responsiveStart = process.hrtime();
     const responsive = responsiveFunction(repo);
-    const responsiveLatency = getLatencyInMs(responsiveStart).toFixed(2);
+    const responsiveLatency = getLatencyInMs(responsiveStart);
 
     const licenseStart = process.hrtime();
     const license = licenseFunction(repo);
-    const licenseLatency = getLatencyInMs(licenseStart).toFixed(2);
+    const licenseLatency = getLatencyInMs(licenseStart);
 
     const netScore = finalScore(repo, rampup, correctness, busFactor, responsive, license);
-    const netScoreLatency = getLatencyInMs(netScoreStart).toFixed(2);
+    const netScoreLatency = getLatencyInMs(netScoreStart);
     return {
         ...repo,
         NDJSONRow: {
