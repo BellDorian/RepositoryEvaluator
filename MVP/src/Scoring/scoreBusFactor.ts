@@ -26,7 +26,7 @@ export type Contributor = {
 
 type CC = { [key: string]: number };
 
-const countCommits = (log: any): { [key: string]: number } => {
+const countCommits = (log: any): { [key: string]: number } | undefined => {
     const res: CC = {};
     if (log) {
         log.forEach((logItem: any) => {
@@ -39,131 +39,88 @@ const countCommits = (log: any): { [key: string]: number } => {
             }
         });
     }
-    return res;
+    return Object.keys(res).length > 0 ? res : undefined;
 };
 
-const filterLow = (contributors: CC) => {
+const filterLow = (contributors: CC | undefined) => {
     let store: CC = {};
-    Object.entries(contributors).forEach((contributor) => {
-        if (contributor[1] > 5) {
-            store[contributor[0]] = contributor[1];
-        }
-    });
-    return store;
+    if (contributors) {
+        Object.entries(contributors).forEach((contributor) => {
+            if (contributor[1] > 5) {
+                store[contributor[0]] = contributor[1];
+            }
+        });
+    }
+    return Object.keys(store).length > 0 ? store : undefined;
 };
 
 function removeRepo(directory: string) {
     if (fileSystem.existsSync(directory)) {
         // Recursively remove all files and subdirectories
         fileSystem.rmSync(directory, { recursive: true, force: true });
-        console.log(`Repository at ${directory} has been removed.`);
+        LogDebug(`Repository at ${directory} has been removed.`);
     } else {
-        console.log(`Directory ${directory} does not exist.`);
+        LogDebug(`Directory ${directory} does not exist.`);
     }
 }
 
-export async function scoreBusFactor<T>(repo: Repository<T>): Promise<number> {
-    const contributors = new Set();
-    if (repo.queryResult?.ref?.target?.history.edges) {
-        repo.queryResult?.ref?.target?.history.edges.forEach((edge) => {
-            contributors.add(edge.node.author.name);
-        });
-    }
-
-    const contributorCount = contributors.size;
-    const maxExpectedContributors = 10;
-    let score = Math.min(1, contributorCount / maxExpectedContributors);
-
-    const repoDirectory = `./REPO_DUMP/${repo.repoName}`;
+const handleRepoClone = async <T>(repoDirectory: string, repo: Repository<T>) => {
     try {
         await git.clone({
             fs: fileSystem,
             http,
             singleBranch: true,
-            dir: `./${repoDirectory}`,
+            dir: repoDirectory,
             url: repo.fileUrl,
         });
+    } catch (err) {
+        if (err instanceof Error) {
+            LogDebug(err.message);
+        } else {
+            LogDebug('unknown error curred in handleRepoClone');
+        }
+        removeRepo(repoDirectory);
+    }
+};
 
+const getGitLog = async (repoDirectory: string, depth: number) => {
+    try {
         const gitLog = await git.log({
             fs: fileSystem,
             dir: repoDirectory,
-            depth: 100,
+            depth: depth,
         });
-        const res = countCommits(gitLog);
-        console.log(res);
-        const fil = filterLow(res);
-        console.log(fil);
-        const maxExpectedContributors = 10;
-        score = Math.min(1, contributors.size / maxExpectedContributors);
-        // const contributorNames: string[] = [];
-        // gitLog.forEach((commit: any) => {
-        //     console.log('COMMIT', commit.commit.author);
-        //     const commitAuthor: string = commit.commit.author.name;
-        //     contributorNames.push(commitAuthor);
-        // });
-        // type Contributor = {
-        //     name: string;
-        //     commits?: number;
-        // };
-
-        // let uniqueContributors: Contributor[] = [];
-        // uniqueContributors.push({ name: contributorNames[0], commits: 1 }); // First contributor guarenteed to be unique
-        // uniqueContributors.slice(1);
-
-        // // Collects unique contributors and their number of commits
-        // contributorNames.forEach((contributor: string) => {
-        //     let currentIndex = -1;
-        //     for (let i = 0; i < uniqueContributors.length; i++) {
-        //         if (uniqueContributors[i].name == contributor) {
-        //             currentIndex = i;
-        //             break;
-        //         }
-        //     }
-        //     if (currentIndex != -1) {
-        //         uniqueContributors.push({ name: contributor, commits: 1 });
-        //     } else {
-        //         if (uniqueContributors[currentIndex]?.commits) {
-        //             let c = uniqueContributors[currentIndex].commits;
-        //             if (c) c += 1;
-        //             uniqueContributors[currentIndex].commits = c;
-        //         }
-        //     }
-        // });
-        // removeRepo(repoDirectory);
-        // if (uniqueContributors.length == 1) {
-        //     return 0; // Bus Factor of only 1
-        // }
-
-        // // Sorts by commits
-        // uniqueContributors.sort((a, b) => b.commits - a.commits);
-        // // Using the number of commits the largest contributor,
-        // // sets a benchmark that is used to determine whether or not a contributor can be considered part of the bus factor
-        // let primaryContributorCommits = uniqueContributors[0].commits;
-        // // Currently, percentages have to add up to 1. Perfectly fine to leave it like this though
-        // const highPercentage = 0.75;
-        // const lowPercentage = 0.25;
-        // let highCommitBenchmark = primaryContributorCommits * highPercentage;
-        // let lowCommitBenchmark = primaryContributorCommits * lowPercentage;
-        // let highContributorScore = 0;
-        // let lowContributorScore = 0;
-        // for (let i = 1; i < uniqueContributors.length; i++) {
-        //     if (uniqueContributors[i].commits >= highCommitBenchmark) {
-        //         highContributorScore++;
-        //     } else if (uniqueContributors[i].commits >= lowCommitBenchmark) {
-        //         lowContributorScore++;
-        //     }
-        // }
-        // Using the Sigmoid function to get the desired distribution of the score.
-
-        // const distrubutionMultiplier = 0.8; // As this value -> 0, it requires more contributors to get close to a 1. Can be edited to produce a different score distribution
-        // highContributorScore = 1 / (1 + Math.pow(Math.E, distrubutionMultiplier * -highContributorScore - 5));
-        // lowContributorScore = 1 / (1 + Math.pow(Math.E, distrubutionMultiplier * -highContributorScore - 5));
-        // // Returns weighted average of score obtained through high commit numbers and low commit numbers.
-        // console.log('iso success');
-        // score = highContributorScore * highPercentage + lowContributorScore * lowPercentage;
+        return gitLog;
     } catch (err) {
-        console.log('iso failed');
-        console.log(err instanceof Error ? err.message : '');
+        if (err instanceof Error) {
+            LogDebug(err.message);
+            return undefined;
+        } else {
+            LogDebug('Unknown error curred getting git log.');
+            return undefined;
+        }
+    }
+};
+
+const calculateScore = (filteredContributors: CC | undefined, maxExpectedContributors: number) => {
+    if (filteredContributors) {
+        return Math.min(1, Object.keys(filteredContributors).length / maxExpectedContributors);
+    } else {
+        return 0;
+    }
+};
+
+export async function scoreBusFactor<T>(repo: Repository<T>): Promise<number> {
+    let score = 0;
+    const repoDirectory = `./REPO_DUMP/${repo.repoName}`;
+    try {
+        await handleRepoClone(repoDirectory, repo);
+        const gitLog = await getGitLog(repoDirectory, 100);
+        const res = countCommits(gitLog);
+        const fil = filterLow(res);
+        score = calculateScore(fil, 10);
+        removeRepo(repoDirectory);
+    } catch (err) {
         LogDebug(err instanceof Error ? err.message : 'unkown error occured');
     }
     return score;

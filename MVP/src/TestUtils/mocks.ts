@@ -32,7 +32,7 @@ export const getResponsiveFuncSpy = (returnValue: number) =>
     jest.spyOn(RESPONSIVESCORING, 'responsiveFunction').mockImplementation((repo) => returnValue);
 
 export const getBusFactorFuncSpy = (returnValue: number) =>
-    jest.spyOn(BUSFACTORSCORING, 'scoreBusFactor').mockImplementation((repo) => returnValue);
+    jest.spyOn(BUSFACTORSCORING, 'scoreBusFactor').mockImplementation(async (repo) => returnValue);
 
 export const getRampUpFuncSpy = (returnValue: number) =>
     jest.spyOn(RAMPUPSCORING, 'scoreRampupTime').mockImplementation((repo) => returnValue);
