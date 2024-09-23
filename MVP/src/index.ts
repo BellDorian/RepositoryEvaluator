@@ -15,7 +15,10 @@ import { checkArgsForFile, processArguments } from './Processors/argProcessor';
 import { writeNDJSONToCLI } from './Output/CLI';
 import { scoreRepositoriesArray } from './Scoring/scoring';
 import { Repository } from './Types/DataTypes';
+import { createCommitsField } from './Requests/QueryBuilders/fields';
+import * as dot from 'dotenv';
 
+dot.config();
 if (!process.env.LOG_FILE) {
     process.exit(1);
 }
@@ -33,6 +36,7 @@ const runner = async () => {
         url
     }`,
         'stargazerCount',
+        createCommitsField(10),
     ]); //add an array of fields here... see Request/QueryBuilders/fields.ts for examples
 
     const result = await requestFromGQL<ReposFromQuery<BaseRepoQueryResponse>>(query); //result is the raw gql response... .data has your data, .errors has the errors

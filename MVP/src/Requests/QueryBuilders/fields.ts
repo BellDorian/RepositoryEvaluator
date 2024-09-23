@@ -39,3 +39,24 @@ export const createIssuesField = (first: number) => `
         totalCount
     }
 `;
+
+export const createCommitsField = (first: number) => `
+ref(qualifiedName: "main") {
+    target {
+        ... on Commit {
+            history(first: ${first}) {
+                edges {
+                    node {
+                        oid
+                        message
+                        committedDate
+                        author {
+                            name
+                            email
+                        }
+                    }
+                }
+            }
+        }
+    }
+}`;
