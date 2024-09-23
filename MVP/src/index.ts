@@ -42,7 +42,7 @@ const runner = async () => {
     const result = await requestFromGQL<ReposFromQuery<BaseRepoQueryResponse>>(query); //result is the raw gql response... .data has your data, .errors has the errors
     console.log();
     const cleanedRepos = mapGQLResultToRepos(result, repos);
-    const res = scoreRepositoriesArray<BaseRepoQueryResponse>(cleanedRepos); //mapper to clean the array of repos and add in their query results.
+    const res = await scoreRepositoriesArray<BaseRepoQueryResponse>(cleanedRepos); //mapper to clean the array of repos and add in their query results.
     writeNDJSONToFile(res); //result is the raw gql response... .data has your data, .errors has the errors
     LogDebug('Successfully cleaned and scored repos');
     writeNDJSONToCLI(res);
