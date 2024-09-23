@@ -1,10 +1,15 @@
-import { Repository, NDJSONRow } from '../Types/DataTypes';
+import { NDJSONRow, Repository } from '../Types/DataTypes';
 import { licenseFunction } from './licenseFunction';
 import { responsiveFunction } from './responsiveFunction';
 import { scoreRampupTime } from './scoreRampupTime';
 import { scoreBusFactor } from './scoreBusFactor';
 import { scoreCorrectness } from './scoreCorrectness';
 import { finalScore } from './finalScore';
+
+function getLatencyInMs(startTime: [number, number]): number {
+    const diff = process.hrtime(startTime); // [seconds, nanoseconds]
+    return diff[0] * 1000 + diff[1] / 1e6; // Convert to milliseconds
+}
 
 /**
  * @author Jorge Puga Hernandez
@@ -17,49 +22,46 @@ import { finalScore } from './finalScore';
  *
  */
 export function scoreRepository<T>(repo: Repository<T>): Repository<T> {
-    const rampUpStart = Date.now();
+    const netScoreStart = process.hrtime();
+    const rampUpStart = process.hrtime();
     const rampup = scoreRampupTime(repo);
-    const rampupLatency = Math.round(((Date.now() - rampUpStart) / 1000) * 1000) / 1000;
+    const rampupLatency = getLatencyInMs(rampUpStart);
 
-    const correctnessStart = Date.now();
+    const correctnessStart = process.hrtime();
     const correctness = scoreCorrectness(repo);
-    const correctnessLatency = Math.round(((Date.now() - correctnessStart) / 1000) * 1000) / 1000;
+    const correctnessLatency = getLatencyInMs(correctnessStart);
 
-    const busFactorStart = Date.now();
+    const busFactorStart = process.hrtime();
     const busFactor = scoreBusFactor(repo);
-    const busFactorLatency = Math.round(((Date.now() - busFactorStart) / 1000) * 1000) / 1000;
+    const busFactorLatency = getLatencyInMs(busFactorStart);
 
-    const responsiveStart = Date.now();
+    const responsiveStart = process.hrtime();
     const responsive = responsiveFunction(repo);
-    const responsiveLatency = Math.round(((Date.now() - responsiveStart) / 1000) * 1000) / 1000;
+    const responsiveLatency = getLatencyInMs(responsiveStart);
 
-    const licenseStart = Date.now();
+    const licenseStart = process.hrtime();
     const license = licenseFunction(repo);
-    const licenseLatency = Math.round(((Date.now() - licenseStart) / 1000) * 1000) / 1000;
+    const licenseLatency = getLatencyInMs(licenseStart);
 
-    const netScoreStart = Date.now();
     const netScore = finalScore(repo, rampup, correctness, busFactor, responsive, license);
-    const netScoreLatency = Math.round(((Date.now() - netScoreStart) / 1000) * 1000) / 1000;
-
-    const updatedNDJSONRow: NDJSONRow = {
-        ...repo.NDJSONRow,
-        NetScore: netScore,
-        NetScore_Latency: netScoreLatency,
-        RampUp: rampup,
-        RampUp_Latency: rampupLatency,
-        Correctness: correctness,
-        Correctness_Latency: correctnessLatency,
-        BusFactor: busFactor,
-        BusFactor_Latency: busFactorLatency,
-        ResponsiveMaintainer: responsive,
-        ResponsiveMaintainer_Latency: responsiveLatency,
-        License: license,
-        License_Latency: licenseLatency,
-    };
-
+    const netScoreLatency = getLatencyInMs(netScoreStart);
     return {
         ...repo,
-        NDJSONRow: updatedNDJSONRow,
+        NDJSONRow: {
+            ...repo.NDJSONRow,
+            NetScore: netScore,
+            NetScore_Latency: netScoreLatency,
+            RampUp: rampup,
+            RampUp_Latency: rampupLatency,
+            Correctness: correctness,
+            Correctness_Latency: correctnessLatency,
+            BusFactor: busFactor,
+            BusFactor_Latency: busFactorLatency,
+            ResponsiveMaintainer: responsive,
+            ResponsiveMaintainer_Latency: responsiveLatency,
+            License: license,
+            License_Latency: licenseLatency,
+        },
     };
 }
 
@@ -74,6 +76,6 @@ export function scoreRepository<T>(repo: Repository<T>): Repository<T> {
  * @returns An updated repository with the calculated metrics and their respective latencies. {@type Repository<T>[]}
  *
  */
-export function scoreRepositoriesArray<T>(repoArr: Repository<T>[]): Repository<T>[] {
+export function scoreRepositoriesArray<Q>(repoArr: Repository<Q>[]): Repository<Q>[] {
     return repoArr.map(scoreRepository);
 }
