@@ -32,7 +32,7 @@ export function scoreRepository<T>(repo: Repository<T>): Repository<T> {
     const correctnessLatency = getLatencyInMs(correctnessStart);
 
     const busFactorStart = process.hrtime();
-    const busFactor = 0; //scoreBusFactor(repo);
+    const busFactor = scoreBusFactor(repo);
     const busFactorLatency = getLatencyInMs(busFactorStart);
 
     const responsiveStart = process.hrtime();

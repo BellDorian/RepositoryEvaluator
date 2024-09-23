@@ -22,7 +22,6 @@ export const mapGQLResultToRepos = <T>(
             if (value) {
                 if (value.owner.login) {
                     repos.forEach((repo) => {
-                        console.log(repo.queryResult?.ref?.target?.history.edges?.map(node => node.node))
                         if (repo.owner === value.owner.login) {
                             repo.queryResult = value;
                         }
