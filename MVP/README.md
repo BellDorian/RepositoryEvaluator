@@ -1,6 +1,28 @@
 # MVP Repo
 
-## 🌟 Start here! 🌟
+## 🌟 Running with checker 🌟
+
+The path to the repository is the MVP folder, not the base folder when cloned.
+
+Ensure environment has node/npm
+
+NPM/Node Installation:
+
+-   [Download and install here](https://nodejs.org/en/download/prebuilt-installer)
+-   [npm Docs](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+
+Check NPM/Node Installation:
+
+-   `npm --version`
+-   `node --version`
+-   If npm & node are installed correctly you should see matching versions from the Download Node.js® page.
+-   I am using node v22.1.0 and npm v10.7.0, not sure if the newest versions break any current configs or not.
+
+Ensure correct permissions on run file (in MVP directory):
+
+-   `chmod +x run`
+
+## 🌟 Devs Start here! 🌟
 
 ### Dependencies
 
