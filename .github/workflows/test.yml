@@ -22,7 +22,8 @@ jobs:
             - name: Install dependencies
               run: npm install
               working-directory: MVP
-
+            - name: Create coverage directory
+              run: mkdir -p MVP/coverage
             - name: Run Jest tests
               run: npm test
               working-directory: MVP
