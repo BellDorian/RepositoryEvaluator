@@ -22,6 +22,12 @@ Ensure correct permissions on run file (in MVP directory):
 
 -   `chmod +x run`
 
+The usual commands that the checker requests are available:
+
+-   `./run install`
+-   `./run test`
+-   `./run {path to url file}`
+
 ## 🌟 Devs Start here! 🌟
 
 ### Dependencies
@@ -72,3 +78,37 @@ If using VSCode install the extension prettier. I have already added my config a
 If anyone needs any help, has any questions, etc don't hesitate to reach out!
 
 put output.txt back for run file before submission
+
+## 🌟 General MVP Information 🌟
+
+### Running without building
+
+Can use nodemon for this:
+
+-   `npm install`
+-   `npm run dev`
+
+### Manual build
+
+We have a build script for this:
+
+-   `npm run build`
+
+### Various test configs
+
+We have two test configurations, to switch between the two swap the script that npm run test runs:
+
+-   muted output: `test:jest:mute`
+-   verbose output: `test:jest:verbose`
+
+### Where is everything?
+
+Inside MVP folder
+
+-   Distribution `dist/`
+-   Coverage `coverage/`
+-   Logs `Logs/`
+-   Entry `index.ts`
+-   ISO dumps `REPO_DUMP/` (should remain empty)
+-   File Results `results/`
+-   Node Modules `node_modules/`
