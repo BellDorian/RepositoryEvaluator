@@ -1,6 +1,34 @@
 # MVP Repo
 
-## 🌟 Start here! 🌟
+## 🌟 Running with checker 🌟
+
+The path to the repository is the MVP folder, not the base folder when cloned.
+
+Ensure environment has node/npm
+
+NPM/Node Installation:
+
+-   [Download and install here](https://nodejs.org/en/download/prebuilt-installer)
+-   [npm Docs](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+
+Check NPM/Node Installation:
+
+-   `npm --version`
+-   `node --version`
+-   If npm & node are installed correctly you should see matching versions from the Download Node.js® page.
+-   I am using node v22.1.0 and npm v10.7.0, not sure if the newest versions break any current configs or not.
+
+Ensure correct permissions on run file (in MVP directory):
+
+-   `chmod +x run`
+
+The usual commands that the checker requests are available:
+
+-   `./run install`
+-   `./run test`
+-   `./run {path to url file}`
+
+## 🌟 Devs Start here! 🌟
 
 ### Dependencies
 
@@ -50,3 +78,37 @@ If using VSCode install the extension prettier. I have already added my config a
 If anyone needs any help, has any questions, etc don't hesitate to reach out!
 
 put output.txt back for run file before submission
+
+## 🌟 General MVP Information 🌟
+
+### Running without building
+
+Can use nodemon for this:
+
+-   `npm install`
+-   `npm run dev`
+
+### Manual build
+
+We have a build script for this:
+
+-   `npm run build`
+
+### Various test configs
+
+We have two test configurations, to switch between the two swap the script that npm run test runs:
+
+-   muted output: `test:jest:mute`
+-   verbose output: `test:jest:verbose`
+
+### Where is everything?
+
+Inside MVP folder
+
+-   Distribution `dist/`
+-   Coverage `coverage/`
+-   Logs `Logs/`
+-   Entry `index.ts`
+-   ISO dumps `REPO_DUMP/` (should remain empty)
+-   File Results `results/`
+-   Node Modules `node_modules/`

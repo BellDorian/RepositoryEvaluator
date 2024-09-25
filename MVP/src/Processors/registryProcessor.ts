@@ -10,7 +10,7 @@ import { getOwnerNameFromGithubUrl } from './githubProcessor';
  * @param packageName - This is the package name for an npm url {@type string}
  * @returns a github repository url found from the registry
  */
-const getRepoUrl = async (packageName: string): Promise<string | undefined> => {
+export const getRepoUrl = async (packageName: string): Promise<string | undefined> => {
     const packageInfo = await fetchPackageInfo(packageName);
     if (packageInfo?.repository?.url) {
         return packageInfo.repository.url;

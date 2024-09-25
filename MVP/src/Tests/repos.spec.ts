@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
-import { repoQueryBuilder } from '../Requests/QueryBuilders/repos';
-import { mockRepos } from '../TestUtils/constants';
+import { buildRepoSchemaQuery, repoQueryBuilder } from '../Requests/QueryBuilders/repos';
+import { mockRepos, repoSchemaQueryString } from '../TestUtils/constants';
 import { defaultFields } from '../Requests/QueryBuilders/constants';
 
 /**
@@ -33,5 +33,9 @@ describe('Repo Query Builder', () => {
         extraFields.forEach((field) => {
             expect(query.includes(field)).toBe(true);
         });
+    });
+    it('Should build the repoSchemaQuery', () => {
+        const query = buildRepoSchemaQuery();
+        expect(query).toBe(repoSchemaQueryString);
     });
 });
