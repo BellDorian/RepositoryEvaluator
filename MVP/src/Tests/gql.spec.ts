@@ -1,3 +1,8 @@
+/**
+ * Please read the describe and it statements for information on what each suite, test does.
+ * This module has tests for gql requests
+ * @author DSinc
+ */
 import { beforeAll, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { requestFromGQL } from '../Requests/GitHub/gql';
 import { getFetchSpy } from '../TestUtils/mocks';

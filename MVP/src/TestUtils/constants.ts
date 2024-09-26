@@ -1,3 +1,7 @@
+/**
+ * This module only contains mocks for our tests.
+ * @author DSinc
+ */
 import path from 'path';
 import { Repository } from '../Types/DataTypes';
 import { BaseRepoQueryResponse, GraphQLResponse, NPMRegistryResponse } from '../Types/ResponseTypes';

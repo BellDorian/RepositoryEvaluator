@@ -1,3 +1,8 @@
+/**
+ * Please read the describe and it statements for information on what each suite, test does.
+ * This module has tests for the E2E
+ * @author DSinc
+ */
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { buildReposFromUrls } from '../Processors/urlProcessor';
 import { BaseRepoQueryResponse, GraphQLResponse, ReposFromQuery } from '../Types/ResponseTypes';

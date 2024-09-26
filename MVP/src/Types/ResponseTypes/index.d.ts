@@ -1,3 +1,7 @@
+/**
+ * This module only contains types for various request type objects in our project.
+ * @author DSinc
+ */
 export type ErrorLocation = {
     line: number;
     column: number;

@@ -1,3 +1,9 @@
+/**
+ * Please see the individual function documentation for information.
+ * This module builds a dynamic query for GQL
+ * @author DSinc
+ */
+
 import { QueryParams, Repository } from '../../Types/DataTypes';
 import { defaultFields } from './constants';
 

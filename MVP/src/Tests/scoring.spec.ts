@@ -1,3 +1,8 @@
+/**
+ * Please read the describe and it statements for information on what each suite, test does.
+ * This module has tests for the argument processor.
+ * @author DSinc
+ */
 import { describe, expect, it } from '@jest/globals';
 import { licenseFunction } from '../Scoring/licenseFunction';
 import { correctnessRepo, licenseScoringMocks, mockValidRepos, rampUpRepo } from '../TestUtils/constants';

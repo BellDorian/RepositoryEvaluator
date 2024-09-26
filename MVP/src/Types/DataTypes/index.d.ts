@@ -1,3 +1,7 @@
+/**
+ * This module only contains types for various data objects in our project.
+ * @author DSinc
+ */
 export type NDJSONRow = Partial<{
     URL: string;
     NetScore: number;

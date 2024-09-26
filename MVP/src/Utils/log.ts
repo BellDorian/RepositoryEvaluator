@@ -1,3 +1,8 @@
+/**
+ * Please see the individual doc comments for more information.
+ * This module handles logging for our application!
+ * @author DSinc
+ */
 import './envConfig';
 import * as fs from 'fs';
 

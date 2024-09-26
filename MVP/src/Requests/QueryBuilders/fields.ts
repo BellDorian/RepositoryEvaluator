@@ -1,3 +1,7 @@
+/**
+ * This module creates various fields, some are used some are unused.
+ * @author DSinc
+ */
 export const createLanguagesField = (first: number) => `
     languages(first: ${first}) {
         nodes {

@@ -1,3 +1,8 @@
+/**
+ * Please see the individual function documentation for information.
+ * This module handles computation of all scores
+ * @author DSinc
+ */
 import { NDJSONRow, Repository } from '../Types/DataTypes';
 import { licenseFunction } from './licenseFunction';
 import { responsiveFunction } from './responsiveFunction';

@@ -1,3 +1,9 @@
+/**
+ * Please see the individual function documentation for information.
+ * This module processes handles the request to GQL
+ * @author DSinc
+ */
+
 import chalk from 'chalk';
 import { GraphQLResponse } from '../../Types/ResponseTypes';
 import { LogDebug, LogInfo } from '../../Utils/log';

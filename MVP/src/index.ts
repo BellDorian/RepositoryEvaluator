@@ -1,3 +1,9 @@
+/**
+ * WELCOME!
+ * This is the entry point to our software. Here, not much is done except for using the main runner in this file.
+ * @author DSinc
+ */
+
 import './Utils/envConfig';
 import chalk from 'chalk';
 import { buildReposFromUrls } from './Processors/urlProcessor';
@@ -24,6 +30,12 @@ dot.config();
 if (!process.env.LOG_FILE || !process.env.GITHUB_TOKEN) {
     process.exit(1);
 }
+
+/**
+ * @author John Leidy
+ * @description This is the main runner for our project.
+ * @returns nothing {@type void
+ */
 const runner = async () => {
     ClearLogFile();
     const filePath = await processArguments();
