@@ -80,6 +80,8 @@ Example Below:
 
 The path to the repository is the MVP folder, not the base folder when cloned.
 
+Example: `REPO_PATH = "/root/repos/checker/space directory/normal/CLONEBEFORESUB/SoftwareEng_Fall2024/MVP"`
+
 Ensure environment has node/npm
 
 NPM/Node Installation:
