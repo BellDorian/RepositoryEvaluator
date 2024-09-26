@@ -1,6 +1,6 @@
 import path from 'path';
 import { Repository } from '../Types/DataTypes';
-import { GraphQLResponse, NPMRegistryResponse } from '../Types/ResponseTypes';
+import { BaseRepoQueryResponse, GraphQLResponse, NPMRegistryResponse } from '../Types/ResponseTypes';
 import { PackageURL } from '../Types/URLTypes';
 
 export const validFilePath = () => path.resolve(__dirname, '../TestUtils/validUrls.txt');
@@ -18,6 +18,20 @@ export const mockUrls = [
     'https://www.npmjs.com/package/@digest/eslint-config-typescript',
     'https://www.npmjs.com/package/@applicaster/zapp-react-native-bridge',
 ];
+
+export const repoSchemaQueryString = `
+       query {
+        __type(name: "Repository") {
+                name
+                kind
+                description
+                fields {
+                    name
+                }
+            }
+        }
+
+    `;
 
 export const mockRepos: Repository<any>[] = [
     {
@@ -377,7 +391,7 @@ export const registryMocking: {
 export const licenseScoringMocks: {
     knownCompatibleLicenses: string[];
     knownIncompatibleLicenses: string[];
-    repoWithValidLicense: Repository<any>;
+    repoWithValidLicense: Repository<BaseRepoQueryResponse & { owner: { login: string } }>;
     repoWithInvalidLicense: Repository<any>;
     repoWithUnknownLicense: Repository<any>;
 } = {
@@ -404,6 +418,10 @@ export const licenseScoringMocks: {
             url: '',
             licenseInfo: {
                 name: 'MIT License',
+            },
+            stargazerCount: 10,
+            owner: {
+                login: 'Z4nzu',
             },
         },
         NDJSONRow: {

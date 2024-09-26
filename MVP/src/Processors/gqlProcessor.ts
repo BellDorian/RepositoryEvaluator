@@ -20,7 +20,7 @@ export const mapGQLResultToRepos = <T>(
         Object.entries(GraphQLResult.data).forEach(([key, value]) => {
             //if its not null we are going to set it to the repo in our repo arr
             if (value) {
-                if (value.owner.login) {
+                if (value.owner?.login) {
                     repos.forEach((repo) => {
                         if (repo.owner === value.owner.login) {
                             repo.queryResult = value;

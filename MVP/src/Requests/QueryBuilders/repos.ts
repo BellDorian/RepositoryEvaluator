@@ -25,6 +25,11 @@ export const repoQueryBuilder = <T>(repos: Repository<T>[], extraFields?: string
     `;
 };
 
+/**
+ * @author John Leidy
+ * @description Builds a query that shows the fields available for repositories
+ * @returns a string to use for a query! {@type string}
+ */
 export const buildRepoSchemaQuery = (): string => {
     return `
        query {
