@@ -43,6 +43,10 @@ export const requestFromGQL = async <T>(query: string): Promise<GraphQLResponse<
                 ? `ERR IN GQL ${chalk.red(err.message)}`
                 : 'An unknown error occured in requestFromGQL'
         );
-        process.exit(1);
+        throw new Error(
+            err instanceof Error
+                ? `ERR IN GQL ${chalk.red(err.message)}`
+                : 'An unknown error occured in requestFromGQL'
+        );
     }
 };
