@@ -22,6 +22,11 @@ export type ResultType<T> = {
     [key: `repo${number}`]: T;
 };
 
+export type TestsFilesFromQuery = {
+    name: string;
+    type: string;
+}[];
+
 export type Repository<T> = {
     owner: string;
     repoName: string;
@@ -46,6 +51,9 @@ export type Repository<T> = {
 
               licenseInfo?: { name?: string };
               ref?: { target?: { history: { edges?: [{ node: { author: { name: string } } }] } } };
+              readmeFile?: { text: string };
+              testsCheckMain?: { entries: TestsFilesFromQuery };
+              testsCheckMaster?: { entries: TestsFilesFromQuery };
           } & T)
         | null;
     NDJSONRow: NDJSONRow;

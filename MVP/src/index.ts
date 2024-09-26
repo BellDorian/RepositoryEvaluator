@@ -12,7 +12,12 @@ import { writeNDJSONToFile } from './Output/File';
 import { processArguments } from './Processors/argProcessor';
 import { writeNDJSONToCLI } from './Output/CLI';
 import { scoreRepositoriesArray } from './Scoring/scoring';
-import { createLicenseField } from './Requests/QueryBuilders/fields';
+import {
+    createLicenseField,
+    createReadmeField,
+    createTestMasterQuery,
+    createTestMainQuery,
+} from './Requests/QueryBuilders/fields';
 import * as dot from 'dotenv';
 
 dot.config();
@@ -24,7 +29,13 @@ const runner = async () => {
     const filePath = await processArguments();
     const cleanUrls = ProvideURLsForQuerying(filePath ? filePath : DEFAULT_URLFILEPATH, true);
     const repos = await buildReposFromUrls<BaseRepoQueryResponse>(cleanUrls);
-    const query = repoQueryBuilder(repos, [createLicenseField(), 'stargazerCount']); //add an array of fields here... see Request/QueryBuilders/fields.ts for examples
+    const query = repoQueryBuilder(repos, [
+        createLicenseField(),
+        createReadmeField(),
+        createTestMainQuery(),
+        createTestMasterQuery(),
+        'stargazerCount',
+    ]); //add an array of fields here... see Request/QueryBuilders/fields.ts for examples
     const result = await requestFromGQL<ReposFromQuery<BaseRepoQueryResponse>>(query); //result is the raw gql response... .data has your data, .errors has the errors
     const cleanedRepos = mapGQLResultToRepos(result, repos);
     const res = await scoreRepositoriesArray<BaseRepoQueryResponse>(cleanedRepos); //mapper to clean the array of repos and add in their query results.

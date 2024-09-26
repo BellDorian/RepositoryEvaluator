@@ -46,4 +46,23 @@ export interface BaseRepoQueryResponse {
     name: string;
     description: string;
     url: string;
+    name: string;
+    url: string;
+    description: string;
+    licenseInfo?: {
+        name: string;
+    };
+    openIssues?: {
+        totalCount: number;
+    };
+    closedIssues?: {
+        totalCount: number;
+    };
+    stargazerCount?: number;
+
+    licenseInfo?: { name?: string };
+    ref?: { target?: { history: { edges?: [{ node: { author: { name: string } } }] } } };
+    readmeFile?: { text: string };
+    testsCheckMain?: { entries: TestsFilesFromQuery };
+    testsCheckMaster?: { entries: TestsFilesFromQuery };
 }

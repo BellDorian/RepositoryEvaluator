@@ -68,3 +68,33 @@ ref(qualifiedName: "main") {
         }
     }
 }`;
+
+export const createReadmeField = () => `
+readmeFile: object(expression: "HEAD:README.md") {
+            ... on Blob {
+                text
+            }
+        }
+`;
+
+export const createTestMainQuery = () => `
+  testsCheckMain: object(expression: "main:") {  
+      ... on Tree {
+        entries {
+          name
+          type
+        }
+      }
+    }
+`;
+
+export const createTestMasterQuery = () => `
+  testsCheckMaster: object(expression: "main:") {  
+      ... on Tree {
+        entries {
+          name
+          type
+        }
+      }
+    }
+`;

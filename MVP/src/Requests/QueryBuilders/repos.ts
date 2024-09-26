@@ -16,11 +16,7 @@ export const repoQueryBuilder = <T>(repos: Repository<T>[], extraFields?: string
                     return `
                 repo${idx}: repository(owner: "${repo.owner}", name: "${repo.repoName}") {
                                 ${[...defaultFields, ...(extraFields ?? [])].join('\n')}
-                                  readmeFile: object(expression: "HEAD:README.md") {
-                                        ... on Blob {
-                                            text
-                                        }
-                                    }
+                                  
                             }
                         `;
                 })
