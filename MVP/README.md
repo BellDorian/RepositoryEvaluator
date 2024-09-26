@@ -1,5 +1,11 @@
 # MVP Repo
 
+## 🌟 Rubric items
+
+Purpose: The purpose of this project is to create software that scores modules based on various metrics.
+
+Configuration: [Go to running with Checker](#running-with-checker-) [Go to Devs Start Here!](#devs-start-here-)
+
 ## 🌟 Running with checker 🌟
 
 The path to the repository is the MVP folder, not the base folder when cloned.
