@@ -6,7 +6,7 @@ import { BaseRepoQueryResponse, ReposFromQuery } from './Types/ResponseTypes';
 import { requestFromGQL } from './Requests/GitHub/gql';
 import { mapGQLResultToRepos } from './Processors/gqlProcessor';
 import { DEFAULT_URLFILEPATH } from './Input/Input';
-import { LogDebug } from './Utils/log';
+import { ClearLogFile, LogDebug } from './Utils/log';
 import { ProvideURLsForQuerying } from './Input/Sanitize';
 import { writeNDJSONToFile } from './Output/File';
 import { processArguments } from './Processors/argProcessor';
@@ -16,10 +16,11 @@ import { createLicenseField } from './Requests/QueryBuilders/fields';
 import * as dot from 'dotenv';
 
 dot.config();
-if (!process.env.LOG_FILE) {
+if (!process.env.LOG_FILE || !process.env.GITHUB_TOKEN) {
     process.exit(1);
 }
 const runner = async () => {
+    ClearLogFile();
     const filePath = await processArguments();
     const cleanUrls = ProvideURLsForQuerying(filePath ? filePath : DEFAULT_URLFILEPATH, true);
     const repos = await buildReposFromUrls<BaseRepoQueryResponse>(cleanUrls);
