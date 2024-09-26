@@ -13,28 +13,6 @@ function getLatencyInMs(startTime: [number, number]): number {
     return diff[0] * 1000 + diff[1] / 1e6; // Convert to milliseconds
 }
 
-const ensureNetNotLessOrMore = (
-    rampUp: number,
-    correctness: number,
-    busFactor: number,
-    responsive: number,
-    license: number,
-    netScore: number,
-    maxOrMin: 'max' | 'min'
-): { newNet: number; netChanged: boolean } => {
-    const compare =
-        maxOrMin === 'min'
-            ? Math.min(netScore, rampUp, correctness, busFactor, responsive, license)
-            : Math.max(netScore, rampUp, correctness, busFactor, responsive, license);
-    if (maxOrMin === 'max' && compare > netScore) {
-        return { newNet: compare, netChanged: true };
-    }
-    if (maxOrMin === 'min' && compare < netScore) {
-        return { newNet: compare, netChanged: true };
-    }
-    return { newNet: netScore, netChanged: false };
-};
-
 /**
  * @author Jorge Puga Hernandez
  * @description - Scores a repository by calling the metric functions created by various team members.
