@@ -10,7 +10,6 @@ https://www.npmjs.com/package/query-string
 https://www.npmjs.com/package/@atom-ide-community/atom-package-manager
 https://github.com/Cinnamon/kotaemon
 https://github.com/Z4nzu/hackingtool
-https://www.npmjs.com/package/@uniswap/default-token-list
 https://www.npmjs.com/package/@hey-api/client-fetch
 https://www.npmjs.com/package/@ckb-ccc/core
 https://www.npmjs.com/package/axios

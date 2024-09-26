@@ -101,4 +101,4 @@ export const processInputFile = (filePath: string) => {
  * @param NDJSONObj - The NDJSON object to convert.
  * @returns The stringified NDJSON object.
  */
-export const convertNDJSONObjToStr = (NDJSONObj: NDJSONRow) => JSON.stringify(NDJSONObj);
+export const convertNDJSONObjToStr = (NDJSONObj: NDJSONRow) => JSON.stringify(NDJSONObj, null, 4);

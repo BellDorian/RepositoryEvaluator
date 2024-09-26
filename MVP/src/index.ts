@@ -89,8 +89,6 @@ const runner = async () => {
     const res = await scoreRepositoriesArray<BaseRepoQueryResponse>(cleanedRepos); //mapper to clean the array of repos and add in their query results.
     writeNDJSONToFile(res); //result is the raw gql response... .data has your data, .errors has the errors
     LogDebug('Successfully cleaned and scored repos');
-
-    checkScores(res);
     writeNDJSONToCLI(res);
 };
 LogDebug(`🌟 ${chalk.greenBright('Starting...')} 🌟`);
