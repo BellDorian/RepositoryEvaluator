@@ -18,7 +18,7 @@ export function scoreRampupTime<T>(repo: Repository<T>): number {
         LogDebug('Stars count was undefined in score ramp up time.');
         return 0;
     }
-    const finalScore = 1 - starsCount / benchmark;
+    const finalScore = Math.min(starsCount / benchmark, 1);
 
     return finalScore;
 }

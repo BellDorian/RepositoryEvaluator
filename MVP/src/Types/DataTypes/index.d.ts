@@ -43,8 +43,9 @@ export type Repository<T> = {
                   totalCount: number;
               };
               stargazerCount?: number;
+
               licenseInfo?: { name?: string };
-              ref?: {target?: {history: {edges?: [{node:{author:{name:string}}}]}}}
+              ref?: { target?: { history: { edges?: [{ node: { author: { name: string } } }] } } };
           } & T)
         | null;
     NDJSONRow: NDJSONRow;
