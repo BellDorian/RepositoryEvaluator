@@ -12,3 +12,11 @@ https://github.com/Cinnamon/kotaemon
 https://github.com/Z4nzu/hackingtool
 https://www.npmjs.com/package/@uniswap/default-token-list
 https://www.npmjs.com/package/@hey-api/client-fetch
+https://www.npmjs.com/package/@ckb-ccc/core
+https://www.npmjs.com/package/axios
+https://www.npmjs.com/package/body-parser
+https://www.npmjs.com/package/helmet
+https://www.npmjs.com/package/async
+https://www.npmjs.com/package/chalk
+https://www.npmjs.com/package/cors
+https://www.npmjs.com/package/jsonwebtoken

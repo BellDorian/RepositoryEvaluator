@@ -23,6 +23,6 @@ export function scoreCorrectness<T>(repo: Repository<T>): number {
         return 0;
     }
 
-    const finalScore = 1 - openIssuesCount / totalIssuesCount;
+    const finalScore = Math.min(1, openIssuesCount / totalIssuesCount);
     return finalScore;
 }

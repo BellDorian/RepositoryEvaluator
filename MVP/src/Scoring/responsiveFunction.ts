@@ -13,7 +13,7 @@ import { Repository } from '../Types/DataTypes';
 export function responsiveFunction<T>(repo: Repository<T>): number {
     const open = repo.queryResult?.openIssues?.totalCount!;
     const closed = repo.queryResult?.closedIssues?.totalCount!;
-    const goodRatio = 100;
+    const goodRatio = 2;
     const ratio = open / closed;
     var score = Math.min(ratio / goodRatio, 1);
 

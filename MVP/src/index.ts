@@ -15,10 +15,11 @@ import { scoreRepositoriesArray } from './Scoring/scoring';
 import { createLicenseField } from './Requests/QueryBuilders/fields';
 import * as dot from 'dotenv';
 import { NDJSONRow, Repository } from './Types/DataTypes';
+import { equalFloat } from './Utils/utils';
 
-const isNotMin = (netScore: number, scores: number[]) => Math.min(netScore, ...scores) != netScore;
+const isNotMin = (netScore: number, scores: number[]) => equalFloat(Math.min(netScore, ...scores), netScore);
 
-const isNotMax = (netScore: number, scores: number[]) => Math.max(netScore, ...scores) != netScore;
+const isNotMax = (netScore: number, scores: number[]) => equalFloat(Math.max(netScore, ...scores), netScore);
 
 const checkScore = <T>(repo: Repository<T>, idx: number, maxMin: 'max' | 'min') => {
     LogInfo(
@@ -67,6 +68,7 @@ const checkScores = <T>(repos: Repository<T>[]) => {
         `${repos.map((repo, idx) => {
             const netScoreMin = checkScore(repo, idx, 'min');
             const netScoreMax = checkScore(repo, idx, 'max');
+
             return netScoreMin === true && netScoreMax === true;
         })}`
     );
@@ -87,8 +89,9 @@ const runner = async () => {
     const res = await scoreRepositoriesArray<BaseRepoQueryResponse>(cleanedRepos); //mapper to clean the array of repos and add in their query results.
     writeNDJSONToFile(res); //result is the raw gql response... .data has your data, .errors has the errors
     LogDebug('Successfully cleaned and scored repos');
-    writeNDJSONToCLI(res);
+
     checkScores(res);
+    writeNDJSONToCLI(res);
 };
 LogDebug(`🌟 ${chalk.greenBright('Starting...')} 🌟`);
 runner();
