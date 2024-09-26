@@ -106,45 +106,7 @@ The usual commands that the checker requests are available:
 -   `./run test`
 -   `./run {path to url file}`
 
-<details>
-  <summary>click to expand and see test run output</summary>
-  
- <code>
-Root@DESKTOP-NULL:~/repos/checker/space directory/normal/spaces again/ECE461-Part-1-CLI-Checker# date
-
-Thu Sep 26 16:25:05 EDT 2024
-root@DESKTOP-NULL:~/repos/checker/space directory/normal/spaces again/ECE461-Part-1-CLI-Checker# python3 checker.py
-Running tests in /root/repos/checker/space directory/normal/CLONEBEFORESUB/SoftwareEng_Fall2024/MVP
-Testing './run install'...
-./run "/root/repos/checker/space directory/normal/spaces again/ECE461-Part-1-CLI-Checker/one-url.txt"
-
-> Install command exited successfully!
-> Subsequent test command exited successfully!
-> Subsequent URL_FILE command exited successfully!
-> 3 / 3 tests passed.
-
-Testing './run test'...
-
-> Test suite output is in the correct format!
-> Test suite contains 20 or more test cases!
-> Test suite achieved 80% or greater line coverage. (2/2 points)
-> 4 / 4 tests passed.
-
-Testing './run URL_FILE'...
-
-> URL_FILE command True successfully!
-> URL_FILE output is valid NDJSON!
-> URL_FILE output has score in valid ranges [0,1] U {-1} !
-> URL_FILE command did not exit successfully when LOG_FILE is not set!
-> URL_FILE command did not exit successfully when GITHUB_TOKEN is not set!
-> 5 / 5 tests passed.
-> // other terminal for repo
-> root@DESKTOP-IUF91A0:~/repos/checker/space directory/normal/CLONEBEFORESUB/SoftwareEng_Fall2024# date
-> Thu Sep 26 16:25:04 EDT 2024
-> root@DESKTOP-IUF91A0:~/repos/checker/space directory/normal/CLONEBEFORESUB/SoftwareEng_Fall2024#
-> </code>
-
-</details>
+![Screenshot](./OutputScreenshot/outputscreeny.png)
 
 ## 🌟 Devs Start here! 🌟
 
