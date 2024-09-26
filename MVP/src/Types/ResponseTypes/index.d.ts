@@ -26,6 +26,8 @@ export type ReposFromQuery<T> = {
 export interface GraphQLResponse<T> {
     data: T;
     errors?: GraphQLError[];
+    message?: string;
+    status?: string;
 }
 
 export interface NPMRegistryResponse {

@@ -28,6 +28,10 @@ function CreateLogFile() {
     }
 }
 
+/**
+ * @author John Leidy
+ * @description Function to reset the log level each run. Without having exit code 1 for no log file we could do a datetime for each.
+ */
 const RemoveIfExists = () => {
     if (fs.existsSync(LOG_FILE)) {
         if (fs.existsSync('./Logs')) {
